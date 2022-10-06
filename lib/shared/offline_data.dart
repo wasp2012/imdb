@@ -4,14 +4,14 @@ import 'package:imdb_demo/injection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPref {
-  static Future setBool(String key, bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setBool(key, value);
+  static Future<bool> setBool(String key, bool value) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.setBool(key, value);
   }
 
   static Future<bool> getBool(String key) async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(key) ?? false;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getBool(key) ?? false;
   }
 
 // static Future setListString(

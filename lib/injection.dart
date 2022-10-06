@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:imdb_demo/shared/data/repo/movies_repository.dart';
 import 'package:imdb_demo/shared/offline_data.dart';
 import 'package:imdb_demo/shared/web_services/network/web_service_for_movies.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'business_logic/theme_cubit/theme_cubit.dart';
 import 'business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
 
@@ -42,9 +43,6 @@ void initGetIt() {
 
   getIt.registerSingleton<ThemeCubitCubit>(ThemeCubitCubit());
   //
-
-  //SharedPref
-  getIt.registerSingleton<SharedPref>(SharedPref());
 
   getIt.registerLazySingleton<AppRouter>(() => AppRouter());
 

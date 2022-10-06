@@ -37,6 +37,7 @@ class SettingsScreen extends StatelessWidget {
                         onChanged: (value) {
                           cubit.isDark = value;
                           cubit.toggleSwitch(value);
+                          SharedPref.setBool(isDarkTheme, cubit.isDark);
                           print(cubit.isDark);
                         },
                       );
