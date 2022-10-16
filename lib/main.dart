@@ -9,6 +9,7 @@ import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/constants/themes.dart';
 import 'package:imdb_demo/shared/data/models/authentication/login_model.dart';
 import 'package:imdb_demo/shared/data/models/authentication/req_token.dart';
+import 'package:imdb_demo/shared/offline_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'business_logic/theme_cubit/theme_cubit.dart';
 import 'business_logic/theme_cubit/theme_state.dart';
@@ -21,21 +22,28 @@ import 'injection.dart';
 import 'route/router.dart';
 
 void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   initGetIt();
 
   Bloc.observer = MyBlocObserver();
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(MyApp(
     router: AppRouter(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.router});
+  MyApp({super.key, required this.router});
 
   final AppRouter router;
+
+  bool isUserTokenSaved = false;
+  void checkUserTokenSaved(String key) async {
+    if (await SharedPrefs.checkValue(key)) {
+      isUserTokenSaved = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +53,17 @@ class MyApp extends StatelessWidget {
         if (snapshot.hasData) {
           final cubitThemeCubit = getIt<ThemeCubitCubit>();
 
-          FlutterNativeSplash.remove();
-
           print(cubitThemeCubit.savedTheme);
-
-          return BlocProvider(
-            create: (context) => getIt<ThemeCubitCubit>(),
+          FlutterNativeSplash.remove();
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => getIt<ThemeCubitCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<RequestTokenCubit>(),
+              ),
+            ],
             child: BlocBuilder<ThemeCubitCubit, SettingState>(
               builder: (context, state) {
                 return MaterialApp(
@@ -60,6 +73,8 @@ class MyApp extends StatelessWidget {
                   themeMode: cubitThemeCubit.savedTheme == true
                       ? ThemeMode.dark
                       : ThemeMode.light,
+                  initialRoute:
+                      isUserTokenSaved == true ? homeScreen : logInScreen,
                   onGenerateRoute: router.onGenerateRoute,
                 );
               },

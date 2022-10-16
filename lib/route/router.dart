@@ -67,17 +67,22 @@ class AppRouter {
             );
           },
         );
-      // case logInScreen:
-      //   return MaterialPageRoute(
-      //     builder: (context) {
-      //       var requestTokenModel = settings.arguments;
-      //       return BlocProvider(
-      //         create: (context) => getIt<LogInCubit>(),
-      //         child: LogInScreen(
-      //             requestTokenModel: requestTokenModel as RequestTokenModel),
-      //       );
-      //     },
-      //   );
+      case logInScreen:
+        return MaterialPageRoute(
+          builder: (context) {
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => getIt<LogInCubit>(),
+                ),
+                BlocProvider(
+                  create: (context) => getIt<RequestTokenCubit>(),
+                ),
+              ],
+              child: LogInScreen(),
+            );
+          },
+        );
     }
   }
 }

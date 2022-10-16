@@ -16,7 +16,7 @@ class PlasmaBackground extends StatelessWidget {
       ),
       child: PlasmaRenderer(
         type: PlasmaType.infinity,
-        particles: 5,
+        particles: 10,
         color: Theme.of(context).particlesColor,
         blur: 0.51,
         size: 0.39,

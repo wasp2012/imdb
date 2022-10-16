@@ -10,5 +10,6 @@ const youtubeLink = 'https://www.youtube.com/watch?v=';
 const imageDisplay = 'http://image.tmdb.org/t/p/original';
 
 //Shared Preference Key
-const isDarkTheme = 'isDarkTheme';
+const darkThemeKey = "isDarkTheme";
 const requestTokenKey = 'isTokenSaved';
+const userToken = 'userToken';
