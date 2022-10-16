@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:imdb_demo/shared/data/repo/movies_repository.dart';
-import 'package:imdb_demo/shared/offline_data.dart';
-import 'package:imdb_demo/shared/web_services/network/web_service_for_movies.dart';
+import 'package:imdb_demo/shared/data/repo/auth_repo/auth_repo.dart';
+import 'package:imdb_demo/shared/data/repo/movies_repo/movies_repository.dart';
+import 'package:imdb_demo/shared/web_services/network/auth_web_services/web_services_for_auth.dart';
+import 'package:imdb_demo/shared/web_services/network/movies_web_services/web_service_for_movies.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'business_logic/auth_cubit/authentication_cubit.dart';
 import 'business_logic/theme_cubit/theme_cubit.dart';
 import 'business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
 
@@ -17,10 +19,17 @@ final getIt = GetIt.instance;
 void initGetIt() {
   getIt.allowReassignment = true;
 
+//Movies
   getIt.registerLazySingleton<WebServicesForMovies>(
       () => WebServicesForMovies(createAndSetupDio()));
 
   getIt.registerLazySingleton<MoviesRepository>(() => MoviesRepository());
+
+//Authentication
+  getIt.registerLazySingleton<WebServicesForAuth>(
+      () => WebServicesForAuth(createAndSetupDio()));
+
+  getIt.registerLazySingleton<AuthRepository>(() => AuthRepository());
 
 //Cubits
   getIt.registerFactory<NowPLayingMoviesCubit>(
@@ -41,7 +50,16 @@ void initGetIt() {
   getIt.registerFactory<VideoForMovieCubit>(
       () => VideoForMovieCubit(getIt<MoviesRepository>()));
 
-  getIt.registerSingleton<ThemeCubitCubit>(ThemeCubitCubit());
+  getIt.registerFactory<RequestTokenCubit>(
+      () => RequestTokenCubit(getIt<AuthRepository>()));
+
+  getIt.registerFactory<LogInCubit>(() => LogInCubit(getIt<AuthRepository>()));
+
+  getIt.registerSingletonAsync<ThemeCubitCubit>(() async {
+    final themeCubit = ThemeCubitCubit();
+    await themeCubit.getSavedTheme();
+    return themeCubit;
+  });
   //
 
   getIt.registerLazySingleton<AppRouter>(() => AppRouter());

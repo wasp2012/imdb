@@ -114,7 +114,7 @@ class MovieDetailsScreen extends StatelessWidget {
                       expandedHeight: 600,
                       pinned: true,
                       stretch: true,
-                      backgroundColor: Theme.of(context).accentColor,
+                      backgroundColor: Theme.of(context).backgroundColor,
                       flexibleSpace: FlexibleSpaceBar(
                         centerTitle: true,
                         collapseMode: CollapseMode.parallax,

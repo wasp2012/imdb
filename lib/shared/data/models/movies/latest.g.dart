@@ -10,10 +10,10 @@ LatestMovieModel _$LatestMovieModelFromJson(Map<String, dynamic> json) =>
     LatestMovieModel(
       adult: json['adult'] as bool?,
       id: json['id'] as int?,
-      originalLanguage: json['originalLanguage'] as String?,
-      originalTitle: json['originalTitle'] as String?,
+      originalLanguage: json['original_language'] as String?,
+      originalTitle: json['original_title'] as String?,
       overview: json['overview'] as String?,
-      releaseDate: json['releaseDate'] as String?,
+      releaseDate: json['release_date'] as String?,
       status: json['status'] as String?,
       title: json['title'] as String?,
     );
@@ -22,10 +22,10 @@ Map<String, dynamic> _$LatestMovieModelToJson(LatestMovieModel instance) =>
     <String, dynamic>{
       'adult': instance.adult,
       'id': instance.id,
-      'originalLanguage': instance.originalLanguage,
-      'originalTitle': instance.originalTitle,
+      'original_language': instance.originalLanguage,
+      'original_title': instance.originalTitle,
       'overview': instance.overview,
-      'releaseDate': instance.releaseDate,
+      'release_date': instance.releaseDate,
       'status': instance.status,
       'title': instance.title,
     };

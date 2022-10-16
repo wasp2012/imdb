@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
-import 'package:imdb_demo/shared/offline_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../business_logic/theme_cubit/theme_cubit.dart';
@@ -24,6 +23,7 @@ class SettingsScreen extends StatelessWidget {
           backgroundColor: Theme.of(context).accentColor,
         ),
         body: Container(
+          color: Theme.of(context).backgroundColor,
           child: ListView(
             children: [
               Row(
@@ -32,13 +32,15 @@ class SettingsScreen extends StatelessWidget {
                   BlocBuilder<ThemeCubitCubit, SettingState>(
                     builder: (context, state) {
                       return Switch(
-                        activeColor: Colors.black54,
-                        value: cubit.isDark,
-                        onChanged: (value) {
+                        activeColor: Color.fromARGB(255, 255, 252, 252),
+                        activeTrackColor: Color.fromARGB(255, 0, 0, 0),
+                        value: cubit.savedTheme ?? false,
+                        onChanged: (value) async {
                           cubit.isDark = value;
                           cubit.toggleSwitch(value);
-                          SharedPref.setBool(isDarkTheme, cubit.isDark);
-                          print(cubit.isDark);
+                          await cubit.getSavedTheme();
+                          print(
+                              ' Setting Screen Saved Theme  ${cubit.savedTheme}');
                         },
                       );
                     },

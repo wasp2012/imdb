@@ -62,6 +62,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
             ),
           );
           return Container(
+            color: Theme.of(context).backgroundColor,
             margin: EdgeInsets.all(10),
             child: YoutubePlayer(
               controller: _controller,

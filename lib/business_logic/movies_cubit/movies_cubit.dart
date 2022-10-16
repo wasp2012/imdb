@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
+import 'package:imdb_demo/shared/data/repo/movies_repo/movies_repository.dart';
 
 import '../../shared/data/models/movies/now_playing.dart';
 import '../../shared/data/models/movies/popular.dart';
 import '../../shared/data/models/movies/results.dart';
 import '../../shared/data/models/movies/top_rated.dart';
 import '../../shared/data/models/movies/upcoming.dart';
-import '../../shared/data/repo/movies_repository.dart';
 import '../../shared/web_services/errors/api_result.dart';
 import '../../shared/web_services/errors/network_exceptions.dart';
 import 'movies_state.dart';

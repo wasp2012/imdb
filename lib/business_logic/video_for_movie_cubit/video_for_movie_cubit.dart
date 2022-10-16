@@ -2,7 +2,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:imdb_demo/shared/data/models/movies/movies_id/movies_video_by_id_model.dart';
-import 'package:imdb_demo/shared/data/repo/movies_repository.dart';
+import 'package:imdb_demo/shared/data/repo/movies_repo/movies_repository.dart';
 import 'package:imdb_demo/shared/web_services/errors/api_result.dart';
 import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 

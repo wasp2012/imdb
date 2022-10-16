@@ -1,23 +1,22 @@
 import 'dart:convert';
 
 import 'package:imdb_demo/shared/constants/apis.dart';
+import 'package:imdb_demo/shared/data/models/movies/movie_details.dart';
 import 'package:imdb_demo/shared/data/models/movies/movies_id/movies_video_by_id_model.dart';
 import 'package:imdb_demo/shared/data/models/movies/now_playing.dart';
 import 'package:imdb_demo/shared/data/models/movies/popular.dart';
 import 'package:imdb_demo/shared/data/models/movies/top_rated.dart';
 import 'package:imdb_demo/shared/data/models/movies/upcoming.dart';
-import 'package:imdb_demo/shared/data/repo/movies_repo_interface.dart';
+import 'package:imdb_demo/shared/data/repo/movies_repo/movies_repo_interface.dart';
+import 'package:imdb_demo/shared/web_services/errors/api_result.dart';
 import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
-
-import '../../web_services/errors/api_result.dart';
-import '../models/movies/movie_details.dart';
 
 class MoviesRepository extends MoviesRepositoryInterface {
   @override
   Future<ApiResult<NowPlayingMovieModel>> getMoviesPlayingNow() async {
     try {
       var response = await webServicesForMovies?.getMoviesPlayingNow(
-        ApisUrl.token,
+        ApisUrl.apiKey,
       );
 
       // print(jsonEncode(response));
@@ -35,7 +34,7 @@ class MoviesRepository extends MoviesRepositoryInterface {
   Future<ApiResult<PopularMovieModel?>> getMoviesPopular() async {
     try {
       var response = await webServicesForMovies?.getMoviesPopular(
-        ApisUrl.token,
+        ApisUrl.apiKey,
       );
 
       // print(jsonEncode(response));
@@ -53,7 +52,7 @@ class MoviesRepository extends MoviesRepositoryInterface {
   Future<ApiResult<TopRatedMovieModel?>> getMoviesTopRated() async {
     try {
       var response = await webServicesForMovies?.getMoviesTopRated(
-        ApisUrl.token,
+        ApisUrl.apiKey,
       );
 
       // print(jsonEncode(response));
@@ -71,7 +70,7 @@ class MoviesRepository extends MoviesRepositoryInterface {
   Future<ApiResult<UpcomingMovieModel?>> getMoviesUpComing() async {
     try {
       var response = await webServicesForMovies?.getMoviesUpComing(
-        ApisUrl.token,
+        ApisUrl.apiKey,
       );
 
       // print(jsonEncode(response));
@@ -89,7 +88,7 @@ class MoviesRepository extends MoviesRepositoryInterface {
   Future<ApiResult<MovieDetailsModel?>> getMovieDetails(String id) async {
     try {
       var response = await webServicesForMovies?.getMovieDetails(
-        ApisUrl.token,
+        ApisUrl.apiKey,
         id,
       );
 
@@ -107,7 +106,7 @@ class MoviesRepository extends MoviesRepositoryInterface {
   Future<ApiResult<MovieVideoById?>> getMovieVideos(String id) async {
     try {
       var response = await webServicesForMovies?.getMovieVideos(
-        ApisUrl.token,
+        ApisUrl.apiKey,
         id,
       );
       print(jsonEncode(response));

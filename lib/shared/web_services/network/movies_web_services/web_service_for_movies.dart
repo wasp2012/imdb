@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:imdb_demo/shared/data/models/movies/movie_details.dart';
 import 'package:imdb_demo/shared/data/models/movies/movies_id/movies_video_by_id_model.dart';
-import 'package:retrofit/http.dart';
+import 'package:retrofit/retrofit.dart';
 import 'package:imdb_demo/shared/constants/apis.dart';
 import 'package:imdb_demo/shared/data/models/movies/now_playing.dart';
 import 'package:imdb_demo/shared/data/models/movies/popular.dart';
@@ -11,7 +11,7 @@ import 'package:imdb_demo/shared/web_services/errors/api_result.dart';
 
 part 'web_service_for_movies.g.dart';
 
-@RestApi(baseUrl: 'https://api.themoviedb.org/3/movie')
+@RestApi(baseUrl: ApisUrl.baseurlForMovies)
 abstract class WebServicesForMovies {
   factory WebServicesForMovies(Dio dio, {String baseUrl}) =
       _WebServicesForMovies;

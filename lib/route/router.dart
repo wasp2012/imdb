@@ -2,11 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:imdb_demo/business_logic/auth_cubit/authentication_cubit.dart';
 import 'package:imdb_demo/injection.dart';
 import 'package:imdb_demo/presentation/screen/home_screen.dart';
+import 'package:imdb_demo/presentation/screen/log_in_screen.dart';
 import 'package:imdb_demo/presentation/screen/movie_details_screen.dart';
 import 'package:imdb_demo/presentation/screen/settings_screen.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
+import 'package:imdb_demo/shared/data/models/authentication/req_token.dart';
 
 import '../business_logic/movie_detail_cubit/movie_details_cubit.dart';
 import '../business_logic/movies_cubit/movies_cubit.dart';
@@ -64,6 +67,17 @@ class AppRouter {
             );
           },
         );
+      // case logInScreen:
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       var requestTokenModel = settings.arguments;
+      //       return BlocProvider(
+      //         create: (context) => getIt<LogInCubit>(),
+      //         child: LogInScreen(
+      //             requestTokenModel: requestTokenModel as RequestTokenModel),
+      //       );
+      //     },
+      //   );
     }
   }
 }

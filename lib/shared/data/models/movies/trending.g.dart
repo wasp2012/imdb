@@ -12,26 +12,26 @@ TrendingMovieModel _$TrendingMovieModelFromJson(Map<String, dynamic> json) =>
       results: (json['results'] as List<dynamic>?)
           ?.map((e) => Results.fromJson(e as Map<String, dynamic>))
           .toList(),
-      totalPages: json['totalPages'] as int?,
-      totalResults: json['totalResults'] as int?,
+      totalPages: json['total_pages'] as int?,
+      totalResults: json['total_results'] as int?,
     );
 
 Map<String, dynamic> _$TrendingMovieModelToJson(TrendingMovieModel instance) =>
     <String, dynamic>{
       'page': instance.page,
       'results': instance.results,
-      'totalPages': instance.totalPages,
-      'totalResults': instance.totalResults,
+      'total_pages': instance.totalPages,
+      'total_results': instance.totalResults,
     };
 
 Results _$ResultsFromJson(Map<String, dynamic> json) => Results(
       adult: json['adult'] as bool?,
       id: json['id'] as int?,
       name: json['name'] as String?,
-      originalName: json['originalName'] as String?,
-      mediaType: json['mediaType'] as String?,
+      originalName: json['original_name'] as String?,
+      mediaType: json['media_type'] as String?,
       popularity: (json['popularity'] as num?)?.toDouble(),
-      knownFor: (json['knownFor'] as List<dynamic>?)
+      knownFor: (json['known_for'] as List<dynamic>?)
           ?.map((e) => KnownFor.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -40,38 +40,38 @@ Map<String, dynamic> _$ResultsToJson(Results instance) => <String, dynamic>{
       'adult': instance.adult,
       'id': instance.id,
       'name': instance.name,
-      'originalName': instance.originalName,
-      'mediaType': instance.mediaType,
+      'original_name': instance.originalName,
+      'media_type': instance.mediaType,
       'popularity': instance.popularity,
-      'knownFor': instance.knownFor,
+      'known_for': instance.knownFor,
     };
 
 KnownFor _$KnownForFromJson(Map<String, dynamic> json) => KnownFor(
       adult: json['adult'] as bool?,
       id: json['id'] as int?,
       title: json['title'] as String?,
-      originalLanguage: json['originalLanguage'] as String?,
-      originalTitle: json['originalTitle'] as String?,
+      originalLanguage: json['original_language'] as String?,
+      originalTitle: json['original_title'] as String?,
       overview: json['overview'] as String?,
-      posterPath: json['posterPath'] as String?,
-      mediaType: json['mediaType'] as String?,
+      posterPath: json['poster_path'] as String?,
+      mediaType: json['media_type'] as String?,
       popularity: (json['popularity'] as num?)?.toDouble(),
-      releaseDate: json['releaseDate'] as String?,
-      voteAverage: (json['voteAverage'] as num?)?.toDouble(),
-      voteCount: json['voteCount'] as int?,
+      releaseDate: json['release_date'] as String?,
+      voteAverage: (json['vote_average'] as num?)?.toDouble(),
+      voteCount: json['vote_count'] as int?,
     );
 
 Map<String, dynamic> _$KnownForToJson(KnownFor instance) => <String, dynamic>{
       'adult': instance.adult,
       'id': instance.id,
       'title': instance.title,
-      'originalLanguage': instance.originalLanguage,
-      'originalTitle': instance.originalTitle,
+      'original_language': instance.originalLanguage,
+      'original_title': instance.originalTitle,
       'overview': instance.overview,
-      'posterPath': instance.posterPath,
-      'mediaType': instance.mediaType,
+      'poster_path': instance.posterPath,
+      'media_type': instance.mediaType,
       'popularity': instance.popularity,
-      'releaseDate': instance.releaseDate,
-      'voteAverage': instance.voteAverage,
-      'voteCount': instance.voteCount,
+      'release_date': instance.releaseDate,
+      'vote_average': instance.voteAverage,
+      'vote_count': instance.voteCount,
     };
