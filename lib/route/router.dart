@@ -7,6 +7,7 @@ import 'package:imdb_demo/injection.dart';
 import 'package:imdb_demo/presentation/screen/home_screen.dart';
 import 'package:imdb_demo/presentation/screen/log_in_screen.dart';
 import 'package:imdb_demo/presentation/screen/movie_details_screen.dart';
+import 'package:imdb_demo/presentation/screen/profile_screen.dart';
 import 'package:imdb_demo/presentation/screen/settings_screen.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/data/models/authentication/req_token.dart';
@@ -78,9 +79,18 @@ class AppRouter {
                 BlocProvider(
                   create: (context) => getIt<RequestTokenCubit>(),
                 ),
+                BlocProvider(
+                  create: (context) => getIt<SessionIdCubit>(),
+                ),
               ],
               child: LogInScreen(),
             );
+          },
+        );
+      case profileScreen:
+        return MaterialPageRoute(
+          builder: (context) {
+            return ProfileScreen();
           },
         );
     }

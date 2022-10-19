@@ -18,35 +18,50 @@ class NavigationDrawerWidget extends StatelessWidget {
                     'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png'),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 20),
+                margin: const EdgeInsets.only(left: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Divider(),
-                    Text(
-                      'Youssef Wael',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                  children: [
+                    const Divider(),
+                    TextButton(
+                      onPressed: null,
+                      child: Text(
+                        'Youssef Wael',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(fontSize: 20),
                       ),
                     ),
-                    Divider(),
-                    Text(
-                      'Watch List',
-                      style: TextStyle(
-                        fontSize: 14,
+                    const Divider(),
+                    TextButton(
+                      onPressed: null,
+                      child: Text(
+                        'Watch List',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(fontSize: 20),
                       ),
                     ),
-                    Text(
-                      'Favorite',
-                      style: TextStyle(
-                        fontSize: 14,
+                    TextButton(
+                      onPressed: null,
+                      child: Text(
+                        'Favorite',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(fontSize: 20),
                       ),
                     ),
-                    Text(
-                      'Profile',
-                      style: TextStyle(
-                        fontSize: 14,
+                    TextButton(
+                      onPressed: null,
+                      child: Text(
+                        'Profile',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(fontSize: 20),
                       ),
                     ),
                   ],

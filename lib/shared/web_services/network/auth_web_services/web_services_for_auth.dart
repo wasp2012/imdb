@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:imdb_demo/shared/constants/apis.dart';
 import 'package:imdb_demo/shared/data/models/authentication/login_model.dart';
 import 'package:imdb_demo/shared/data/models/authentication/req_token.dart';
+import 'package:imdb_demo/shared/data/models/authentication/session_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'web_services_for_auth.g.dart';
@@ -19,5 +20,10 @@ abstract class WebServicesForAuth {
   Future<LoginModel> postLogIn(
     @Query('api_key') String apiKey,
     @Body() LogInBodyModel bodyModel,
+  );
+  @POST('/session/new')
+  Future<SessionModel> createSession(
+    @Query('api_key') String apiKey,
+    @Body() SessionBody requestToken,
   );
 }

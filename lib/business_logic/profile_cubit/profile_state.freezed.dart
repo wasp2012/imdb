@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'authentication_state.dart';
+part of 'profile_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,12 +15,11 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$AuthenticationState<T> {
+mixin _$ProfileState<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
     required TResult Function() loading,
-    required TResult Function(IconData x) obscureTextChangeState,
     required TResult Function(T data) success,
     required TResult Function(NetworkExceptions networkExceptions) error,
   }) =>
@@ -29,7 +28,6 @@ mixin _$AuthenticationState<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
     TResult Function(T data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
   }) =>
@@ -38,7 +36,6 @@ mixin _$AuthenticationState<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
     TResult Function(T data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
     required TResult orElse(),
@@ -48,8 +45,6 @@ mixin _$AuthenticationState<T> {
   TResult map<TResult extends Object?>({
     required TResult Function(Idle<T> value) idle,
     required TResult Function(Loading<T> value) loading,
-    required TResult Function(ObscureTextChangeState<T> value)
-        obscureTextChangeState,
     required TResult Function(Success<T> value) success,
     required TResult Function(Error<T> value) error,
   }) =>
@@ -58,7 +53,6 @@ mixin _$AuthenticationState<T> {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Idle<T> value)? idle,
     TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
   }) =>
@@ -67,7 +61,6 @@ mixin _$AuthenticationState<T> {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Idle<T> value)? idle,
     TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
     required TResult orElse(),
@@ -76,20 +69,20 @@ mixin _$AuthenticationState<T> {
 }
 
 /// @nodoc
-abstract class $AuthenticationStateCopyWith<T, $Res> {
-  factory $AuthenticationStateCopyWith(AuthenticationState<T> value,
-          $Res Function(AuthenticationState<T>) then) =
-      _$AuthenticationStateCopyWithImpl<T, $Res>;
+abstract class $ProfileStateCopyWith<T, $Res> {
+  factory $ProfileStateCopyWith(
+          ProfileState<T> value, $Res Function(ProfileState<T>) then) =
+      _$ProfileStateCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
-class _$AuthenticationStateCopyWithImpl<T, $Res>
-    implements $AuthenticationStateCopyWith<T, $Res> {
-  _$AuthenticationStateCopyWithImpl(this._value, this._then);
+class _$ProfileStateCopyWithImpl<T, $Res>
+    implements $ProfileStateCopyWith<T, $Res> {
+  _$ProfileStateCopyWithImpl(this._value, this._then);
 
-  final AuthenticationState<T> _value;
+  final ProfileState<T> _value;
   // ignore: unused_field
-  final $Res Function(AuthenticationState<T>) _then;
+  final $Res Function(ProfileState<T>) _then;
 }
 
 /// @nodoc
@@ -99,8 +92,7 @@ abstract class _$$IdleCopyWith<T, $Res> {
 }
 
 /// @nodoc
-class __$$IdleCopyWithImpl<T, $Res>
-    extends _$AuthenticationStateCopyWithImpl<T, $Res>
+class __$$IdleCopyWithImpl<T, $Res> extends _$ProfileStateCopyWithImpl<T, $Res>
     implements _$$IdleCopyWith<T, $Res> {
   __$$IdleCopyWithImpl(_$Idle<T> _value, $Res Function(_$Idle<T>) _then)
       : super(_value, (v) => _then(v as _$Idle<T>));
@@ -116,7 +108,7 @@ class _$Idle<T> implements Idle<T> {
 
   @override
   String toString() {
-    return 'AuthenticationState<$T>.idle()';
+    return 'ProfileState<$T>.idle()';
   }
 
   @override
@@ -133,7 +125,6 @@ class _$Idle<T> implements Idle<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
     required TResult Function() loading,
-    required TResult Function(IconData x) obscureTextChangeState,
     required TResult Function(T data) success,
     required TResult Function(NetworkExceptions networkExceptions) error,
   }) {
@@ -145,7 +136,6 @@ class _$Idle<T> implements Idle<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
     TResult Function(T data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
   }) {
@@ -157,7 +147,6 @@ class _$Idle<T> implements Idle<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
     TResult Function(T data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
     required TResult orElse(),
@@ -173,8 +162,6 @@ class _$Idle<T> implements Idle<T> {
   TResult map<TResult extends Object?>({
     required TResult Function(Idle<T> value) idle,
     required TResult Function(Loading<T> value) loading,
-    required TResult Function(ObscureTextChangeState<T> value)
-        obscureTextChangeState,
     required TResult Function(Success<T> value) success,
     required TResult Function(Error<T> value) error,
   }) {
@@ -186,7 +173,6 @@ class _$Idle<T> implements Idle<T> {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Idle<T> value)? idle,
     TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
   }) {
@@ -198,7 +184,6 @@ class _$Idle<T> implements Idle<T> {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Idle<T> value)? idle,
     TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
     required TResult orElse(),
@@ -210,7 +195,7 @@ class _$Idle<T> implements Idle<T> {
   }
 }
 
-abstract class Idle<T> implements AuthenticationState<T> {
+abstract class Idle<T> implements ProfileState<T> {
   const factory Idle() = _$Idle<T>;
 }
 
@@ -223,7 +208,7 @@ abstract class _$$LoadingCopyWith<T, $Res> {
 
 /// @nodoc
 class __$$LoadingCopyWithImpl<T, $Res>
-    extends _$AuthenticationStateCopyWithImpl<T, $Res>
+    extends _$ProfileStateCopyWithImpl<T, $Res>
     implements _$$LoadingCopyWith<T, $Res> {
   __$$LoadingCopyWithImpl(
       _$Loading<T> _value, $Res Function(_$Loading<T>) _then)
@@ -240,7 +225,7 @@ class _$Loading<T> implements Loading<T> {
 
   @override
   String toString() {
-    return 'AuthenticationState<$T>.loading()';
+    return 'ProfileState<$T>.loading()';
   }
 
   @override
@@ -257,7 +242,6 @@ class _$Loading<T> implements Loading<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
     required TResult Function() loading,
-    required TResult Function(IconData x) obscureTextChangeState,
     required TResult Function(T data) success,
     required TResult Function(NetworkExceptions networkExceptions) error,
   }) {
@@ -269,7 +253,6 @@ class _$Loading<T> implements Loading<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
     TResult Function(T data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
   }) {
@@ -281,7 +264,6 @@ class _$Loading<T> implements Loading<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
     TResult Function(T data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
     required TResult orElse(),
@@ -297,8 +279,6 @@ class _$Loading<T> implements Loading<T> {
   TResult map<TResult extends Object?>({
     required TResult Function(Idle<T> value) idle,
     required TResult Function(Loading<T> value) loading,
-    required TResult Function(ObscureTextChangeState<T> value)
-        obscureTextChangeState,
     required TResult Function(Success<T> value) success,
     required TResult Function(Error<T> value) error,
   }) {
@@ -310,7 +290,6 @@ class _$Loading<T> implements Loading<T> {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Idle<T> value)? idle,
     TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
   }) {
@@ -322,7 +301,6 @@ class _$Loading<T> implements Loading<T> {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Idle<T> value)? idle,
     TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
     required TResult orElse(),
@@ -334,164 +312,8 @@ class _$Loading<T> implements Loading<T> {
   }
 }
 
-abstract class Loading<T> implements AuthenticationState<T> {
+abstract class Loading<T> implements ProfileState<T> {
   const factory Loading() = _$Loading<T>;
-}
-
-/// @nodoc
-abstract class _$$ObscureTextChangeStateCopyWith<T, $Res> {
-  factory _$$ObscureTextChangeStateCopyWith(_$ObscureTextChangeState<T> value,
-          $Res Function(_$ObscureTextChangeState<T>) then) =
-      __$$ObscureTextChangeStateCopyWithImpl<T, $Res>;
-  $Res call({IconData x});
-}
-
-/// @nodoc
-class __$$ObscureTextChangeStateCopyWithImpl<T, $Res>
-    extends _$AuthenticationStateCopyWithImpl<T, $Res>
-    implements _$$ObscureTextChangeStateCopyWith<T, $Res> {
-  __$$ObscureTextChangeStateCopyWithImpl(_$ObscureTextChangeState<T> _value,
-      $Res Function(_$ObscureTextChangeState<T>) _then)
-      : super(_value, (v) => _then(v as _$ObscureTextChangeState<T>));
-
-  @override
-  _$ObscureTextChangeState<T> get _value =>
-      super._value as _$ObscureTextChangeState<T>;
-
-  @override
-  $Res call({
-    Object? x = freezed,
-  }) {
-    return _then(_$ObscureTextChangeState<T>(
-      x == freezed
-          ? _value.x
-          : x // ignore: cast_nullable_to_non_nullable
-              as IconData,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$ObscureTextChangeState<T> implements ObscureTextChangeState<T> {
-  const _$ObscureTextChangeState(this.x);
-
-  @override
-  final IconData x;
-
-  @override
-  String toString() {
-    return 'AuthenticationState<$T>.obscureTextChangeState(x: $x)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ObscureTextChangeState<T> &&
-            const DeepCollectionEquality().equals(other.x, x));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(x));
-
-  @JsonKey(ignore: true)
-  @override
-  _$$ObscureTextChangeStateCopyWith<T, _$ObscureTextChangeState<T>>
-      get copyWith => __$$ObscureTextChangeStateCopyWithImpl<T,
-          _$ObscureTextChangeState<T>>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() idle,
-    required TResult Function() loading,
-    required TResult Function(IconData x) obscureTextChangeState,
-    required TResult Function(T data) success,
-    required TResult Function(NetworkExceptions networkExceptions) error,
-  }) {
-    return obscureTextChangeState(x);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? idle,
-    TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
-    TResult Function(T data)? success,
-    TResult Function(NetworkExceptions networkExceptions)? error,
-  }) {
-    return obscureTextChangeState?.call(x);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? idle,
-    TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
-    TResult Function(T data)? success,
-    TResult Function(NetworkExceptions networkExceptions)? error,
-    required TResult orElse(),
-  }) {
-    if (obscureTextChangeState != null) {
-      return obscureTextChangeState(x);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(Idle<T> value) idle,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(ObscureTextChangeState<T> value)
-        obscureTextChangeState,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
-  }) {
-    return obscureTextChangeState(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
-  }) {
-    return obscureTextChangeState?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
-    required TResult orElse(),
-  }) {
-    if (obscureTextChangeState != null) {
-      return obscureTextChangeState(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class ObscureTextChangeState<T> implements AuthenticationState<T> {
-  const factory ObscureTextChangeState(final IconData x) =
-      _$ObscureTextChangeState<T>;
-
-  IconData get x;
-  @JsonKey(ignore: true)
-  _$$ObscureTextChangeStateCopyWith<T, _$ObscureTextChangeState<T>>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -504,7 +326,7 @@ abstract class _$$SuccessCopyWith<T, $Res> {
 
 /// @nodoc
 class __$$SuccessCopyWithImpl<T, $Res>
-    extends _$AuthenticationStateCopyWithImpl<T, $Res>
+    extends _$ProfileStateCopyWithImpl<T, $Res>
     implements _$$SuccessCopyWith<T, $Res> {
   __$$SuccessCopyWithImpl(
       _$Success<T> _value, $Res Function(_$Success<T>) _then)
@@ -536,7 +358,7 @@ class _$Success<T> implements Success<T> {
 
   @override
   String toString() {
-    return 'AuthenticationState<$T>.success(data: $data)';
+    return 'ProfileState<$T>.success(data: $data)';
   }
 
   @override
@@ -561,7 +383,6 @@ class _$Success<T> implements Success<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
     required TResult Function() loading,
-    required TResult Function(IconData x) obscureTextChangeState,
     required TResult Function(T data) success,
     required TResult Function(NetworkExceptions networkExceptions) error,
   }) {
@@ -573,7 +394,6 @@ class _$Success<T> implements Success<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
     TResult Function(T data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
   }) {
@@ -585,7 +405,6 @@ class _$Success<T> implements Success<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
     TResult Function(T data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
     required TResult orElse(),
@@ -601,8 +420,6 @@ class _$Success<T> implements Success<T> {
   TResult map<TResult extends Object?>({
     required TResult Function(Idle<T> value) idle,
     required TResult Function(Loading<T> value) loading,
-    required TResult Function(ObscureTextChangeState<T> value)
-        obscureTextChangeState,
     required TResult Function(Success<T> value) success,
     required TResult Function(Error<T> value) error,
   }) {
@@ -614,7 +431,6 @@ class _$Success<T> implements Success<T> {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Idle<T> value)? idle,
     TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
   }) {
@@ -626,7 +442,6 @@ class _$Success<T> implements Success<T> {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Idle<T> value)? idle,
     TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
     required TResult orElse(),
@@ -638,7 +453,7 @@ class _$Success<T> implements Success<T> {
   }
 }
 
-abstract class Success<T> implements AuthenticationState<T> {
+abstract class Success<T> implements ProfileState<T> {
   const factory Success(final T data) = _$Success<T>;
 
   T get data;
@@ -657,8 +472,7 @@ abstract class _$$ErrorCopyWith<T, $Res> {
 }
 
 /// @nodoc
-class __$$ErrorCopyWithImpl<T, $Res>
-    extends _$AuthenticationStateCopyWithImpl<T, $Res>
+class __$$ErrorCopyWithImpl<T, $Res> extends _$ProfileStateCopyWithImpl<T, $Res>
     implements _$$ErrorCopyWith<T, $Res> {
   __$$ErrorCopyWithImpl(_$Error<T> _value, $Res Function(_$Error<T>) _then)
       : super(_value, (v) => _then(v as _$Error<T>));
@@ -696,7 +510,7 @@ class _$Error<T> implements Error<T> {
 
   @override
   String toString() {
-    return 'AuthenticationState<$T>.error(networkExceptions: $networkExceptions)';
+    return 'ProfileState<$T>.error(networkExceptions: $networkExceptions)';
   }
 
   @override
@@ -722,7 +536,6 @@ class _$Error<T> implements Error<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
     required TResult Function() loading,
-    required TResult Function(IconData x) obscureTextChangeState,
     required TResult Function(T data) success,
     required TResult Function(NetworkExceptions networkExceptions) error,
   }) {
@@ -734,7 +547,6 @@ class _$Error<T> implements Error<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
     TResult Function(T data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
   }) {
@@ -746,7 +558,6 @@ class _$Error<T> implements Error<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(IconData x)? obscureTextChangeState,
     TResult Function(T data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
     required TResult orElse(),
@@ -762,8 +573,6 @@ class _$Error<T> implements Error<T> {
   TResult map<TResult extends Object?>({
     required TResult Function(Idle<T> value) idle,
     required TResult Function(Loading<T> value) loading,
-    required TResult Function(ObscureTextChangeState<T> value)
-        obscureTextChangeState,
     required TResult Function(Success<T> value) success,
     required TResult Function(Error<T> value) error,
   }) {
@@ -775,7 +584,6 @@ class _$Error<T> implements Error<T> {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Idle<T> value)? idle,
     TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
   }) {
@@ -787,7 +595,6 @@ class _$Error<T> implements Error<T> {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Idle<T> value)? idle,
     TResult Function(Loading<T> value)? loading,
-    TResult Function(ObscureTextChangeState<T> value)? obscureTextChangeState,
     TResult Function(Success<T> value)? success,
     TResult Function(Error<T> value)? error,
     required TResult orElse(),
@@ -799,7 +606,7 @@ class _$Error<T> implements Error<T> {
   }
 }
 
-abstract class Error<T> implements AuthenticationState<T> {
+abstract class Error<T> implements ProfileState<T> {
   const factory Error(final NetworkExceptions networkExceptions) = _$Error<T>;
 
   NetworkExceptions get networkExceptions;

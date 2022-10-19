@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:imdb_demo/business_logic/profile_cubit/profile_cubit.dart';
+import 'package:imdb_demo/shared/data/repo/account_repo/acc_repo.dart';
 import 'package:imdb_demo/shared/data/repo/auth_repo/auth_repo.dart';
 import 'package:imdb_demo/shared/data/repo/movies_repo/movies_repository.dart';
 import 'package:imdb_demo/shared/web_services/network/auth_web_services/web_services_for_auth.dart';
@@ -13,6 +15,7 @@ import 'route/router.dart';
 
 import 'business_logic/movie_detail_cubit/movie_details_cubit.dart';
 import 'business_logic/movies_cubit/movies_cubit.dart';
+import 'shared/web_services/network/account_web_services/web_service_for_account.dart';
 
 final getIt = GetIt.instance;
 
@@ -31,17 +34,23 @@ void initGetIt() {
 
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepository());
 
+//Account
+  getIt.registerLazySingleton<WebServicesForAccount>(
+      () => WebServicesForAccount(createAndSetupDio()));
+
+  getIt.registerLazySingleton<AccountRepository>(() => AccountRepository());
+
 //Cubits
-  getIt.registerFactory<NowPLayingMoviesCubit>(
+  getIt.registerLazySingleton<NowPLayingMoviesCubit>(
       () => NowPLayingMoviesCubit(getIt<MoviesRepository>()));
 
-  getIt.registerFactory<TopRatedMoviesCubit>(
+  getIt.registerLazySingleton<TopRatedMoviesCubit>(
       () => TopRatedMoviesCubit(getIt<MoviesRepository>()));
 
-  getIt.registerFactory<PopularMoviesCubit>(
+  getIt.registerLazySingleton<PopularMoviesCubit>(
       () => PopularMoviesCubit(getIt<MoviesRepository>()));
 
-  getIt.registerFactory<UpcomingMoviesCubit>(
+  getIt.registerLazySingleton<UpcomingMoviesCubit>(
       () => UpcomingMoviesCubit(getIt<MoviesRepository>()));
 
   getIt.registerFactory<MovieDetailsCubit>(
@@ -53,7 +62,14 @@ void initGetIt() {
   getIt.registerFactory<RequestTokenCubit>(
       () => RequestTokenCubit(getIt<AuthRepository>()));
 
-  getIt.registerFactory<LogInCubit>(() => LogInCubit(getIt<AuthRepository>()));
+  getIt.registerFactory<SessionIdCubit>(
+      () => SessionIdCubit(getIt<AuthRepository>()));
+
+  getIt.registerLazySingleton<LogInCubit>(
+      () => LogInCubit(getIt<AuthRepository>()));
+
+  getIt.registerFactory<ProfileCubit>(
+      () => ProfileCubit(getIt<AccountRepository>()));
 
   getIt.registerSingletonAsync<ThemeCubitCubit>(() async {
     final themeCubit = ThemeCubitCubit();
@@ -74,7 +90,6 @@ Dio createAndSetupDio() {
   dio
     ..options.connectTimeout = 60 * 1000
     ..options.receiveTimeout = 60 * 1000;
-
   dio.interceptors.add(LogInterceptor(
     responseBody: true,
     error: true,

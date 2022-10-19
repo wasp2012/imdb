@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/data/models/authentication/login_model.dart';
 import 'package:imdb_demo/shared/data/models/authentication/req_token.dart';
+import 'package:imdb_demo/shared/data/models/authentication/session_model.dart';
 import 'package:imdb_demo/shared/data/repo/auth_repo/auth_repo.dart';
 import 'package:imdb_demo/shared/offline_data.dart';
 import 'package:imdb_demo/shared/web_services/errors/api_result.dart';
@@ -40,21 +41,39 @@ class RequestTokenCubit extends Cubit<AuthenticationState<RequestTokenModel>> {
 class LogInCubit extends Cubit<AuthenticationState<LoginModel>> {
   AuthRepository authRepository;
 
-  TextEditingController? userName = TextEditingController();
-  TextEditingController? password = TextEditingController();
+  TextEditingController userName = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   LogInCubit(this.authRepository) : super(const Idle());
   LoginModel? loginModelObj;
+  bool isLoggedIn = false;
+
+  Future<void> logIn(String userName, String password) async {
+    print(userName);
+    print(password);
+
+    print('Not Empty ${await SharedPrefs.getStringValuesSF(requestTokenKey)}');
+    if (await SharedPrefs.checkValue(requestTokenKey)) {
+      String reqToken = await SharedPrefs.getStringValuesSF(requestTokenKey);
+      await sendDataToLogin(userName, password, reqToken);
+    }
+  }
+
+  Future<void> sendDataToLogin(
+      String userName, String password, String reqToken) async {
+    emitPostLogin(LogInBodyModel(
+        username: userName, password: password, requestToken: reqToken));
+  }
 
   Future<void> emitPostLogin(LogInBodyModel logInBodyModel) async {
     try {
       emit(const AuthenticationState.loading());
 
-      ApiResult<LoginModel?> response =
-          await authRepository.postLogIn(logInBodyModel);
-      response.when(success: (loginResults) async {
-        loginModelObj = loginResults!;
-        await SharedPrefs.addStringToSF(userToken, loginResults.requestToken!);
+      var response = await authRepository.postLogIn(logInBodyModel);
+      response.when(success: (LoginModel? loginResults) async {
+        loginModelObj = loginResults;
+        await SharedPrefs.addStringToSF(userToken, loginResults!.requestToken!);
+        isLoggedIn = loginResults.success!;
         emit(AuthenticationState.success(loginResults));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(AuthenticationState.error(networkExceptions));
@@ -64,15 +83,47 @@ class LogInCubit extends Cubit<AuthenticationState<LoginModel>> {
     }
   }
 
-  logIn() async {
-    if (userName!.text.isNotEmpty && password!.text.isNotEmpty) {
-      String reqToken = await SharedPrefs.getStringValuesSF(requestTokenKey);
-      if (reqToken != '' && reqToken.isNotEmpty) {
-        emitPostLogin(LogInBodyModel(
-            username: userName?.text,
-            password: password?.text,
-            requestToken: reqToken));
-      }
+  bool isPasswordHidden = true;
+  IconData icon = Icons.visibility_off;
+
+  showHidePassword() {
+    isPasswordHidden = !isPasswordHidden;
+    icon = isPasswordHidden == true ? Icons.visibility : Icons.visibility_off;
+    print(isPasswordHidden);
+    emit(AuthenticationState.obscureTextChangeState(icon));
+  }
+}
+
+class SessionIdCubit extends Cubit<AuthenticationState<SessionModel>> {
+  AuthRepository authRepository;
+
+  SessionIdCubit(this.authRepository) : super(const Idle());
+
+  SessionModel? sessionModel;
+
+  Future<void> checkThenCreateSession() async {
+    if (await SharedPrefs.checkValue(requestTokenKey)) {
+      String requestToken =
+          await SharedPrefs.getStringValuesSF(requestTokenKey);
+      emitSessionId(SessionBody(requestToken: requestToken));
+    }
+  }
+
+  Future<void> emitSessionId(SessionBody sessionBody) async {
+    try {
+      emit(const AuthenticationState.loading());
+
+      ApiResult<SessionModel?> response =
+          await authRepository.createSession(sessionBody);
+      response.when(success: (sessionResult) async {
+        sessionModel = sessionResult!;
+        await SharedPrefs.addStringToSF(sessionId, sessionResult.sessionId!);
+        emit(AuthenticationState.success(sessionResult));
+      }, failure: (NetworkExceptions networkExceptions) {
+        emit(AuthenticationState.error(networkExceptions));
+      });
+    } catch (e) {
+      print(e.toString());
     }
   }
 }
