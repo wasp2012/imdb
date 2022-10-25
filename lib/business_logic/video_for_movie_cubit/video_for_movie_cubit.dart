@@ -8,15 +8,14 @@ import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 
 import 'video_for_movie_state.dart';
 
-class VideoForMovieCubit extends Cubit<VideoForMovieState<MovieVideoById>> {
+class VideoForMovieCubit extends Cubit<VideoForMovieState> {
   MoviesRepository moviesRepository;
   VideoForMovieCubit(
     this.moviesRepository,
   ) : super(const Idle());
+  MovieVideoById? videoForMovieResultsList;
 
   Future<void> getMovieVideos(String id) async {
-    MovieVideoById videoForMovieResultsList;
-
     try {
       emit(const VideoForMovieState.loading());
       ApiResult<MovieVideoById?> response =

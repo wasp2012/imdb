@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:imdb_demo/injection.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
-import 'package:imdb_demo/shared/data/models/movies/movie_details.dart';
+import 'package:imdb_demo/shared/data/models/account/favorite_model.dart';
+import 'package:imdb_demo/shared/offline_data.dart';
 import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 import 'package:intl/intl.dart';
 import 'package:neon/neon.dart';
@@ -13,11 +14,16 @@ import 'package:neon/neon.dart';
 import '../../business_logic/movie_detail_cubit/movie_details_cubit.dart';
 import '../../business_logic/movie_detail_cubit/movie_details_state.dart';
 
-class MovieDetailsScreen extends StatelessWidget {
+class MovieDetailsScreen extends StatefulWidget {
   final String movieId;
 
   const MovieDetailsScreen({Key? key, required this.movieId}) : super(key: key);
 
+  @override
+  State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
+}
+
+class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   Widget characterInfo(String title, String value, BuildContext context) {
     return RichText(
       maxLines: 1,
@@ -82,183 +88,193 @@ class MovieDetailsScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    print('MoviesDetails is :$movieId');
-    // var cubit = BlocProvider.of<MovieDetailsCubit>(context);
+  void initState() {
+    super.initState();
+    BlocProvider.of<MovieDetailsCubit>(context);
+  }
 
-    // cubit.emitMovieDetails(widget.movieId);
-    // print(cubit.state);
+  @override
+  Widget build(BuildContext context) {
+    print('MoviesDetails is :${widget.movieId}');
+    var cubit = BlocProvider.of<MovieDetailsCubit>(context);
+    cubit.emitMovieDetails(widget.movieId);
+    cubit.emitGetUserDetails();
+
     return Scaffold(
-      body: BlocProvider(
-        create: (context) =>
-            getIt<MovieDetailsCubit>()..emitMovieDetails(movieId),
-        child: BlocConsumer<MovieDetailsCubit,
-            MovieDetailsState<MovieDetailsModel>>(
-          listener: (context, state) {},
-          builder: (context, MovieDetailsState<MovieDetailsModel> state) {
-            return state.when(
-              idle: () {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              loading: () {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              success: (MovieDetailsModel movieDetailsModel) {
-                return CustomScrollView(
-                  slivers: [
-                    SliverAppBar(
-                      expandedHeight: 600,
-                      pinned: true,
-                      stretch: true,
-                      backgroundColor: Theme.of(context).backgroundColor,
-                      flexibleSpace: FlexibleSpaceBar(
-                        centerTitle: true,
-                        collapseMode: CollapseMode.parallax,
-                        title: Container(
-                          child: Neon(
-                            text: '${movieDetailsModel.originalTitle!}',
-                            color: Colors.cyan,
-                            fontSize: 20,
-                            flickeringText: true,
-                            font: NeonFont.Membra,
-                          ),
-                        ),
-                        background: Image.network(
-                          '$imageDisplay${movieDetailsModel.posterPath}',
-                          fit: BoxFit.fill,
-                          filterQuality: FilterQuality.high,
+      body: BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
+        builder: (context, MovieDetailsState state) {
+          return state.when(
+            idle: () {
+              return Image.asset('assets/images/placeholder.gif');
+            },
+            loading: () {
+              return CircularProgressIndicator();
+            },
+            success: (movieDetailsResult) {
+              print(cubit.state);
+
+              return CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    expandedHeight: 600,
+                    pinned: true,
+                    stretch: true,
+                    backgroundColor: Theme.of(context).backgroundColor,
+                    flexibleSpace: FlexibleSpaceBar(
+                      centerTitle: true,
+                      collapseMode: CollapseMode.parallax,
+                      title: Container(
+                        child: Neon(
+                          text: '${cubit.movieDetailsModel!.title}',
+                          color: Colors.cyan,
+                          fontSize: 20,
+                          flickeringText: true,
+                          font: NeonFont.Membra,
                         ),
                       ),
-                    ),
-                    SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(14, 14, 14, 0),
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                characterInfo('Title : ',
-                                    movieDetailsModel.originalTitle!, context),
-                                buildDivider(315, context),
-                                // characterInfo('Budget: ',
-                                //     '${movieDetailsModel.budget}\$ '),
-                                characterInfo(
-                                    'Budget: ',
-                                    movieDetailsModel.budget
-                                                .toString()
-                                                .isNotEmpty &&
-                                            movieDetailsModel.budget != 0
-                                        ? '${NumberFormat("#,###", "en_US").format(movieDetailsModel.budget)}\$ '
-                                        : 'Budget Not Supported!',
-                                    context),
-                                buildDivider(250, context),
-                                characterInfo('Release date : ',
-                                    movieDetailsModel.releaseDate!, context),
-                                buildDivider(
-                                    movieDetailsModel.releaseDate!.length *
-                                        30.0,
-                                    context),
-                                characterInfo(
-                                    'Adult : ',
-                                    movieDetailsModel.adult == true
-                                        ? '+18'
-                                        : 'Family',
-                                    context),
-                                buildDivider(300, context),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: Theme.of(context).primaryColor,
-                                      )),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      characterInfo(
-                                          'Rate: ',
-                                          '${movieDetailsModel.voteAverage.toString()} /10',
-                                          context),
-                                      characterInfo(
-                                          'Vote Count: ',
-                                          movieDetailsModel.voteCount
-                                              .toString(),
-                                          context)
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                characterInfo(
-                                    'Popularity: ',
-                                    '${(movieDetailsModel.popularity!.floor() / 100.0).toString()} %',
-                                    context),
-                                buildDivider(300, context),
-                                RichText(
-                                  text: TextSpan(
-                                    text: 'Overview :',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline1!
-                                        .copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                  ),
-                                ),
-                                buildDivider(300, context),
-                                Text(
-                                  ' ${movieDetailsModel.overview!}',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(fontSize: 16, height: 1.1),
-                                ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                Container(
-                                  width: double.infinity,
-                                  height: 50,
-                                  child: displayRandomQuoteOrEmptySpace(
-                                      movieDetailsModel.tagline!),
-                                ),
-                                const SizedBox(
-                                  height: 200,
-                                ),
-                                ElevatedButton(
-                                    onPressed: () => Navigator.pushNamed(
-                                        context, videoScreen,
-                                        arguments: movieId),
-                                    child: Text('Trailers')),
-                              ],
-                            ),
-                          ),
-                        ],
+                      background: Image.network(
+                        '$imageDisplay${cubit.movieDetailsModel!.posterPath}',
+                        fit: BoxFit.fill,
+                        filterQuality: FilterQuality.high,
                       ),
                     ),
-                  ],
-                );
-              },
-              error: (NetworkExceptions error) {
-                return Center(
-                  child: Text(
-                    NetworkExceptions.getErrorMessage(error),
                   ),
-                );
-              },
-            );
-          },
-        ),
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        Container(
+                          margin: EdgeInsets.fromLTRB(14, 14, 14, 0),
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              characterInfo(
+                                  'Title : ',
+                                  cubit.movieDetailsModel!.originalTitle!,
+                                  context),
+                              buildDivider(315, context),
+                              // characterInfo('Budget: ',
+                              //     '${movieDetailsModel.budget}\$ '),
+                              characterInfo(
+                                  'Budget: ',
+                                  cubit.movieDetailsModel!.budget
+                                              .toString()
+                                              .isNotEmpty &&
+                                          cubit.movieDetailsModel!.budget != 0
+                                      ? '${NumberFormat("#,###", "en_US").format(cubit.movieDetailsModel!.budget)}\$ '
+                                      : 'Budget Not Supported!',
+                                  context),
+                              buildDivider(250, context),
+                              characterInfo(
+                                  'Release date : ',
+                                  cubit.movieDetailsModel!.releaseDate!,
+                                  context),
+                              buildDivider(
+                                  cubit.movieDetailsModel!.releaseDate!.length *
+                                      30.0,
+                                  context),
+                              characterInfo(
+                                  'Adult : ',
+                                  cubit.movieDetailsModel!.adult == true
+                                      ? '+18'
+                                      : 'Family',
+                                  context),
+                              buildDivider(300, context),
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Theme.of(context).primaryColor,
+                                    )),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    characterInfo(
+                                        'Rate: ',
+                                        '${cubit.movieDetailsModel!.voteAverage.toString()} /10',
+                                        context),
+                                    characterInfo(
+                                        'Vote Count: ',
+                                        cubit.movieDetailsModel!.voteCount
+                                            .toString(),
+                                        context)
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              characterInfo(
+                                  'Popularity: ',
+                                  '${(cubit.movieDetailsModel!.popularity!.floor() / 100.0).toString()} %',
+                                  context),
+                              buildDivider(300, context),
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Overview :',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline1!
+                                      .copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                ),
+                              ),
+                              buildDivider(300, context),
+                              Text(
+                                ' ${cubit.movieDetailsModel!.overview!}',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(fontSize: 16, height: 1.1),
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              Container(
+                                width: double.infinity,
+                                height: 50,
+                                child: displayRandomQuoteOrEmptySpace(
+                                    cubit.movieDetailsModel!.tagline!),
+                              ),
+                              const SizedBox(
+                                height: 200,
+                              ),
+                              ElevatedButton(
+                                  onPressed: () => Navigator.pushNamed(
+                                      context, videoScreen,
+                                      arguments: widget.movieId),
+                                  child: Text('Trailers')),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+            error: (NetworkExceptions error) {
+              return Center(
+                child: Text(
+                  NetworkExceptions.getErrorMessage(error),
+                ),
+              );
+            },
+          );
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {}, child: Icon(Icons.favorite_border_outlined)),
+      floatingActionButton: FutureBuilder(builder: (context, snapshot) {
+        return FloatingActionButton(
+            onPressed: () async {
+              cubit.emitMarkAsFavorite(FavoriteBody(
+                  mediaType: mediaTypeMovie,
+                  mediaId: int.parse(widget.movieId),
+                  favorite: true));
+            },
+            child: Icon(Icons.favorite));
+      }),
     );
   }
 }

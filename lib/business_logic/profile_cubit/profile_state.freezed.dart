@@ -15,12 +15,12 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$ProfileState<T> {
+mixin _$ProfileState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
     required TResult Function() loading,
-    required TResult Function(T data) success,
+    required TResult Function(dynamic data) success,
     required TResult Function(NetworkExceptions networkExceptions) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$ProfileState<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(T data)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,85 +36,84 @@ mixin _$ProfileState<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(T data)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Idle<T> value) idle,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(Idle value) idle,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Idle value)? idle,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Idle value)? idle,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProfileStateCopyWith<T, $Res> {
+abstract class $ProfileStateCopyWith<$Res> {
   factory $ProfileStateCopyWith(
-          ProfileState<T> value, $Res Function(ProfileState<T>) then) =
-      _$ProfileStateCopyWithImpl<T, $Res>;
+          ProfileState value, $Res Function(ProfileState) then) =
+      _$ProfileStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$ProfileStateCopyWithImpl<T, $Res>
-    implements $ProfileStateCopyWith<T, $Res> {
+class _$ProfileStateCopyWithImpl<$Res> implements $ProfileStateCopyWith<$Res> {
   _$ProfileStateCopyWithImpl(this._value, this._then);
 
-  final ProfileState<T> _value;
+  final ProfileState _value;
   // ignore: unused_field
-  final $Res Function(ProfileState<T>) _then;
+  final $Res Function(ProfileState) _then;
 }
 
 /// @nodoc
-abstract class _$$IdleCopyWith<T, $Res> {
-  factory _$$IdleCopyWith(_$Idle<T> value, $Res Function(_$Idle<T>) then) =
-      __$$IdleCopyWithImpl<T, $Res>;
+abstract class _$$IdleCopyWith<$Res> {
+  factory _$$IdleCopyWith(_$Idle value, $Res Function(_$Idle) then) =
+      __$$IdleCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$IdleCopyWithImpl<T, $Res> extends _$ProfileStateCopyWithImpl<T, $Res>
-    implements _$$IdleCopyWith<T, $Res> {
-  __$$IdleCopyWithImpl(_$Idle<T> _value, $Res Function(_$Idle<T>) _then)
-      : super(_value, (v) => _then(v as _$Idle<T>));
+class __$$IdleCopyWithImpl<$Res> extends _$ProfileStateCopyWithImpl<$Res>
+    implements _$$IdleCopyWith<$Res> {
+  __$$IdleCopyWithImpl(_$Idle _value, $Res Function(_$Idle) _then)
+      : super(_value, (v) => _then(v as _$Idle));
 
   @override
-  _$Idle<T> get _value => super._value as _$Idle<T>;
+  _$Idle get _value => super._value as _$Idle;
 }
 
 /// @nodoc
 
-class _$Idle<T> implements Idle<T> {
+class _$Idle implements Idle {
   const _$Idle();
 
   @override
   String toString() {
-    return 'ProfileState<$T>.idle()';
+    return 'ProfileState.idle()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Idle<T>);
+        (other.runtimeType == runtimeType && other is _$Idle);
   }
 
   @override
@@ -125,7 +124,7 @@ class _$Idle<T> implements Idle<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
     required TResult Function() loading,
-    required TResult Function(T data) success,
+    required TResult Function(dynamic data) success,
     required TResult Function(NetworkExceptions networkExceptions) error,
   }) {
     return idle();
@@ -136,7 +135,7 @@ class _$Idle<T> implements Idle<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(T data)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
   }) {
     return idle?.call();
@@ -147,7 +146,7 @@ class _$Idle<T> implements Idle<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(T data)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
     required TResult orElse(),
   }) {
@@ -160,10 +159,10 @@ class _$Idle<T> implements Idle<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Idle<T> value) idle,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(Idle value) idle,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) {
     return idle(this);
   }
@@ -171,10 +170,10 @@ class _$Idle<T> implements Idle<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Idle value)? idle,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
   }) {
     return idle?.call(this);
   }
@@ -182,10 +181,10 @@ class _$Idle<T> implements Idle<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Idle value)? idle,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (idle != null) {
@@ -195,43 +194,40 @@ class _$Idle<T> implements Idle<T> {
   }
 }
 
-abstract class Idle<T> implements ProfileState<T> {
-  const factory Idle() = _$Idle<T>;
+abstract class Idle implements ProfileState {
+  const factory Idle() = _$Idle;
 }
 
 /// @nodoc
-abstract class _$$LoadingCopyWith<T, $Res> {
-  factory _$$LoadingCopyWith(
-          _$Loading<T> value, $Res Function(_$Loading<T>) then) =
-      __$$LoadingCopyWithImpl<T, $Res>;
+abstract class _$$LoadingCopyWith<$Res> {
+  factory _$$LoadingCopyWith(_$Loading value, $Res Function(_$Loading) then) =
+      __$$LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$LoadingCopyWithImpl<T, $Res>
-    extends _$ProfileStateCopyWithImpl<T, $Res>
-    implements _$$LoadingCopyWith<T, $Res> {
-  __$$LoadingCopyWithImpl(
-      _$Loading<T> _value, $Res Function(_$Loading<T>) _then)
-      : super(_value, (v) => _then(v as _$Loading<T>));
+class __$$LoadingCopyWithImpl<$Res> extends _$ProfileStateCopyWithImpl<$Res>
+    implements _$$LoadingCopyWith<$Res> {
+  __$$LoadingCopyWithImpl(_$Loading _value, $Res Function(_$Loading) _then)
+      : super(_value, (v) => _then(v as _$Loading));
 
   @override
-  _$Loading<T> get _value => super._value as _$Loading<T>;
+  _$Loading get _value => super._value as _$Loading;
 }
 
 /// @nodoc
 
-class _$Loading<T> implements Loading<T> {
+class _$Loading implements Loading {
   const _$Loading();
 
   @override
   String toString() {
-    return 'ProfileState<$T>.loading()';
+    return 'ProfileState.loading()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Loading<T>);
+        (other.runtimeType == runtimeType && other is _$Loading);
   }
 
   @override
@@ -242,7 +238,7 @@ class _$Loading<T> implements Loading<T> {
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
     required TResult Function() loading,
-    required TResult Function(T data) success,
+    required TResult Function(dynamic data) success,
     required TResult Function(NetworkExceptions networkExceptions) error,
   }) {
     return loading();
@@ -253,7 +249,7 @@ class _$Loading<T> implements Loading<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(T data)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
   }) {
     return loading?.call();
@@ -264,7 +260,7 @@ class _$Loading<T> implements Loading<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(T data)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
     required TResult orElse(),
   }) {
@@ -277,10 +273,10 @@ class _$Loading<T> implements Loading<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Idle<T> value) idle,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(Idle value) idle,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) {
     return loading(this);
   }
@@ -288,10 +284,10 @@ class _$Loading<T> implements Loading<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Idle value)? idle,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
   }) {
     return loading?.call(this);
   }
@@ -299,10 +295,10 @@ class _$Loading<T> implements Loading<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Idle value)? idle,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -312,60 +308,54 @@ class _$Loading<T> implements Loading<T> {
   }
 }
 
-abstract class Loading<T> implements ProfileState<T> {
-  const factory Loading() = _$Loading<T>;
+abstract class Loading implements ProfileState {
+  const factory Loading() = _$Loading;
 }
 
 /// @nodoc
-abstract class _$$SuccessCopyWith<T, $Res> {
-  factory _$$SuccessCopyWith(
-          _$Success<T> value, $Res Function(_$Success<T>) then) =
-      __$$SuccessCopyWithImpl<T, $Res>;
-  $Res call({T data});
+abstract class _$$SuccessCopyWith<$Res> {
+  factory _$$SuccessCopyWith(_$Success value, $Res Function(_$Success) then) =
+      __$$SuccessCopyWithImpl<$Res>;
+  $Res call({dynamic data});
 }
 
 /// @nodoc
-class __$$SuccessCopyWithImpl<T, $Res>
-    extends _$ProfileStateCopyWithImpl<T, $Res>
-    implements _$$SuccessCopyWith<T, $Res> {
-  __$$SuccessCopyWithImpl(
-      _$Success<T> _value, $Res Function(_$Success<T>) _then)
-      : super(_value, (v) => _then(v as _$Success<T>));
+class __$$SuccessCopyWithImpl<$Res> extends _$ProfileStateCopyWithImpl<$Res>
+    implements _$$SuccessCopyWith<$Res> {
+  __$$SuccessCopyWithImpl(_$Success _value, $Res Function(_$Success) _then)
+      : super(_value, (v) => _then(v as _$Success));
 
   @override
-  _$Success<T> get _value => super._value as _$Success<T>;
+  _$Success get _value => super._value as _$Success;
 
   @override
   $Res call({
     Object? data = freezed,
   }) {
-    return _then(_$Success<T>(
-      data == freezed
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as T,
+    return _then(_$Success(
+      data == freezed ? _value.data : data,
     ));
   }
 }
 
 /// @nodoc
 
-class _$Success<T> implements Success<T> {
+class _$Success implements Success {
   const _$Success(this.data);
 
   @override
-  final T data;
+  final dynamic data;
 
   @override
   String toString() {
-    return 'ProfileState<$T>.success(data: $data)';
+    return 'ProfileState.success(data: $data)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Success<T> &&
+            other is _$Success &&
             const DeepCollectionEquality().equals(other.data, data));
   }
 
@@ -375,15 +365,15 @@ class _$Success<T> implements Success<T> {
 
   @JsonKey(ignore: true)
   @override
-  _$$SuccessCopyWith<T, _$Success<T>> get copyWith =>
-      __$$SuccessCopyWithImpl<T, _$Success<T>>(this, _$identity);
+  _$$SuccessCopyWith<_$Success> get copyWith =>
+      __$$SuccessCopyWithImpl<_$Success>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
     required TResult Function() loading,
-    required TResult Function(T data) success,
+    required TResult Function(dynamic data) success,
     required TResult Function(NetworkExceptions networkExceptions) error,
   }) {
     return success(data);
@@ -394,7 +384,7 @@ class _$Success<T> implements Success<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(T data)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
   }) {
     return success?.call(data);
@@ -405,7 +395,7 @@ class _$Success<T> implements Success<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(T data)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
     required TResult orElse(),
   }) {
@@ -418,10 +408,10 @@ class _$Success<T> implements Success<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Idle<T> value) idle,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(Idle value) idle,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) {
     return success(this);
   }
@@ -429,10 +419,10 @@ class _$Success<T> implements Success<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Idle value)? idle,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
   }) {
     return success?.call(this);
   }
@@ -440,10 +430,10 @@ class _$Success<T> implements Success<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Idle value)? idle,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -453,38 +443,38 @@ class _$Success<T> implements Success<T> {
   }
 }
 
-abstract class Success<T> implements ProfileState<T> {
-  const factory Success(final T data) = _$Success<T>;
+abstract class Success implements ProfileState {
+  const factory Success(final dynamic data) = _$Success;
 
-  T get data;
+  dynamic get data;
   @JsonKey(ignore: true)
-  _$$SuccessCopyWith<T, _$Success<T>> get copyWith =>
+  _$$SuccessCopyWith<_$Success> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorCopyWith<T, $Res> {
-  factory _$$ErrorCopyWith(_$Error<T> value, $Res Function(_$Error<T>) then) =
-      __$$ErrorCopyWithImpl<T, $Res>;
+abstract class _$$ErrorCopyWith<$Res> {
+  factory _$$ErrorCopyWith(_$Error value, $Res Function(_$Error) then) =
+      __$$ErrorCopyWithImpl<$Res>;
   $Res call({NetworkExceptions networkExceptions});
 
   $NetworkExceptionsCopyWith<$Res> get networkExceptions;
 }
 
 /// @nodoc
-class __$$ErrorCopyWithImpl<T, $Res> extends _$ProfileStateCopyWithImpl<T, $Res>
-    implements _$$ErrorCopyWith<T, $Res> {
-  __$$ErrorCopyWithImpl(_$Error<T> _value, $Res Function(_$Error<T>) _then)
-      : super(_value, (v) => _then(v as _$Error<T>));
+class __$$ErrorCopyWithImpl<$Res> extends _$ProfileStateCopyWithImpl<$Res>
+    implements _$$ErrorCopyWith<$Res> {
+  __$$ErrorCopyWithImpl(_$Error _value, $Res Function(_$Error) _then)
+      : super(_value, (v) => _then(v as _$Error));
 
   @override
-  _$Error<T> get _value => super._value as _$Error<T>;
+  _$Error get _value => super._value as _$Error;
 
   @override
   $Res call({
     Object? networkExceptions = freezed,
   }) {
-    return _then(_$Error<T>(
+    return _then(_$Error(
       networkExceptions == freezed
           ? _value.networkExceptions
           : networkExceptions // ignore: cast_nullable_to_non_nullable
@@ -502,7 +492,7 @@ class __$$ErrorCopyWithImpl<T, $Res> extends _$ProfileStateCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$Error<T> implements Error<T> {
+class _$Error implements Error {
   const _$Error(this.networkExceptions);
 
   @override
@@ -510,14 +500,14 @@ class _$Error<T> implements Error<T> {
 
   @override
   String toString() {
-    return 'ProfileState<$T>.error(networkExceptions: $networkExceptions)';
+    return 'ProfileState.error(networkExceptions: $networkExceptions)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Error<T> &&
+            other is _$Error &&
             const DeepCollectionEquality()
                 .equals(other.networkExceptions, networkExceptions));
   }
@@ -528,15 +518,15 @@ class _$Error<T> implements Error<T> {
 
   @JsonKey(ignore: true)
   @override
-  _$$ErrorCopyWith<T, _$Error<T>> get copyWith =>
-      __$$ErrorCopyWithImpl<T, _$Error<T>>(this, _$identity);
+  _$$ErrorCopyWith<_$Error> get copyWith =>
+      __$$ErrorCopyWithImpl<_$Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() idle,
     required TResult Function() loading,
-    required TResult Function(T data) success,
+    required TResult Function(dynamic data) success,
     required TResult Function(NetworkExceptions networkExceptions) error,
   }) {
     return error(networkExceptions);
@@ -547,7 +537,7 @@ class _$Error<T> implements Error<T> {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(T data)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
   }) {
     return error?.call(networkExceptions);
@@ -558,7 +548,7 @@ class _$Error<T> implements Error<T> {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? idle,
     TResult Function()? loading,
-    TResult Function(T data)? success,
+    TResult Function(dynamic data)? success,
     TResult Function(NetworkExceptions networkExceptions)? error,
     required TResult orElse(),
   }) {
@@ -571,10 +561,10 @@ class _$Error<T> implements Error<T> {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Idle<T> value) idle,
-    required TResult Function(Loading<T> value) loading,
-    required TResult Function(Success<T> value) success,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(Idle value) idle,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Success value) success,
+    required TResult Function(Error value) error,
   }) {
     return error(this);
   }
@@ -582,10 +572,10 @@ class _$Error<T> implements Error<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Idle value)? idle,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
   }) {
     return error?.call(this);
   }
@@ -593,10 +583,10 @@ class _$Error<T> implements Error<T> {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Idle<T> value)? idle,
-    TResult Function(Loading<T> value)? loading,
-    TResult Function(Success<T> value)? success,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Idle value)? idle,
+    TResult Function(Loading value)? loading,
+    TResult Function(Success value)? success,
+    TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -606,11 +596,10 @@ class _$Error<T> implements Error<T> {
   }
 }
 
-abstract class Error<T> implements ProfileState<T> {
-  const factory Error(final NetworkExceptions networkExceptions) = _$Error<T>;
+abstract class Error implements ProfileState {
+  const factory Error(final NetworkExceptions networkExceptions) = _$Error;
 
   NetworkExceptions get networkExceptions;
   @JsonKey(ignore: true)
-  _$$ErrorCopyWith<T, _$Error<T>> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ErrorCopyWith<_$Error> get copyWith => throw _privateConstructorUsedError;
 }

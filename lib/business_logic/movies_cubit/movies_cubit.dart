@@ -10,16 +10,18 @@ import '../../shared/web_services/errors/api_result.dart';
 import '../../shared/web_services/errors/network_exceptions.dart';
 import 'movies_state.dart';
 
-class NowPLayingMoviesCubit extends Cubit<MoviesState<NowPlayingMovieModel>> {
+class MoviesCubit extends Cubit<MoviesState> {
   MoviesRepository moviesRepository;
 
-  NowPLayingMoviesCubit(
+  MoviesCubit(
     this.moviesRepository,
   ) : super(const Idle());
+  List<Results>? nowPlayingMoviesList = [];
+  List<Results>? topRatedMoviesList = [];
+  List<Results>? popularMoviesList = [];
+  List<Results>? upComingMoviesList = [];
 
   Future<void> emitNowPlayingMovies() async {
-    List<Results>? nowPlayingMoviesList = [];
-
     try {
       emit(const MoviesState.loading());
 
@@ -35,18 +37,8 @@ class NowPLayingMoviesCubit extends Cubit<MoviesState<NowPlayingMovieModel>> {
       print(e.toString());
     }
   }
-}
-
-class TopRatedMoviesCubit extends Cubit<MoviesState<TopRatedMovieModel>> {
-  MoviesRepository moviesRepository;
-
-  TopRatedMoviesCubit(
-    this.moviesRepository,
-  ) : super(const Idle());
 
   Future<void> emitTopRatedMovies() async {
-    List<Results>? topRatedMoviesList = [];
-
     try {
       emit(const MoviesState.loading());
       ApiResult<TopRatedMovieModel?> response =
@@ -61,18 +53,8 @@ class TopRatedMoviesCubit extends Cubit<MoviesState<TopRatedMovieModel>> {
       print(e.toString());
     }
   }
-}
-
-class PopularMoviesCubit extends Cubit<MoviesState<PopularMovieModel>> {
-  MoviesRepository moviesRepository;
-
-  PopularMoviesCubit(
-    this.moviesRepository,
-  ) : super(const Idle());
 
   Future<void> emitMoviesPopular() async {
-    List<Results>? popularMoviesList = [];
-
     try {
       emit(const MoviesState.loading());
       ApiResult<PopularMovieModel?> response =
@@ -87,16 +69,6 @@ class PopularMoviesCubit extends Cubit<MoviesState<PopularMovieModel>> {
       print(e.toString());
     }
   }
-}
-
-class UpcomingMoviesCubit extends Cubit<MoviesState<UpcomingMovieModel>> {
-  MoviesRepository moviesRepository;
-
-  UpcomingMoviesCubit(
-    this.moviesRepository,
-  ) : super(const Idle());
-
-  List<Results>? upComingMoviesList = [];
 
   Future<void> emitMoviesUpComing() async {
     try {

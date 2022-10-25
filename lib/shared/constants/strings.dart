@@ -9,9 +9,18 @@ const profileScreen = '/profile_screen';
 //Links
 const youtubeLink = 'https://www.youtube.com/watch?v=';
 const imageDisplay = 'http://image.tmdb.org/t/p/original';
+const gravatar = 'https://secure.gravatar.com/avatar/';
+const personImage =
+    'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png';
 
 //Shared Preference Key
 const darkThemeKey = "isDarkTheme";
 const requestTokenKey = 'isTokenSaved';
-const userToken = 'userToken';
-const sessionId = 'sessionId';
+const userTokenKey = 'userToken';
+const sessionIdKey = 'sessionId';
+const userIdKey = 'userId';
+const favoriteKey = 'favorite';
+
+//Media Type
+const mediaTypeMovie = "movie";
+const mediaTypeTv = "tv";

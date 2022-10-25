@@ -26,10 +26,27 @@ class SharedPrefs {
     return stringValue;
   }
 
+  static addIntToSF(String key, int value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt(key, value);
+  }
+
+  static getIntValuesSF(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    int stringValue = prefs.getInt(key) ?? -1;
+    return stringValue;
+  }
+
   static Future<bool> checkValue(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     bool checkValue = prefs.containsKey(key);
     return checkValue;
+  }
+
+  static Future<void> logOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 }

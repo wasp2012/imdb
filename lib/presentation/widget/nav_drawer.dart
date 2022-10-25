@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
+import 'package:imdb_demo/shared/offline_data.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   const NavigationDrawerWidget({super.key});
@@ -55,7 +56,13 @@ class NavigationDrawerWidget extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: null,
+                      onPressed: () async {
+                        if (await SharedPrefs.checkValue(sessionIdKey)) {
+                          Navigator.pushNamed(context, profileScreen);
+                        } else {
+                          await returnToLogin(context);
+                        }
+                      },
                       child: Text(
                         'Profile',
                         style: Theme.of(context)
@@ -80,7 +87,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                 );
               },
               child: Row(
-                children: const [
+                children: [
                   Text(
                     'Settings',
                     style: TextStyle(
@@ -92,6 +99,15 @@ class NavigationDrawerWidget extends StatelessWidget {
                   Divider(
                     color: Colors.grey,
                   ),
+                  const Spacer(),
+                  TextButton(
+                      onPressed: () async {
+                        await returnToLogin(context);
+                      },
+                      child: Text(
+                        'Log out',
+                        style: Theme.of(context).textTheme.bodyText2,
+                      )),
                 ],
               ),
             ),
@@ -99,5 +115,10 @@ class NavigationDrawerWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> returnToLogin(BuildContext context) async {
+    await SharedPrefs.logOut();
+    Navigator.pushReplacementNamed(context, logInScreen);
   }
 }

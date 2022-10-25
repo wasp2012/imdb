@@ -41,34 +41,19 @@ void initGetIt() {
   getIt.registerLazySingleton<AccountRepository>(() => AccountRepository());
 
 //Cubits
-  getIt.registerLazySingleton<NowPLayingMoviesCubit>(
-      () => NowPLayingMoviesCubit(getIt<MoviesRepository>()));
+  getIt.registerLazySingleton<MoviesCubit>(
+      () => MoviesCubit(getIt<MoviesRepository>()));
 
-  getIt.registerLazySingleton<TopRatedMoviesCubit>(
-      () => TopRatedMoviesCubit(getIt<MoviesRepository>()));
-
-  getIt.registerLazySingleton<PopularMoviesCubit>(
-      () => PopularMoviesCubit(getIt<MoviesRepository>()));
-
-  getIt.registerLazySingleton<UpcomingMoviesCubit>(
-      () => UpcomingMoviesCubit(getIt<MoviesRepository>()));
-
-  getIt.registerFactory<MovieDetailsCubit>(
-      () => MovieDetailsCubit(getIt<MoviesRepository>()));
+  getIt.registerFactory<MovieDetailsCubit>(() =>
+      MovieDetailsCubit(getIt<MoviesRepository>(), getIt<AccountRepository>()));
 
   getIt.registerFactory<VideoForMovieCubit>(
       () => VideoForMovieCubit(getIt<MoviesRepository>()));
 
-  getIt.registerFactory<RequestTokenCubit>(
-      () => RequestTokenCubit(getIt<AuthRepository>()));
+  getIt.registerSingleton<AuthenticationCubit>(
+      AuthenticationCubit(getIt<AuthRepository>()));
 
-  getIt.registerFactory<SessionIdCubit>(
-      () => SessionIdCubit(getIt<AuthRepository>()));
-
-  getIt.registerLazySingleton<LogInCubit>(
-      () => LogInCubit(getIt<AuthRepository>()));
-
-  getIt.registerFactory<ProfileCubit>(
+  getIt.registerLazySingleton<ProfileCubit>(
       () => ProfileCubit(getIt<AccountRepository>()));
 
   getIt.registerSingletonAsync<ThemeCubitCubit>(() async {

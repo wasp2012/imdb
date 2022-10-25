@@ -32,7 +32,7 @@ void main() async {
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  var isUserLoggedIn = await SharedPrefs.checkValue(userToken);
+  var isUserLoggedIn = await SharedPrefs.checkValue(userTokenKey);
   runApp(MyApp(
     router: AppRouter(),
     home: isUserLoggedIn == true ? homeScreen : logInScreen,
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
                 create: (context) => getIt<ThemeCubitCubit>(),
               ),
               BlocProvider(
-                create: (context) => getIt<RequestTokenCubit>(),
+                create: (context) => getIt<AuthenticationCubit>(),
               ),
             ],
             child: BlocBuilder<ThemeCubitCubit, SettingState>(

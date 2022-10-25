@@ -11,24 +11,22 @@ import 'package:imdb_demo/shared/helper.dart';
 import 'package:imdb_demo/shared/offline_data.dart';
 
 class LogInScreen extends StatefulWidget {
-  LogInScreen({super.key});
+  const LogInScreen({super.key});
 
   @override
   State<LogInScreen> createState() => _LogInScreenState();
 }
 
 class _LogInScreenState extends State<LogInScreen> {
-  bool _showPassword = false;
-
   @override
   void initState() {
     super.initState();
-    getIt<RequestTokenCubit>().emitGetRequestToken();
+    getIt<AuthenticationCubit>().emitGetRequestToken();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = getIt<LogInCubit>();
+    final cubit = getIt<AuthenticationCubit>();
     return Scaffold(
       body: Stack(
         children: [
@@ -95,7 +93,8 @@ class _LogInScreenState extends State<LogInScreen> {
                     controller: cubit.password,
                     validator: (value) =>
                         Validator.validatePassword(value ?? ""),
-                    obscureText: context.watch<LogInCubit>().isPasswordHidden,
+                    obscureText:
+                        context.watch<AuthenticationCubit>().isPasswordHidden,
                     decoration: InputDecoration(
                       suffixIcon: InkWell(
                         onTap: cubit.showHidePassword,
@@ -117,20 +116,29 @@ class _LogInScreenState extends State<LogInScreen> {
                 Container(
                   margin: const EdgeInsets.only(top: 30),
                   alignment: Alignment.center,
-                  child:
-                      BlocListener<LogInCubit, AuthenticationState<LoginModel>>(
+                  child: BlocListener<AuthenticationCubit, AuthenticationState>(
                     listener: (context, state) {
-                      state.whenOrNull(success: (data) {
-                        data.success == true
-                            ? Navigator.pushReplacementNamed(
-                                context, homeScreen)
-                            : cantLogInDialog(context);
-                      });
+                      state.whenOrNull(
+                        successLogin: (LoginModel data) {
+                          if (data.success == true) {
+                            cubit.userName.clear();
+                            cubit.password.clear();
+                            Navigator.pushReplacementNamed(context, homeScreen);
+                          } else {
+                            cantLogInDialog(context);
+                          }
+                        },
+                        loading: () => CircularProgressIndicator(),
+                        error: (networkExceptions) {
+                          print(networkExceptions);
+                          cantLogInDialog(context);
+                        },
+                      );
                     },
                     child: ElevatedButton(
                       onPressed: () async {
                         await logInOnPress(context, cubit);
-                        await getIt<SessionIdCubit>().checkThenCreateSession();
+                        cubit.checkThenCreateSession();
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
@@ -159,9 +167,10 @@ class _LogInScreenState extends State<LogInScreen> {
     );
   }
 
-  Future<void> logInOnPress(BuildContext context, LogInCubit cubit) async {
-    var userName = context.read<LogInCubit>().userName.text;
-    var password = context.read<LogInCubit>().password.text;
+  Future<void> logInOnPress(
+      BuildContext context, AuthenticationCubit cubit) async {
+    var userName = context.read<AuthenticationCubit>().userName.text;
+    var password = context.read<AuthenticationCubit>().password.text;
 
     if (userName.isNotEmpty && password.isNotEmpty) {
       if (userName.length >= 8 && password.length >= 8) {
@@ -170,15 +179,6 @@ class _LogInScreenState extends State<LogInScreen> {
         await cubit.logIn(userName, password);
         // loggedInAlready(cubit, context);
       }
-    } else {
-      cantLogInDialog(context);
-    }
-  }
-
-  void loggedInAlready(LogInCubit cubit, BuildContext context) {
-    print(cubit.isLoggedIn);
-    if (cubit.isLoggedIn == true) {
-      Navigator.pushReplacementNamed(context, homeScreen);
     } else {
       cantLogInDialog(context);
     }

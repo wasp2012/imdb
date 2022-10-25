@@ -11,10 +11,10 @@ import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 
 import 'authentication_state.dart';
 
-class RequestTokenCubit extends Cubit<AuthenticationState<RequestTokenModel>> {
+class AuthenticationCubit extends Cubit<AuthenticationState> {
   AuthRepository authRepository;
 
-  RequestTokenCubit(this.authRepository) : super(const Idle());
+  AuthenticationCubit(this.authRepository) : super(const Idle());
 
   RequestTokenModel? requestTokenObj;
 
@@ -36,15 +36,10 @@ class RequestTokenCubit extends Cubit<AuthenticationState<RequestTokenModel>> {
       print(e.toString());
     }
   }
-}
-
-class LogInCubit extends Cubit<AuthenticationState<LoginModel>> {
-  AuthRepository authRepository;
 
   TextEditingController userName = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  LogInCubit(this.authRepository) : super(const Idle());
   LoginModel? loginModelObj;
   bool isLoggedIn = false;
 
@@ -72,9 +67,10 @@ class LogInCubit extends Cubit<AuthenticationState<LoginModel>> {
       var response = await authRepository.postLogIn(logInBodyModel);
       response.when(success: (LoginModel? loginResults) async {
         loginModelObj = loginResults;
-        await SharedPrefs.addStringToSF(userToken, loginResults!.requestToken!);
+        await SharedPrefs.addStringToSF(
+            userTokenKey, loginResults!.requestToken!);
         isLoggedIn = loginResults.success!;
-        emit(AuthenticationState.success(loginResults));
+        emit(AuthenticationState.successLogin(loginResults));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(AuthenticationState.error(networkExceptions));
       });
@@ -92,14 +88,6 @@ class LogInCubit extends Cubit<AuthenticationState<LoginModel>> {
     print(isPasswordHidden);
     emit(AuthenticationState.obscureTextChangeState(icon));
   }
-}
-
-class SessionIdCubit extends Cubit<AuthenticationState<SessionModel>> {
-  AuthRepository authRepository;
-
-  SessionIdCubit(this.authRepository) : super(const Idle());
-
-  SessionModel? sessionModel;
 
   Future<void> checkThenCreateSession() async {
     if (await SharedPrefs.checkValue(requestTokenKey)) {
@@ -109,6 +97,8 @@ class SessionIdCubit extends Cubit<AuthenticationState<SessionModel>> {
     }
   }
 
+  SessionModel? sessionModel;
+
   Future<void> emitSessionId(SessionBody sessionBody) async {
     try {
       emit(const AuthenticationState.loading());
@@ -117,7 +107,7 @@ class SessionIdCubit extends Cubit<AuthenticationState<SessionModel>> {
           await authRepository.createSession(sessionBody);
       response.when(success: (sessionResult) async {
         sessionModel = sessionResult!;
-        await SharedPrefs.addStringToSF(sessionId, sessionResult.sessionId!);
+        await SharedPrefs.addStringToSF(sessionIdKey, sessionResult.sessionId!);
         emit(AuthenticationState.success(sessionResult));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(AuthenticationState.error(networkExceptions));

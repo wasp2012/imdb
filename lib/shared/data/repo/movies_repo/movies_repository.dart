@@ -91,8 +91,9 @@ class MoviesRepository extends MoviesRepositoryInterface {
         ApisUrl.apiKey,
         id,
       );
+      print(response!.title);
 
-      return ApiResult.success(response!);
+      return ApiResult.success(response);
     } catch (error) {
       return ApiResult.failure(
         NetworkExceptions.getDioException(

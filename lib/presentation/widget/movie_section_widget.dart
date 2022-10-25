@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:imdb_demo/shared/data/models/movies/now_playing.dart';
-import 'package:imdb_demo/shared/data/models/movies/popular.dart';
-import 'package:imdb_demo/shared/data/models/movies/top_rated.dart';
-import 'package:imdb_demo/shared/data/models/movies/upcoming.dart';
+import 'package:imdb_demo/injection.dart';
+
 import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 
 import '../../business_logic/movies_cubit/movies_cubit.dart';
@@ -29,49 +27,50 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.flag == 1) {
-      BlocProvider.of<NowPLayingMoviesCubit>(context).emitNowPlayingMovies();
-      return BlocConsumer<NowPLayingMoviesCubit,
-          MoviesState<NowPlayingMovieModel>>(
-        listener: (context, state) {},
-        builder: (context, MoviesState<NowPlayingMovieModel> state) {
+      final cubit = getIt<MoviesCubit>();
+
+      cubit.emitNowPlayingMovies();
+      return BlocBuilder<MoviesCubit, MoviesState>(
+        builder: (context, MoviesState state) {
           return state.when(idle: () {
-            return const Center(child: CircularProgressIndicator());
+            return Image.asset('assets/images/placeholder.gif');
           }, loading: () {
             return Image.asset('assets/images/placeholder.gif');
-          }, success: (NowPlayingMovieModel nowPlayingMovieModel) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "${widget.sectionTitle}! ",
-                  style: Theme.of(context).textTheme.headline1!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                ),
-                SizedBox(
-                  height: 170,
-                  child: GridView.builder(
-                    scrollDirection: Axis.horizontal,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      childAspectRatio: 1.2,
-                      crossAxisSpacing: 1,
-                      mainAxisSpacing: 1,
-                    ),
-                    itemCount: nowPlayingMovieModel.results!.length,
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return MoviesGridWidget(
-                        movie: nowPlayingMovieModel.results![index],
-                      );
-                    },
+          }, success: (nowPlayingMovieModel) {
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${widget.sectionTitle}! ",
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
                   ),
-                ),
-                Divider(color: Theme.of(context).primaryColor),
-              ],
+                  SizedBox(
+                    height: 170,
+                    child: GridView.builder(
+                      scrollDirection: Axis.horizontal,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        childAspectRatio: 1.2,
+                        mainAxisSpacing: 1,
+                      ),
+                      itemCount: cubit.nowPlayingMoviesList!.length,
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return MoviesGridWidget(
+                          movie: cubit.nowPlayingMoviesList![index],
+                        );
+                      },
+                    ),
+                  ),
+                  Divider(color: Theme.of(context).primaryColor),
+                ],
+              ),
             );
           }, error: (NetworkExceptions error) {
             return Center(
@@ -80,18 +79,19 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
         },
       );
     } else if (widget.flag == 2) {
-      BlocProvider.of<TopRatedMoviesCubit>(context).emitTopRatedMovies();
+      final cubit = getIt<MoviesCubit>();
+
+      cubit.emitTopRatedMovies();
 
       return Container(
         // margin: const EdgeInsets.only(top: 5, bottom: 15),
-        child:
-            BlocBuilder<TopRatedMoviesCubit, MoviesState<TopRatedMovieModel>>(
-          builder: (context, MoviesState<TopRatedMovieModel> state) {
+        child: BlocBuilder<MoviesCubit, MoviesState>(
+          builder: (context, MoviesState state) {
             return state.when(idle: () {
-              return const Center(child: CircularProgressIndicator());
+              return Image.asset('assets/images/placeholder.gif');
             }, loading: () {
-              return const Center(child: CircularProgressIndicator());
-            }, success: (TopRatedMovieModel topRatedMovieModel) {
+              return Image.asset('assets/images/placeholder.gif');
+            }, success: (topRatedMovieModel) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -113,12 +113,12 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                         crossAxisSpacing: 1,
                         mainAxisSpacing: 1,
                       ),
-                      itemCount: topRatedMovieModel.results!.length,
+                      itemCount: cubit.topRatedMoviesList!.length,
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return MoviesGridWidget(
-                          movie: topRatedMovieModel.results![index],
+                          movie: cubit.topRatedMoviesList![index],
                         );
                       },
                     ),
@@ -134,17 +134,19 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
         ),
       );
     } else if (widget.flag == 3) {
-      BlocProvider.of<PopularMoviesCubit>(context).emitMoviesPopular();
+      final cubit = getIt<MoviesCubit>();
+
+      cubit.emitMoviesPopular();
 
       return Container(
         // margin: const EdgeInsets.only(top: 5, bottom: 15),
-        child: BlocBuilder<PopularMoviesCubit, MoviesState<PopularMovieModel>>(
-          builder: (context, MoviesState<PopularMovieModel> state) {
+        child: BlocBuilder<MoviesCubit, MoviesState>(
+          builder: (context, MoviesState state) {
             return state.when(idle: () {
-              return const Center(child: CircularProgressIndicator());
+              return Image.asset('assets/images/placeholder.gif');
             }, loading: () {
-              return const Center(child: CircularProgressIndicator());
-            }, success: (PopularMovieModel popularMovieModel) {
+              return Image.asset('assets/images/placeholder.gif');
+            }, success: (popularMovieModel) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -166,12 +168,12 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                         crossAxisSpacing: 1,
                         mainAxisSpacing: 1,
                       ),
-                      itemCount: popularMovieModel.results!.length,
+                      itemCount: cubit.popularMoviesList!.length,
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return MoviesGridWidget(
-                          movie: popularMovieModel.results![index],
+                          movie: cubit.popularMoviesList![index],
                         );
                       },
                     ),
@@ -187,18 +189,19 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
         ),
       );
     } else if (widget.flag == 4) {
-      BlocProvider.of<UpcomingMoviesCubit>(context).emitMoviesUpComing();
+      final cubit = getIt<MoviesCubit>();
+
+      cubit.emitMoviesUpComing();
 
       return Container(
         // margin: const EdgeInsets.only(top: 5, bottom: 15),
-        child:
-            BlocBuilder<UpcomingMoviesCubit, MoviesState<UpcomingMovieModel>>(
-          builder: (context, MoviesState<UpcomingMovieModel> state) {
+        child: BlocBuilder<MoviesCubit, MoviesState>(
+          builder: (context, MoviesState state) {
             return state.when(idle: () {
-              return const Center(child: CircularProgressIndicator());
+              return Image.asset('assets/images/placeholder.gif');
             }, loading: () {
-              return const Center(child: CircularProgressIndicator());
-            }, success: (UpcomingMovieModel upcomingMovieModel) {
+              return Image.asset('assets/images/placeholder.gif');
+            }, success: (upcomingMovieModel) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -220,12 +223,12 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                         crossAxisSpacing: 1,
                         mainAxisSpacing: 1,
                       ),
-                      itemCount: upcomingMovieModel.results!.length,
+                      itemCount: cubit.upComingMoviesList!.length,
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return MoviesGridWidget(
-                          movie: upcomingMovieModel.results![index],
+                          movie: cubit.upComingMoviesList![index],
                         );
                       },
                     ),
