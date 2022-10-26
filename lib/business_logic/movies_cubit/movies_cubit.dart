@@ -15,7 +15,7 @@ class MoviesCubit extends Cubit<MoviesState> {
 
   MoviesCubit(
     this.moviesRepository,
-  ) : super(const Idle());
+  ) : super(MoviesStateIdle());
   List<Results>? nowPlayingMoviesList = [];
   List<Results>? topRatedMoviesList = [];
   List<Results>? popularMoviesList = [];
@@ -23,15 +23,15 @@ class MoviesCubit extends Cubit<MoviesState> {
 
   Future<void> emitNowPlayingMovies() async {
     try {
-      emit(const MoviesState.loading());
+      emit(MoviesStateLoading());
 
       ApiResult<NowPlayingMovieModel?> response =
           await moviesRepository.getMoviesPlayingNow();
       response.when(success: (nowPlayingMovieModel) {
         nowPlayingMoviesList = nowPlayingMovieModel!.results!.cast<Results>();
-        emit(MoviesState.success(nowPlayingMovieModel));
+        emit(MoviesStateSuccess(nowPlayingMovieModel.results));
       }, failure: (NetworkExceptions networkExceptions) {
-        emit(MoviesState.error(networkExceptions));
+        emit(MoviesStateError(networkExceptions));
       });
     } catch (e) {
       print(e.toString());
@@ -40,14 +40,14 @@ class MoviesCubit extends Cubit<MoviesState> {
 
   Future<void> emitTopRatedMovies() async {
     try {
-      emit(const MoviesState.loading());
+      emit(MoviesStateLoading());
       ApiResult<TopRatedMovieModel?> response =
           await moviesRepository.getMoviesTopRated();
       response.when(success: (topRatedMovies) {
         topRatedMoviesList = topRatedMovies!.results!.cast<Results>();
-        emit(MoviesState.success(topRatedMovies));
+        emit(MoviesStateSuccess(topRatedMovies.results));
       }, failure: (NetworkExceptions networkExceptions) {
-        emit(MoviesState.error(networkExceptions));
+        emit(MoviesStateError(networkExceptions));
       });
     } catch (e) {
       print(e.toString());
@@ -56,14 +56,14 @@ class MoviesCubit extends Cubit<MoviesState> {
 
   Future<void> emitMoviesPopular() async {
     try {
-      emit(const MoviesState.loading());
+      emit(MoviesStateLoading());
       ApiResult<PopularMovieModel?> response =
           await moviesRepository.getMoviesPopular();
       response.when(success: (popularMovies) {
         popularMoviesList = popularMovies!.results!.cast<Results>();
-        emit(MoviesState.success(popularMovies));
+        emit(MoviesStateSuccess(popularMovies.results));
       }, failure: (NetworkExceptions networkExceptions) {
-        emit(MoviesState.error(networkExceptions));
+        emit(MoviesStateError(networkExceptions));
       });
     } catch (e) {
       print(e.toString());
@@ -72,14 +72,14 @@ class MoviesCubit extends Cubit<MoviesState> {
 
   Future<void> emitMoviesUpComing() async {
     try {
-      emit(const MoviesState.loading());
+      emit(MoviesStateLoading());
       ApiResult<UpcomingMovieModel?> response =
           await moviesRepository.getMoviesUpComing();
       response.when(success: (upComingMovies) {
         upComingMoviesList = upComingMovies!.results!.cast<Results>();
-        emit(MoviesState.success(upComingMovies));
+        emit(MoviesStateSuccess(upComingMovies.results));
       }, failure: (NetworkExceptions networkExceptions) {
-        emit(MoviesState.error(networkExceptions));
+        emit(MoviesStateError(networkExceptions));
       });
     } catch (e) {
       print(e.toString());

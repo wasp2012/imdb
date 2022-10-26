@@ -21,21 +21,25 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
   MovieDetailsCubit(
     this.moviesRepository,
     this.accountRepository,
-  ) : super(const Idle());
+  ) : super(MovieDetailsIdle());
   MovieDetailsModel? movieDetailsModel;
 
   Future<void> emitMovieDetails(String id) async {
     try {
-      emit(const MovieDetailsState.loading());
+      emit(MovieDetailsLoading());
 
       ApiResult<MovieDetailsModel?> response =
           await moviesRepository.getMovieDetails(id);
 
       response.when(success: (movieDetailsResult) {
         movieDetailsModel = movieDetailsResult!;
-        emit(MovieDetailsState.success(movieDetailsResult));
+        emit(MovieDetailsSuccess(
+          movieDetailsModel: movieDetailsResult,
+        ));
       }, failure: (NetworkExceptions networkExceptions) {
-        emit(MovieDetailsState.error(networkExceptions));
+        emit(MovieDetailsError(
+          networkExceptions: networkExceptions,
+        ));
       });
     } catch (e) {
       print(e.toString());
@@ -47,16 +51,17 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
   Future<void> emitGetUserDetails() async {
     if (await SharedPrefs.checkValue(sessionIdKey)) {
       try {
-        emit(const MovieDetailsState.loading());
         var sessionID = await SharedPrefs.getStringValuesSF(sessionIdKey);
         ApiResult<UserDetailsModel?> response =
             await accountRepository.getUserDetails(sessionID);
         response.when(success: (userDetailsResult) async {
           userDetails = userDetailsResult!;
           saveUserId(userDetailsResult.id!);
-          emit(MovieDetailsState.success(userDetailsResult));
+          emit(UserDetailsSuccess(userDetails: userDetailsResult));
         }, failure: (NetworkExceptions networkExceptions) {
-          emit(MovieDetailsState.error(networkExceptions));
+          emit(MovieDetailsError(
+            networkExceptions: networkExceptions,
+          ));
         });
       } catch (e) {
         print(e.toString());
@@ -75,21 +80,22 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
   FavoriteModel? favoriteModel;
 
   Future<void> emitMarkAsFavorite(FavoriteBody favoriteBody) async {
+    emit(MarkFavoriteLoading());
+    await emitGetUserDetails();
+
     if (await SharedPrefs.checkValue(sessionIdKey) &&
         await SharedPrefs.checkValue(userIdKey)) {
       String sessionId = await SharedPrefs.getStringValuesSF(sessionIdKey);
       int userId = await SharedPrefs.getIntValuesSF(userIdKey);
       try {
-        emit(const MovieDetailsState.loading());
-
         ApiResult<FavoriteModel?> response = await accountRepository
             .markMovieAsFavorite(sessionId, userId, favoriteBody);
         saveFavorite();
         response.when(success: (favoriteResult) {
           favoriteModel = favoriteResult!;
-          emit(MovieDetailsState.success(favoriteResult));
+          emit(MarkFavoriteSuccess(favoriteModel: favoriteResult));
         }, failure: (NetworkExceptions networkExceptions) {
-          emit(MovieDetailsState.error(networkExceptions));
+          emit(MarkFavoriteError(networkExceptions: networkExceptions));
         });
       } catch (e) {
         print(e.toString());

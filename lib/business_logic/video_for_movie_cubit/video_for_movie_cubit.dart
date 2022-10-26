@@ -12,20 +12,21 @@ class VideoForMovieCubit extends Cubit<VideoForMovieState> {
   MoviesRepository moviesRepository;
   VideoForMovieCubit(
     this.moviesRepository,
-  ) : super(const Idle());
+  ) : super(VideoForMovieStateIdle());
   MovieVideoById? videoForMovieResultsList;
 
   Future<void> getMovieVideos(String id) async {
+    emit(VideoForMovieStateLoading());
+
     try {
-      emit(const VideoForMovieState.loading());
       ApiResult<MovieVideoById?> response =
           await moviesRepository.getMovieVideos(id);
 
       response.when(success: (videoResults) {
         videoForMovieResultsList = videoResults!;
-        emit(VideoForMovieState.success(videoResults));
+        emit(VideoForMovieStateSuccess(videoResults));
       }, failure: (NetworkExceptions networkExceptions) {
-        emit(VideoForMovieState.error(networkExceptions));
+        emit(VideoForMovieStateError(networkExceptions));
       });
     } catch (e) {
       print(e.toString());

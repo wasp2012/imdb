@@ -31,53 +31,50 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
 
       cubit.emitNowPlayingMovies();
       return BlocBuilder<MoviesCubit, MoviesState>(
-        builder: (context, MoviesState state) {
-          return state.when(idle: () {
-            return Image.asset('assets/images/placeholder.gif');
-          }, loading: () {
-            return Image.asset('assets/images/placeholder.gif');
-          }, success: (nowPlayingMovieModel) {
-            return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${widget.sectionTitle}! ",
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                  ),
-                  SizedBox(
-                    height: 170,
-                    child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-                        childAspectRatio: 1.2,
-                        mainAxisSpacing: 1,
-                      ),
-                      itemCount: cubit.nowPlayingMoviesList!.length,
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return MoviesGridWidget(
-                          movie: cubit.nowPlayingMoviesList![index],
-                        );
-                      },
+          builder: (context, MoviesState state) {
+        if (state is MoviesStateLoading) {
+          return CircularProgressIndicator();
+        } else if (state is MoviesStateError) {
+          return Card(
+            elevation: 20,
+            child: Text(state.networkExceptions.toString()),
+          );
+        }
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${widget.sectionTitle}! ",
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
-                  ),
-                  Divider(color: Theme.of(context).primaryColor),
-                ],
               ),
-            );
-          }, error: (NetworkExceptions error) {
-            return Center(
-                child: Text(NetworkExceptions.getErrorMessage(error)));
-          });
-        },
-      );
+              SizedBox(
+                height: 170,
+                child: GridView.builder(
+                  scrollDirection: Axis.horizontal,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    childAspectRatio: 1.2,
+                    mainAxisSpacing: 1,
+                  ),
+                  itemCount: cubit.nowPlayingMoviesList!.length,
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return MoviesGridWidget(
+                      movie: cubit.nowPlayingMoviesList![index],
+                    );
+                  },
+                ),
+              ),
+              Divider(color: Theme.of(context).primaryColor),
+            ],
+          ),
+        );
+      });
     } else if (widget.flag == 2) {
       final cubit = getIt<MoviesCubit>();
 
@@ -87,11 +84,14 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
         // margin: const EdgeInsets.only(top: 5, bottom: 15),
         child: BlocBuilder<MoviesCubit, MoviesState>(
           builder: (context, MoviesState state) {
-            return state.when(idle: () {
-              return Image.asset('assets/images/placeholder.gif');
-            }, loading: () {
-              return Image.asset('assets/images/placeholder.gif');
-            }, success: (topRatedMovieModel) {
+            if (state is MoviesStateLoading) {
+              return CircularProgressIndicator();
+            } else if (state is MoviesStateError) {
+              return Card(
+                elevation: 20,
+                child: Text(state.networkExceptions.toString()),
+              );
+            } else {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -126,10 +126,7 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                   Divider(color: Theme.of(context).primaryColor),
                 ],
               );
-            }, error: (NetworkExceptions error) {
-              return Center(
-                  child: Text(NetworkExceptions.getErrorMessage(error)));
-            });
+            }
           },
         ),
       );
@@ -142,11 +139,14 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
         // margin: const EdgeInsets.only(top: 5, bottom: 15),
         child: BlocBuilder<MoviesCubit, MoviesState>(
           builder: (context, MoviesState state) {
-            return state.when(idle: () {
-              return Image.asset('assets/images/placeholder.gif');
-            }, loading: () {
-              return Image.asset('assets/images/placeholder.gif');
-            }, success: (popularMovieModel) {
+            if (state is MoviesStateLoading) {
+              return CircularProgressIndicator();
+            } else if (state is MoviesStateError) {
+              return Card(
+                elevation: 20,
+                child: Text(state.networkExceptions.toString()),
+              );
+            } else {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -181,10 +181,7 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                   Divider(color: Theme.of(context).primaryColor),
                 ],
               );
-            }, error: (NetworkExceptions error) {
-              return Center(
-                  child: Text(NetworkExceptions.getErrorMessage(error)));
-            });
+            }
           },
         ),
       );
@@ -197,11 +194,14 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
         // margin: const EdgeInsets.only(top: 5, bottom: 15),
         child: BlocBuilder<MoviesCubit, MoviesState>(
           builder: (context, MoviesState state) {
-            return state.when(idle: () {
-              return Image.asset('assets/images/placeholder.gif');
-            }, loading: () {
-              return Image.asset('assets/images/placeholder.gif');
-            }, success: (upcomingMovieModel) {
+            if (state is MoviesStateLoading) {
+              return CircularProgressIndicator();
+            } else if (state is MoviesStateError) {
+              return Card(
+                elevation: 20,
+                child: Text(state.networkExceptions.toString()),
+              );
+            } else {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -238,10 +238,7 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                   ),
                 ],
               );
-            }, error: (NetworkExceptions error) {
-              return Center(
-                  child: Text(NetworkExceptions.getErrorMessage(error)));
-            });
+            }
           },
         ),
       );

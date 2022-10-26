@@ -15,22 +15,22 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   ProfileCubit(
     this.accountRepository,
-  ) : super(const Idle());
+  ) : super(ProfileStateIdle());
 
   UserDetailsModel? userDetails;
 
   Future<void> emitGetUserDetails() async {
     if (await SharedPrefs.checkValue(sessionIdKey)) {
       try {
-        emit(const ProfileState.loading());
+        emit(ProfileStateLoading());
         var sessionID = await SharedPrefs.getStringValuesSF(sessionIdKey);
         ApiResult<UserDetailsModel?> response =
             await accountRepository.getUserDetails(sessionID);
         response.when(success: (userDetailsResult) {
           userDetails = userDetailsResult!;
-          emit(ProfileState.success(userDetailsResult));
+          emit(ProfileStateSuccess(userDetailsResult));
         }, failure: (NetworkExceptions networkExceptions) {
-          emit(ProfileState.error(networkExceptions));
+          emit(ProfileStateError(networkExceptions));
         });
       } catch (e) {
         print(e.toString());

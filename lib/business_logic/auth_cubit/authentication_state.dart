@@ -1,22 +1,39 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 
 import '../../shared/data/models/authentication/login_model.dart';
+import '../../shared/data/models/authentication/req_token.dart';
+import '../../shared/data/models/authentication/session_model.dart';
 
-part 'authentication_state.freezed.dart';
+@immutable
+abstract class AuthenticationState {}
 
-@freezed
-class AuthenticationState with _$AuthenticationState {
-  const factory AuthenticationState.idle() = Idle;
-  const factory AuthenticationState.loading() = Loading;
-  const factory AuthenticationState.obscureTextChangeState(IconData x) =
-      ObscureTextChangeState;
-  const factory AuthenticationState.success(data) = Success;
+class AuthenticationStateIdle extends AuthenticationState {}
 
-  const factory AuthenticationState.successLogin(LoginModel data) =
-      SuccessLogin;
+class AuthenticationStateLoading extends AuthenticationState {}
 
-  const factory AuthenticationState.error(NetworkExceptions networkExceptions) =
-      Error;
+class AuthenticationStateSuccess extends AuthenticationState {
+  RequestTokenModel? requestTokenObj;
+  SessionModel? sessionModel;
+  LoginModel? loginModelObj;
+
+  AuthenticationStateSuccess.reqToken(this.requestTokenObj);
+  AuthenticationStateSuccess.session(this.sessionModel);
+  AuthenticationStateSuccess.login(this.loginModelObj);
+}
+
+class AuthenticationStateChangeText extends AuthenticationState {
+  final IconData iconData;
+  AuthenticationStateChangeText(
+    this.iconData,
+  );
+}
+
+class AuthenticationStateError extends AuthenticationState {
+  final NetworkExceptions networkExceptions;
+
+  AuthenticationStateError(this.networkExceptions);
 }

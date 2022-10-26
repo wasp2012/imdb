@@ -21,15 +21,13 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           color: Theme.of(context).backgroundColor,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                MovieSectionWidget(sectionTitle: 'Now Playing', flag: 1),
-                MovieSectionWidget(sectionTitle: 'Top Rated', flag: 2),
-                MovieSectionWidget(sectionTitle: 'Popular', flag: 3),
-                MovieSectionWidget(sectionTitle: 'Upcoming', flag: 4),
-              ],
-            ),
+          child: Column(
+            children: [
+              MovieSectionWidget(sectionTitle: 'Now Playing', flag: 1),
+              MovieSectionWidget(sectionTitle: 'Top Rated', flag: 2),
+              MovieSectionWidget(sectionTitle: 'Popular', flag: 3),
+              MovieSectionWidget(sectionTitle: 'Upcoming', flag: 4),
+            ],
           ),
         ),
       ),

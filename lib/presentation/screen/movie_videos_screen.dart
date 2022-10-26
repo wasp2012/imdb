@@ -16,40 +16,30 @@ class MovieVideosScreen extends StatelessWidget {
     print(movieId);
     final cubit = getIt<VideoForMovieCubit>();
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).accentColor,
-        title: Text('YouTube'),
-      ),
-      body: BlocProvider(
-        create: (context) =>
-            getIt<VideoForMovieCubit>()..getMovieVideos(movieId),
-        child: BlocBuilder<VideoForMovieCubit, VideoForMovieState>(
-          builder: (context, state) {
-            return state.when(
-              idle: () {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              loading: () {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-              success: (movieVideoById) {
-                return YouTubePlayerWidget(results: movieVideoById.results!);
-              },
-              error: (NetworkExceptions error) {
-                return Center(
-                  child: Text(
-                    NetworkExceptions.getErrorMessage(error),
-                  ),
-                );
-              },
-            );
-          },
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).accentColor,
+          title: const Text('YouTube'),
         ),
-      ),
-    );
+        body: BlocProvider(
+          create: (context) =>
+              getIt<VideoForMovieCubit>()..getMovieVideos(movieId),
+          child: BlocBuilder<VideoForMovieCubit, VideoForMovieState>(
+            builder: (context, state) {
+              if (state is VideoForMovieStateLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is VideoForMovieStateSuccess) {
+                return YouTubePlayerWidget(
+                    results: cubit.videoForMovieResultsList!.results!);
+              } else if (state is VideoForMovieStateError) {
+                return const Center(
+                  child: Text('Something wrong happened'),
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
+          ),
+        ));
   }
 }
+//                    NetworkExceptions.getErrorMessage(error),

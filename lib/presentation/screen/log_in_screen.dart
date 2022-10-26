@@ -64,7 +64,7 @@ class _LogInScreenState extends State<LogInScreen> {
                   style: Theme.of(context).textTheme.headline1!.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
-                        color: Color(0xfffc5185),
+                        color: const Color(0xfffc5185),
                       ),
                 ),
                 const SizedBox(
@@ -118,22 +118,21 @@ class _LogInScreenState extends State<LogInScreen> {
                   alignment: Alignment.center,
                   child: BlocListener<AuthenticationCubit, AuthenticationState>(
                     listener: (context, state) {
-                      state.whenOrNull(
-                        successLogin: (LoginModel data) {
-                          if (data.success == true) {
-                            cubit.userName.clear();
-                            cubit.password.clear();
-                            Navigator.pushReplacementNamed(context, homeScreen);
-                          } else {
-                            cantLogInDialog(context);
-                          }
-                        },
-                        loading: () => CircularProgressIndicator(),
-                        error: (networkExceptions) {
-                          print(networkExceptions);
+                      if (state is AuthenticationStateLoading) {
+                        const CircularProgressIndicator();
+                      } else if (state is AuthenticationStateSuccess) {
+                        if (cubit.loginModelObj!.success == true) {
+                          cubit.userName.clear();
+                          cubit.password.clear();
+                          Navigator.pushReplacementNamed(context, homeScreen);
+                        } else {
                           cantLogInDialog(context);
-                        },
-                      );
+                        }
+                      } else if (state is AuthenticationStateError) {
+                        const Center(
+                          child: Text('Something wrong happened'),
+                        );
+                      }
                     },
                     child: ElevatedButton(
                       onPressed: () async {
@@ -195,7 +194,7 @@ class _LogInScreenState extends State<LogInScreen> {
             onPressed: () {
               Navigator.of(ctx).pop();
             },
-            child: Text('Ok'),
+            child: const Text('Ok'),
           ),
         ],
       ),
