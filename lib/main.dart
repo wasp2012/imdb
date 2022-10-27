@@ -51,20 +51,20 @@ class MyApp extends StatelessWidget {
       future: getIt.allReady(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          final cubitThemeCubit = getIt<ThemeCubitCubit>();
+          final cubitThemeCubit = getIt<ThemeCubit>();
 
           print(cubitThemeCubit.savedTheme);
           FlutterNativeSplash.remove();
           return MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => getIt<ThemeCubitCubit>(),
+                create: (context) => getIt<ThemeCubit>(),
               ),
               BlocProvider(
                 create: (context) => getIt<AuthenticationCubit>(),
               ),
             ],
-            child: BlocBuilder<ThemeCubitCubit, SettingState>(
+            child: BlocBuilder<ThemeCubit, SettingStateTheme>(
               builder: (context, state) {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,

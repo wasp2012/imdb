@@ -2,6 +2,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
 
 import 'package:imdb_demo/injection.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
@@ -91,15 +92,17 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   void initState() {
     super.initState();
     BlocProvider.of<MovieDetailsCubit>(context);
+    BlocProvider.of<FavoriteCubit>(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    var cubit = BlocProvider.of<MovieDetailsCubit>(context);
+    var movieCubit = BlocProvider.of<MovieDetailsCubit>(context);
+    var favCubit = BlocProvider.of<FavoriteCubit>(context);
 
     return Scaffold(
         body: FutureBuilder(
-            future: cubit.emitMovieDetails(widget.movieId),
+            future: movieCubit.emitMovieDetails(widget.movieId),
             builder: (context, snapshot) =>
                 BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
                     builder: (context, state) {
@@ -118,19 +121,21 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               collapseMode: CollapseMode.parallax,
                               title: Container(
                                 child: Neon(
-                                  text: '${cubit.movieDetailsModel!.title}',
+                                  text:
+                                      '${movieCubit.movieDetailsModel!.title}',
                                   color: Colors.cyan,
                                   fontSize: 20,
                                   flickeringText: true,
                                   font: NeonFont.Membra,
                                 ),
                               ),
-                              background: cubit.movieDetailsModel!.posterPath!
-                                          .isNotEmpty &&
-                                      cubit.movieDetailsModel!.posterPath !=
+                              background: movieCubit.movieDetailsModel!
+                                          .posterPath!.isNotEmpty &&
+                                      movieCubit
+                                              .movieDetailsModel!.posterPath !=
                                           null
                                   ? Image.network(
-                                      '$imageDisplay${cubit.movieDetailsModel!.posterPath}',
+                                      '$imageDisplay${movieCubit.movieDetailsModel!.posterPath}',
                                       fit: BoxFit.fill,
                                       filterQuality: FilterQuality.high,
                                     )
@@ -149,35 +154,38 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   children: [
                                     characterInfo(
                                         'Title : ',
-                                        cubit.movieDetailsModel!.originalTitle!,
+                                        movieCubit
+                                            .movieDetailsModel!.originalTitle!,
                                         context),
                                     buildDivider(315, context),
                                     // characterInfo('Budget: ',
                                     //     '${movieDetailsModel.budget}$ '),
                                     characterInfo(
                                         'Budget: ',
-                                        cubit.movieDetailsModel!.budget
+                                        movieCubit.movieDetailsModel!.budget
                                                     .toString()
                                                     .isNotEmpty &&
-                                                cubit.movieDetailsModel!
+                                                movieCubit.movieDetailsModel!
                                                         .budget !=
                                                     0
-                                            ? '${NumberFormat("#,###", "en_US").format(cubit.movieDetailsModel!.budget)} \$'
+                                            ? '${NumberFormat("#,###", "en_US").format(movieCubit.movieDetailsModel!.budget)} \$'
                                             : 'Budget Not Supported!',
                                         context),
                                     buildDivider(250, context),
                                     characterInfo(
                                         'Release date : ',
-                                        cubit.movieDetailsModel!.releaseDate!,
+                                        movieCubit
+                                            .movieDetailsModel!.releaseDate!,
                                         context),
                                     buildDivider(
-                                        cubit.movieDetailsModel!.releaseDate!
-                                                .length *
+                                        movieCubit.movieDetailsModel!
+                                                .releaseDate!.length *
                                             30.0,
                                         context),
                                     characterInfo(
                                         'Adult : ',
-                                        cubit.movieDetailsModel!.adult == true
+                                        movieCubit.movieDetailsModel!.adult ==
+                                                true
                                             ? '+18'
                                             : 'Family',
                                         context),
@@ -196,11 +204,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                         children: [
                                           characterInfo(
                                               'Rate: ',
-                                              '${cubit.movieDetailsModel!.voteAverage.toString()} /10',
+                                              '${movieCubit.movieDetailsModel!.voteAverage.toString()} /10',
                                               context),
                                           characterInfo(
                                               'Vote Count: ',
-                                              cubit.movieDetailsModel!.voteCount
+                                              movieCubit
+                                                  .movieDetailsModel!.voteCount
                                                   .toString(),
                                               context)
                                         ],
@@ -228,7 +237,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                     ),
                                     buildDivider(300, context),
                                     Text(
-                                      ' ${cubit.movieDetailsModel!.overview!}',
+                                      ' ${movieCubit.movieDetailsModel!.overview!}',
                                       textAlign: TextAlign.start,
                                       style:
                                           TextStyle(fontSize: 16, height: 1.1),
@@ -240,7 +249,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                       width: double.infinity,
                                       height: 50,
                                       child: displayRandomQuoteOrEmptySpace(
-                                          cubit.movieDetailsModel!.tagline!),
+                                          movieCubit
+                                              .movieDetailsModel!.tagline!),
                                     ),
                                     const SizedBox(
                                       height: 200,
@@ -260,26 +270,46 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     );
                   }
                 })),
-        floatingActionButton:
-            BlocListener<MovieDetailsCubit, MovieDetailsState>(
+        floatingActionButton: BlocListener<FavoriteCubit, FavoriteState>(
           listener: (context, state) {
-            if (state is MarkFavoriteLoading || state is MarkFavoriteIdle) {
+            if (state is FavoriteStateLoading) {
               Center(
                 child: CircularProgressIndicator(),
+              );
+            } else if (state is FavoriteStateSaved) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 1),
+                  content: Text('Saved to Favorite'),
+                ),
+              );
+            } else if (state is FavoriteStateRemoved) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(seconds: 1),
+                  content: Text('Removed From Favorite'),
+                ),
               );
             }
           },
           child: FloatingActionButton(
             onPressed: () {
-              cubit.emitMarkAsFavorite(
-                FavoriteBody(
-                    mediaType: mediaTypeMovie,
-                    mediaId: int.parse(widget.movieId),
-                    favorite: cubit.isFavorite == true ? false : true),
-              );
+              favCubit.isFavorite == true
+                  ? favCubit.emitMarkAsFavorite(FavoriteBody(
+                      mediaType: mediaTypeMovie,
+                      mediaId: int.parse(widget.movieId),
+                      favorite: false))
+                  : favCubit.emitMarkAsFavorite(
+                      FavoriteBody(
+                          mediaType: mediaTypeMovie,
+                          mediaId: int.parse(widget.movieId),
+                          favorite: true),
+                    );
             },
             child: Icon(
-              cubit.isFavorite == true ? Icons.favorite : Icons.favorite_border,
+              favCubit.isFavorite == true
+                  ? Icons.favorite
+                  : Icons.favorite_border,
             ),
           ),
         ));

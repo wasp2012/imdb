@@ -13,10 +13,10 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // BlocProvider.of<ThemeCubitCubit>(context).updateAppTheme();
-    final cubit = getIt<ThemeCubitCubit>();
+    final cubit = getIt<ThemeCubit>();
 
     return BlocProvider.value(
-      value: getIt<ThemeCubitCubit>(),
+      value: getIt<ThemeCubit>(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Settings'),
@@ -29,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
               Row(
                 children: [
                   Text('Dark Mode'),
-                  BlocBuilder<ThemeCubitCubit, SettingState>(
+                  BlocBuilder<ThemeCubit, SettingStateTheme>(
                     builder: (context, state) {
                       return Switch(
                         activeColor: Color.fromARGB(255, 255, 252, 252),

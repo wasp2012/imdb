@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:imdb_demo/injection.dart';
 
-import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
-
 import '../../business_logic/movies_cubit/movies_cubit.dart';
 import '../../business_logic/movies_cubit/movies_state.dart';
 
@@ -33,7 +31,7 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
       return BlocBuilder<MoviesCubit, MoviesState>(
           builder: (context, MoviesState state) {
         if (state is MoviesStateLoading) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (state is MoviesStateError) {
           return Card(
             elevation: 20,
@@ -54,15 +52,15 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
               SizedBox(
                 height: 170,
                 child: GridView.builder(
-                  scrollDirection: Axis.horizontal,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 1,
                     childAspectRatio: 1.2,
                     mainAxisSpacing: 1,
                   ),
+                  scrollDirection: Axis.horizontal,
                   itemCount: cubit.nowPlayingMoviesList!.length,
                   shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return MoviesGridWidget(
                       movie: cubit.nowPlayingMoviesList![index],
@@ -85,7 +83,7 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
         child: BlocBuilder<MoviesCubit, MoviesState>(
           builder: (context, MoviesState state) {
             if (state is MoviesStateLoading) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (state is MoviesStateError) {
               return Card(
                 elevation: 20,
@@ -105,7 +103,6 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                   SizedBox(
                     height: 170,
                     child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
@@ -113,9 +110,10 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                         crossAxisSpacing: 1,
                         mainAxisSpacing: 1,
                       ),
+                      scrollDirection: Axis.horizontal,
                       itemCount: cubit.topRatedMoviesList!.length,
                       shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return MoviesGridWidget(
                           movie: cubit.topRatedMoviesList![index],
@@ -140,7 +138,7 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
         child: BlocBuilder<MoviesCubit, MoviesState>(
           builder: (context, MoviesState state) {
             if (state is MoviesStateLoading) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (state is MoviesStateError) {
               return Card(
                 elevation: 20,
@@ -160,7 +158,6 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                   SizedBox(
                     height: 170,
                     child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
@@ -168,9 +165,10 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                         crossAxisSpacing: 1,
                         mainAxisSpacing: 1,
                       ),
+                      scrollDirection: Axis.horizontal,
                       itemCount: cubit.popularMoviesList!.length,
                       shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return MoviesGridWidget(
                           movie: cubit.popularMoviesList![index],
@@ -195,7 +193,7 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
         child: BlocBuilder<MoviesCubit, MoviesState>(
           builder: (context, MoviesState state) {
             if (state is MoviesStateLoading) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (state is MoviesStateError) {
               return Card(
                 elevation: 20,
@@ -215,7 +213,6 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                   SizedBox(
                     height: 170,
                     child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
@@ -223,9 +220,10 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                         crossAxisSpacing: 1,
                         mainAxisSpacing: 1,
                       ),
+                      scrollDirection: Axis.horizontal,
                       itemCount: cubit.upComingMoviesList!.length,
                       shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return MoviesGridWidget(
                           movie: cubit.upComingMoviesList![index],

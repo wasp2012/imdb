@@ -16,6 +16,10 @@ abstract class AccountRepositoryInterface {
   }
 
   Future<ApiResult<UserDetailsModel?>> getUserDetails(String sessionID);
+
   Future<ApiResult<FavoriteModel?>> markMovieAsFavorite(
       String sessionId, int accountId, FavoriteBody favoriteBody);
+
+  Future<ApiResult<AllFavoriteModel?>> getFavoriteMovies(
+      String sessionId, int accountId);
 }

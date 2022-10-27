@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
 import 'package:imdb_demo/business_logic/profile_cubit/profile_cubit.dart';
 import 'package:imdb_demo/shared/data/repo/account_repo/acc_repo.dart';
 import 'package:imdb_demo/shared/data/repo/auth_repo/auth_repo.dart';
@@ -44,8 +45,11 @@ void initGetIt() {
   getIt.registerLazySingleton<MoviesCubit>(
       () => MoviesCubit(getIt<MoviesRepository>()));
 
-  getIt.registerFactory<MovieDetailsCubit>(() =>
-      MovieDetailsCubit(getIt<MoviesRepository>(), getIt<AccountRepository>()));
+  getIt.registerFactory<MovieDetailsCubit>(
+      () => MovieDetailsCubit(getIt<MoviesRepository>()));
+
+  getIt.registerFactory<FavoriteCubit>(
+      () => FavoriteCubit(getIt<AccountRepository>()));
 
   getIt.registerFactory<VideoForMovieCubit>(
       () => VideoForMovieCubit(getIt<MoviesRepository>()));
@@ -53,11 +57,13 @@ void initGetIt() {
   getIt.registerSingleton<AuthenticationCubit>(
       AuthenticationCubit(getIt<AuthRepository>()));
 
-  getIt.registerLazySingleton<ProfileCubit>(
-      () => ProfileCubit(getIt<AccountRepository>()));
-
-  getIt.registerSingletonAsync<ThemeCubitCubit>(() async {
-    final themeCubit = ThemeCubitCubit();
+  getIt.registerSingletonAsync<ProfileCubit>(() async {
+    final userDetail = ProfileCubit(getIt<AccountRepository>());
+    await userDetail.emitGetUserDetails();
+    return userDetail;
+  });
+  getIt.registerSingletonAsync<ThemeCubit>(() async {
+    final themeCubit = ThemeCubit();
     await themeCubit.getSavedTheme();
     return themeCubit;
   });

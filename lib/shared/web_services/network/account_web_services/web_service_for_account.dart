@@ -25,4 +25,11 @@ abstract class WebServicesForAccount {
     @Path('account_id') int accountId,
     @Body() FavoriteBody favoriteBody,
   );
+
+  @GET('/account/{account_id}/favorite/movies')
+  Future<AllFavoriteModel> getFavoriteMovies(
+    @Query('api_key') String apiKey,
+    @Query('session_id') String sessionId,
+    @Path('account_id') int accountId,
+  );
 }

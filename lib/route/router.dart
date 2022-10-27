@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:imdb_demo/business_logic/auth_cubit/authentication_cubit.dart';
+import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
 import 'package:imdb_demo/business_logic/profile_cubit/profile_cubit.dart';
 import 'package:imdb_demo/injection.dart';
 import 'package:imdb_demo/presentation/screen/home_screen.dart';
@@ -36,9 +37,18 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) {
             var movieId = settings.arguments;
-            return BlocProvider(
-              create: (context) => MovieDetailsCubit(
-                  getIt<MoviesRepository>(), getIt<AccountRepository>()),
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) =>
+                      MovieDetailsCubit(getIt<MoviesRepository>()),
+                ),
+                BlocProvider(
+                  create: (context) => FavoriteCubit(
+                    (getIt<AccountRepository>()),
+                  ),
+                ),
+              ],
               child: MovieDetailsScreen(
                 movieId: movieId as String,
               ),
@@ -63,7 +73,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) {
             return BlocProvider(
-              create: (context) => getIt<ThemeCubitCubit>(),
+              create: (context) => getIt<ThemeCubit>(),
               child: SettingsScreen(),
             );
           },

@@ -36,4 +36,18 @@ class AccountRepository extends AccountRepositoryInterface {
       return ApiResult.failure(NetworkExceptions.getDioException(e));
     }
   }
+
+  @override
+  Future<ApiResult<AllFavoriteModel?>> getFavoriteMovies(
+      String sessionId, int accountId) async {
+    try {
+      var response = await webServicesForAcc?.getFavoriteMovies(
+          ApisUrl.apiKey, sessionId, accountId);
+      print('statusMessage ${response!.results![0]}');
+      print('statusCode ${response}');
+      return ApiResult.success(response);
+    } catch (e) {
+      return ApiResult.failure(NetworkExceptions.getDioException(e));
+    }
+  }
 }
