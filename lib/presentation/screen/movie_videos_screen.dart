@@ -15,31 +15,35 @@ class MovieVideosScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     print(movieId);
     final cubit = getIt<VideoForMovieCubit>();
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).accentColor,
           title: const Text('YouTube'),
         ),
-        body: BlocProvider(
-          create: (context) =>
-              getIt<VideoForMovieCubit>()..getMovieVideos(movieId),
-          child: BlocBuilder<VideoForMovieCubit, VideoForMovieState>(
+        body: FutureBuilder(
+          future: cubit.getMovieVideos(movieId),
+          builder: (context, snapshot) =>
+              BlocBuilder<VideoForMovieCubit, VideoForMovieState>(
             builder: (context, state) {
               if (state is VideoForMovieStateLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is VideoForMovieStateSuccess) {
-                return YouTubePlayerWidget(
-                    results: cubit.videoForMovieResultsList!.results!);
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               } else if (state is VideoForMovieStateError) {
                 return const Center(
                   child: Text('Something wrong happened'),
                 );
               } else {
-                return const CircularProgressIndicator();
+                if (cubit.videoForMovieResultsList.isNotEmpty) {
+                  return YouTubePlayerWidget(
+                      results: cubit.videoForMovieResultsList);
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
               }
             },
           ),
         ));
   }
 }
-//                    NetworkExceptions.getErrorMessage(error),

@@ -48,8 +48,11 @@ void initGetIt() {
   getIt.registerFactory<MovieDetailsCubit>(
       () => MovieDetailsCubit(getIt<MoviesRepository>()));
 
-  getIt.registerFactory<FavoriteCubit>(
-      () => FavoriteCubit(getIt<AccountRepository>()));
+  getIt.registerSingletonAsync<FavoriteCubit>(() async {
+    final allFavorite = FavoriteCubit(getIt<AccountRepository>());
+    await allFavorite.emitGetFavoriteMovies();
+    return allFavorite;
+  });
 
   getIt.registerFactory<VideoForMovieCubit>(
       () => VideoForMovieCubit(getIt<MoviesRepository>()));
@@ -60,6 +63,7 @@ void initGetIt() {
   getIt.registerSingletonAsync<ProfileCubit>(() async {
     final userDetail = ProfileCubit(getIt<AccountRepository>());
     await userDetail.emitGetUserDetails();
+
     return userDetail;
   });
   getIt.registerSingletonAsync<ThemeCubit>(() async {

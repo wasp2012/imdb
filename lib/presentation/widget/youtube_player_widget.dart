@@ -47,36 +47,42 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1,
-          childAspectRatio: 2,
-        ),
-        itemCount: widget.results.length,
-        itemBuilder: (BuildContext context, int index) {
-          _controller = YoutubePlayerController(
-            initialVideoId: widget.results[index]!.key!,
-            flags: const YoutubePlayerFlags(
-              autoPlay: false,
-              mute: true,
-            ),
-          );
-          return Container(
-            color: Theme.of(context).backgroundColor,
-            margin: EdgeInsets.all(10),
-            child: YoutubePlayer(
-              controller: _controller,
-              showVideoProgressIndicator: true,
-              progressIndicatorColor: Colors.amber,
-              progressColors: const ProgressBarColors(
-                playedColor: Colors.amber,
-                handleColor: Colors.amberAccent,
+    if (widget.results.isEmpty || widget.results == null) {
+      return Center(
+        child: Container(child: Text('Nothing to show')),
+      );
+    } else {
+      return GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1,
+            childAspectRatio: 2,
+          ),
+          itemCount: widget.results.length,
+          itemBuilder: (BuildContext context, int index) {
+            _controller = YoutubePlayerController(
+              initialVideoId: widget.results[index]!.key!,
+              flags: const YoutubePlayerFlags(
+                autoPlay: false,
+                mute: true,
               ),
-              onReady: () {
-                _controller.addListener(listener);
-              },
-            ),
-          );
-        });
+            );
+            return Container(
+              color: Theme.of(context).backgroundColor,
+              margin: EdgeInsets.all(10),
+              child: YoutubePlayer(
+                controller: _controller,
+                showVideoProgressIndicator: true,
+                progressIndicatorColor: Colors.amber,
+                progressColors: const ProgressBarColors(
+                  playedColor: Colors.amber,
+                  handleColor: Colors.amberAccent,
+                ),
+                onReady: () {
+                  _controller.addListener(listener);
+                },
+              ),
+            );
+          });
+    }
   }
 }

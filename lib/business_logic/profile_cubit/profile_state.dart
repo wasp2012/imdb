@@ -22,17 +22,3 @@ class ProfileStateError extends ProfileState {
 
   ProfileStateError(this.networkExceptions);
 }
-
-class FavoriteMoviesLoading extends ProfileState {}
-
-class FavoriteMoviesSuccess extends ProfileState {
-  final AllFavoriteModel allFavoriteModel;
-
-  FavoriteMoviesSuccess(this.allFavoriteModel);
-}
-
-class FavoriteMoviesError extends ProfileState {
-  final NetworkExceptions networkExceptions;
-
-  FavoriteMoviesError(this.networkExceptions);
-}

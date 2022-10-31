@@ -9,11 +9,11 @@ import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 import 'video_for_movie_state.dart';
 
 class VideoForMovieCubit extends Cubit<VideoForMovieState> {
-  MoviesRepository moviesRepository;
+  final MoviesRepository moviesRepository;
   VideoForMovieCubit(
     this.moviesRepository,
   ) : super(VideoForMovieStateIdle());
-  MovieVideoById? videoForMovieResultsList;
+  List<VideoForMovieResult> videoForMovieResultsList = [];
 
   Future<void> getMovieVideos(String id) async {
     emit(VideoForMovieStateLoading());
@@ -23,7 +23,7 @@ class VideoForMovieCubit extends Cubit<VideoForMovieState> {
           await moviesRepository.getMovieVideos(id);
 
       response.when(success: (videoResults) {
-        videoForMovieResultsList = videoResults!;
+        videoForMovieResultsList = videoResults!.results ?? [];
         emit(VideoForMovieStateSuccess(videoResults));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(VideoForMovieStateError(networkExceptions));

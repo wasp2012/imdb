@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'favorite_cubit.dart';
 
 @immutable
@@ -35,4 +36,32 @@ class FavoriteStateError extends FavoriteState {
   final NetworkExceptions networkExceptions;
 
   FavoriteStateError(this.networkExceptions);
+}
+
+class FavoriteMoviesLoading extends FavoriteState {}
+
+class FavoriteMoviesSuccess extends FavoriteState {
+  final AllFavoriteModel allFavoriteModel;
+
+  FavoriteMoviesSuccess(this.allFavoriteModel);
+}
+
+class FavoriteMoviesError extends FavoriteState {
+  final NetworkExceptions networkExceptions;
+
+  FavoriteMoviesError(this.networkExceptions);
+}
+
+class MarkFavoriteIcon extends FavoriteState {
+  IconData iconData;
+  MarkFavoriteIcon({
+    required this.iconData,
+  });
+}
+
+class UnMarkFavoriteIcon extends FavoriteState {
+  IconData iconData;
+  UnMarkFavoriteIcon({
+    required this.iconData,
+  });
 }

@@ -6,6 +6,7 @@ import 'package:imdb_demo/business_logic/auth_cubit/authentication_cubit.dart';
 import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
 import 'package:imdb_demo/business_logic/profile_cubit/profile_cubit.dart';
 import 'package:imdb_demo/injection.dart';
+import 'package:imdb_demo/presentation/screen/favorite_list_screen.dart';
 import 'package:imdb_demo/presentation/screen/home_screen.dart';
 import 'package:imdb_demo/presentation/screen/log_in_screen.dart';
 import 'package:imdb_demo/presentation/screen/movie_details_screen.dart';
@@ -43,8 +44,9 @@ class AppRouter {
                   create: (context) =>
                       MovieDetailsCubit(getIt<MoviesRepository>()),
                 ),
+                BlocProvider(create: (context) => getIt<FavoriteCubit>()),
                 BlocProvider(
-                  create: (context) => FavoriteCubit(
+                  create: (context) => ProfileCubit(
                     (getIt<AccountRepository>()),
                   ),
                 ),
@@ -61,8 +63,7 @@ class AppRouter {
             var movieId = settings.arguments;
 
             return BlocProvider(
-              create: (context) =>
-                  VideoForMovieCubit(getIt<MoviesRepository>()),
+              create: (context) => getIt<VideoForMovieCubit>(),
               child: MovieVideosScreen(
                 movieId: movieId as String,
               ),
@@ -93,6 +94,27 @@ class AppRouter {
             return BlocProvider(
               create: (context) => getIt<ProfileCubit>(),
               child: ProfileScreen(),
+            );
+          },
+        );
+      case favoriteScreen:
+        return MaterialPageRoute(
+          builder: (context) {
+            var movieId = settings.arguments;
+
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => FavoriteCubit(
+                    (getIt<AccountRepository>()),
+                  ),
+                ),
+                BlocProvider(
+                  create: (context) =>
+                      MovieDetailsCubit(getIt<MoviesRepository>()),
+                ),
+              ],
+              child: FavoriteScreen(),
             );
           },
         );

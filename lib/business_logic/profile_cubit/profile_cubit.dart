@@ -56,25 +56,4 @@ class ProfileCubit extends Cubit<ProfileState> {
       await SharedPrefs.addIntToSF(userIdKey, userId);
     }
   }
-
-  AllFavoriteModel? allFavoriteModel;
-  Future<void> emitGetFavoriteMovies() async {
-    emit(FavoriteMoviesLoading());
-    if (await SharedPrefs.checkValue(sessionIdKey) &&
-        await SharedPrefs.checkValue(userIdKey)) {
-      var sessionId = await SharedPrefs.getStringValuesSF(sessionIdKey);
-      var userId = await SharedPrefs.getIntValuesSF(userIdKey);
-
-      ApiResult<AllFavoriteModel?> response =
-          await accountRepository.getFavoriteMovies(sessionId, userId);
-      response.when(success: (favoriteMoviesResponse) {
-        allFavoriteModel = favoriteMoviesResponse;
-        emit(FavoriteMoviesSuccess(favoriteMoviesResponse!));
-      }, failure: (NetworkExceptions networkExceptions) {
-        emit(FavoriteMoviesError(networkExceptions));
-      });
-    } else {
-      throw const NetworkExceptions.notFound('Session ID Or UserId');
-    }
-  }
 }

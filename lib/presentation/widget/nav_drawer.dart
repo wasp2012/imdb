@@ -46,7 +46,8 @@ class NavigationDrawerWidget extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: null,
+                      onPressed: () =>
+                          Navigator.pushNamed(context, favoriteScreen),
                       child: Text(
                         'Favorite',
                         style: Theme.of(context)
