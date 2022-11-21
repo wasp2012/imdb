@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:imdb_demo/business_logic/auth_cubit/authentication_cubit.dart';
-import 'package:imdb_demo/business_logic/auth_cubit/authentication_state.dart';
-import 'package:imdb_demo/injection.dart';
-import 'package:imdb_demo/presentation/widget/plasma.dart';
-import 'package:imdb_demo/shared/constants/strings.dart';
-import 'package:imdb_demo/shared/data/models/authentication/login_model.dart';
-import 'package:imdb_demo/shared/data/models/authentication/req_token.dart';
-import 'package:imdb_demo/shared/helper.dart';
-import 'package:imdb_demo/shared/offline_data.dart';
+import '../../business_logic/auth_cubit/authentication_cubit.dart';
+import '../../business_logic/auth_cubit/authentication_state.dart';
+import '../../injection.dart';
+import '../widget/plasma.dart';
+import '../../shared/constants/strings.dart';
+import '../../shared/data/models/authentication/login_model.dart';
+import '../../shared/data/models/authentication/req_token.dart';
+import '../../shared/helper.dart';
+import '../../shared/offline_data.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});

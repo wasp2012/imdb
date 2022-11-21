@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:imdb_demo/business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
-import 'package:imdb_demo/business_logic/video_for_movie_cubit/video_for_movie_state.dart';
-import 'package:imdb_demo/injection.dart';
-import 'package:imdb_demo/presentation/widget/youtube_player_widget.dart';
-import 'package:imdb_demo/shared/data/models/movies/movies_id/movies_video_by_id_model.dart';
+import '../../business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
+import '../../business_logic/video_for_movie_cubit/video_for_movie_state.dart';
+import '../../injection.dart';
+import '../widget/youtube_player_widget.dart';
+import '../../shared/data/models/movies/movies_id/movies_video_by_id_model.dart';
 
 import '../../shared/web_services/errors/network_exceptions.dart';
 

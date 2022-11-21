@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 
 import '../../shared/data/models/movies/movies_id/movies_video_by_id_model.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:imdb_demo/shared/constants/strings.dart';
-import 'package:imdb_demo/shared/offline_data.dart';
+import '../../shared/constants/strings.dart';
+import '../../shared/offline_data.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   const NavigationDrawerWidget({super.key});

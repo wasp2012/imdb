@@ -38,31 +38,35 @@ class _BluredMovieImageWidgetState extends State<BluredMovieImageWidget> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: GridView.builder(
-          controller: _scrollController,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-          ),
-          scrollDirection: Axis.horizontal,
-          itemCount: widget.movie!.length,
-          shrinkWrap: true,
-          physics: const ClampingScrollPhysics(),
-          itemBuilder: (context, index) {
-            return GridTile(
-              child: ClipPath(
-                clipper: ClippingClass(),
-                child: widget.movie!.isNotEmpty
-                    ? Image.network(
-                        '$imageDisplay${widget.movie![index].posterPath}',
-                        fit: BoxFit.cover,
-                      )
-                    : Image.asset('assets/images/placeholder.gif'),
-              ),
+      child: GridView.count(
+        controller: _scrollController,
+        crossAxisCount: 1,
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(),
+        children: widget.movie!.map(
+          (movie) {
+            return ClipPath(
+              clipper: ClippingClass(),
+              child: widget.movie!.isNotEmpty
+                  ? Image.network(
+                      '$imageDisplay${movie.posterPath}',
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset('assets/images/placeholder.gif'),
             );
-          }),
+          },
+        ).toList(),
+      ),
     );
   }
 }

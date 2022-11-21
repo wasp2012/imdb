@@ -9,8 +9,10 @@ class AppTheme {
   static Color lightParticlesColor = const Color(0xffFFFFFF);
   static Color lightButtonColor = const Color(0xff1f4287);
   static Color lightHoverColor = const Color(0xffdee1ec);
+  static Color lightGradientColorOne = Color.fromARGB(255, 128, 47, 146);
+  static Color lightGradientColorTwo = Colors.white;
 
-  static TextTheme lightTextTheme = TextTheme(
+  static TextTheme lightTextTheme = const TextTheme(
     headline1: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
     headline2: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
     bodyText2: TextStyle(
@@ -24,8 +26,10 @@ class AppTheme {
   static Color darkParticlesColor = const Color(0x441c2a3d);
   static Color darkButtonColor = const Color(0xfffc5185);
   static Color darkHoverColor = const Color(0xff0e153a);
+  static Color darkGradientColorOne = const Color(0xff490957);
+  static Color darkGradientColorTwo = const Color(0xff090408);
 
-  static TextTheme darkTextTheme = TextTheme(
+  static TextTheme darkTextTheme = const TextTheme(
     headline1: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
     headline2: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
     bodyText2: TextStyle(
@@ -43,6 +47,10 @@ class AppTheme {
     textTheme: lightTextTheme,
     hoverColor: lightHoverColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
+    colorScheme: ColorScheme.light(
+      primary: lightGradientColorOne,
+      secondary: lightGradientColorTwo,
+    ),
   );
 
   static Brightness get currentSystemBrightness =>
@@ -57,6 +65,10 @@ class AppTheme {
     textTheme: darkTextTheme,
     hoverColor: darkHoverColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
+    colorScheme: ColorScheme.dark(
+      primary: darkGradientColorOne,
+      secondary: darkGradientColorTwo,
+    ),
   );
 
   static setStatusBarAndNavigationBarColors(ThemeMode themeMode) {

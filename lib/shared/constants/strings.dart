@@ -6,6 +6,7 @@ const settingsScreen = '/settings_screen';
 const logInScreen = '/log_in_screen';
 const profileScreen = '/profile_screen';
 const favoriteScreen = 'favorite_screen';
+const watchListScreen = '/watch_list_screen';
 
 //Links
 const youtubeLink = 'https://www.youtube.com/watch?v=';

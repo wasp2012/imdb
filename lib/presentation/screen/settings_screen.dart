@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:imdb_demo/shared/constants/strings.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../shared/constants/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../business_logic/theme_cubit/theme_cubit.dart';
 import '../../business_logic/theme_cubit/theme_state.dart';
 import '../../injection.dart';
+import '../widget/curved_bottom_navbar_widget.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -18,17 +20,30 @@ class SettingsScreen extends StatelessWidget {
     return BlocProvider.value(
       value: getIt<ThemeCubit>(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Settings'),
-          backgroundColor: Theme.of(context).accentColor,
-        ),
+        bottomNavigationBar: CurvedBottomNavbarWidget(currentPage: 4),
         body: Container(
-          color: Theme.of(context).backgroundColor,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
           child: ListView(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text('Dark Mode'),
+                  Text(
+                    'Dark Mode',
+                    style: Theme.of(context).textTheme.headline1!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                  ),
                   BlocBuilder<ThemeCubit, SettingStateTheme>(
                     builder: (context, state) {
                       return Switch(

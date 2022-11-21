@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
-import 'package:imdb_demo/business_logic/profile_cubit/profile_cubit.dart';
-import 'package:imdb_demo/shared/data/repo/account_repo/acc_repo.dart';
-import 'package:imdb_demo/shared/data/repo/auth_repo/auth_repo.dart';
-import 'package:imdb_demo/shared/data/repo/movies_repo/movies_repository.dart';
-import 'package:imdb_demo/shared/web_services/network/auth_web_services/web_services_for_auth.dart';
-import 'package:imdb_demo/shared/web_services/network/movies_web_services/web_service_for_movies.dart';
+import 'business_logic/favorite_cubit/favorite_cubit.dart';
+import 'business_logic/profile_cubit/profile_cubit.dart';
+import 'shared/data/repo/account_repo/acc_repo.dart';
+import 'shared/data/repo/auth_repo/auth_repo.dart';
+import 'shared/data/repo/movies_repo/movies_repository.dart';
+import 'shared/web_services/network/auth_web_services/web_services_for_auth.dart';
+import 'shared/web_services/network/movies_web_services/web_service_for_movies.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'business_logic/auth_cubit/authentication_cubit.dart';
 import 'business_logic/theme_cubit/theme_cubit.dart';
@@ -57,15 +57,19 @@ void initGetIt() {
   getIt.registerFactory<VideoForMovieCubit>(
       () => VideoForMovieCubit(getIt<MoviesRepository>()));
 
-  getIt.registerSingleton<AuthenticationCubit>(
-      AuthenticationCubit(getIt<AuthRepository>()));
+  getIt.registerSingletonAsync<AuthenticationCubit>(() async {
+    final authentication = AuthenticationCubit(getIt<AuthRepository>());
+    await authentication.emitGetRequestToken();
 
+    return authentication;
+  });
   getIt.registerSingletonAsync<ProfileCubit>(() async {
     final userDetail = ProfileCubit(getIt<AccountRepository>());
     await userDetail.emitGetUserDetails();
 
     return userDetail;
   });
+
   getIt.registerSingletonAsync<ThemeCubit>(() async {
     final themeCubit = ThemeCubit();
     await themeCubit.getSavedTheme();

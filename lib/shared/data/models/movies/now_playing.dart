@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:imdb_demo/shared/data/models/movies/results.dart';
+import 'results.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'now_playing.g.dart';

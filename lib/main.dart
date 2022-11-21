@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:imdb_demo/presentation/screen/log_in_screen.dart';
+import 'package:imdb_demo/presentation/widget/curved_bottom_navbar_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -87,7 +88,7 @@ class MyApp extends StatelessWidget {
             ),
           );
         } else {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
       },
     );

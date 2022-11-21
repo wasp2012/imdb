@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:imdb_demo/business_logic/profile_cubit/profile_cubit.dart';
-import 'package:imdb_demo/business_logic/profile_cubit/profile_state.dart';
-import 'package:imdb_demo/injection.dart';
-import 'package:imdb_demo/shared/constants/strings.dart';
+import '../../business_logic/profile_cubit/profile_cubit.dart';
+import '../../business_logic/profile_cubit/profile_state.dart';
+import '../../injection.dart';
+import '../../shared/constants/strings.dart';
+import '../widget/curved_bottom_navbar_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -23,6 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           appBar: AppBar(
             title: Text('Hi ${cubit.userDetails!.username!}'),
           ),
+          bottomNavigationBar: CurvedBottomNavbarWidget(currentPage: 3),
           body: BlocBuilder<ProfileCubit, ProfileState>(
             builder: (context, state) {
               if (state is ProfileStateLoading) {

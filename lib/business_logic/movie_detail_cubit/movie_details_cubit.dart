@@ -1,16 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
-import 'package:imdb_demo/shared/constants/strings.dart';
-import 'package:imdb_demo/shared/data/models/account/favorite_model.dart';
-
-import 'package:imdb_demo/shared/data/repo/account_repo/acc_repo.dart';
 import 'package:imdb_demo/shared/data/repo/movies_repo/movies_repository.dart';
-import 'package:imdb_demo/shared/offline_data.dart';
 import 'package:imdb_demo/shared/web_services/errors/api_result.dart';
 import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 
-import '../../shared/data/models/account/profile_details_model.dart';
 import '../../shared/data/models/movies/movie_details.dart';
 import 'movie_details_state.dart';
 

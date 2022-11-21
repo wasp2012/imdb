@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:imdb_demo/shared/constants/apis.dart';
-import 'package:imdb_demo/shared/data/models/movies/movie_details.dart';
-import 'package:imdb_demo/shared/data/models/movies/movies_id/movies_video_by_id_model.dart';
-import 'package:imdb_demo/shared/data/models/movies/now_playing.dart';
-import 'package:imdb_demo/shared/data/models/movies/popular.dart';
-import 'package:imdb_demo/shared/data/models/movies/top_rated.dart';
-import 'package:imdb_demo/shared/data/models/movies/upcoming.dart';
-import 'package:imdb_demo/shared/data/repo/movies_repo/movies_repo_interface.dart';
-import 'package:imdb_demo/shared/web_services/errors/api_result.dart';
-import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
+import '../../../constants/apis.dart';
+import '../../models/movies/movie_details.dart';
+import '../../models/movies/movies_id/movies_video_by_id_model.dart';
+import '../../models/movies/now_playing.dart';
+import '../../models/movies/popular.dart';
+import '../../models/movies/top_rated.dart';
+import '../../models/movies/upcoming.dart';
+import 'movies_repo_interface.dart';
+import '../../../web_services/errors/api_result.dart';
+import '../../../web_services/errors/network_exceptions.dart';
 
 class MoviesRepository extends MoviesRepositoryInterface {
   @override

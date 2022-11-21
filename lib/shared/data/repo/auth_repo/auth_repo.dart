@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:imdb_demo/shared/constants/apis.dart';
-import 'package:imdb_demo/shared/data/models/authentication/login_model.dart';
-import 'package:imdb_demo/shared/data/models/authentication/req_token.dart';
-import 'package:imdb_demo/shared/data/models/authentication/session_model.dart';
-import 'package:imdb_demo/shared/data/repo/auth_repo/auth_repo_interface.dart';
-import 'package:imdb_demo/shared/web_services/errors/api_result.dart';
-import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
+import '../../../constants/apis.dart';
+import '../../models/authentication/login_model.dart';
+import '../../models/authentication/req_token.dart';
+import '../../models/authentication/session_model.dart';
+import 'auth_repo_interface.dart';
+import '../../../web_services/errors/api_result.dart';
+import '../../../web_services/errors/network_exceptions.dart';
 
 class AuthRepository extends AuthRepositoryInterface {
   @override

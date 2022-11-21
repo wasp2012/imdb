@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
+import '../../shared/web_services/errors/network_exceptions.dart';
 
 import '../../shared/data/models/account/favorite_model.dart';
 import '../../shared/data/models/account/profile_details_model.dart';

@@ -2,12 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:imdb_demo/shared/constants/strings.dart';
-import 'package:imdb_demo/shared/data/models/account/favorite_model.dart';
-import 'package:imdb_demo/shared/data/repo/account_repo/acc_repo.dart';
-import 'package:imdb_demo/shared/offline_data.dart';
-import 'package:imdb_demo/shared/web_services/errors/api_result.dart';
-import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
+import '../../shared/constants/strings.dart';
+import '../../shared/data/models/account/favorite_model.dart';
+import '../../shared/data/repo/account_repo/acc_repo.dart';
+import '../../shared/offline_data.dart';
+import '../../shared/web_services/errors/api_result.dart';
+import '../../shared/web_services/errors/network_exceptions.dart';
 
 import '../../shared/data/models/account/profile_details_model.dart';
 
@@ -98,6 +98,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         emit(FavoriteMoviesError(networkExceptions));
       });
     } else {
+      Navigator.defaultRouteName;
       throw const NetworkExceptions.notFound('Session ID Or UserId');
     }
   }

@@ -12,6 +12,7 @@ import 'package:imdb_demo/presentation/screen/log_in_screen.dart';
 import 'package:imdb_demo/presentation/screen/movie_details_screen.dart';
 import 'package:imdb_demo/presentation/screen/profile_screen.dart';
 import 'package:imdb_demo/presentation/screen/settings_screen.dart';
+import 'package:imdb_demo/presentation/screen/watch_list_screen.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
 
 import '../business_logic/movie_detail_cubit/movie_details_cubit.dart';
@@ -28,8 +29,8 @@ class AppRouter {
       case homeScreen:
         return MaterialPageRoute(
           builder: (context) {
-            return BlocProvider(
-              create: (context) => getIt<MoviesCubit>(),
+            return BlocProvider.value(
+              value: getIt<MoviesCubit>(),
               child: HomeScreen(),
             );
           },
@@ -116,6 +117,12 @@ class AppRouter {
               ],
               child: FavoriteScreen(),
             );
+          },
+        );
+      case watchListScreen:
+        return MaterialPageRoute(
+          builder: (context) {
+            return WatchListScreen();
           },
         );
     }

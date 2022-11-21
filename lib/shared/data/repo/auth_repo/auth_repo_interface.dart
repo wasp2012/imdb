@@ -5,7 +5,6 @@ import 'package:imdb_demo/shared/data/models/authentication/login_model.dart';
 import 'package:imdb_demo/shared/data/models/authentication/req_token.dart';
 import 'package:imdb_demo/shared/data/models/authentication/session_model.dart';
 import 'package:imdb_demo/shared/web_services/errors/api_result.dart';
-
 import 'package:imdb_demo/shared/web_services/network/auth_web_services/web_services_for_auth.dart';
 
 abstract class AuthRepositoryInterface {
