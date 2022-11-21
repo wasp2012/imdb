@@ -31,23 +31,28 @@ class FavoriteScreen extends StatelessWidget {
               child: Text('Error Occured'),
             );
           } else {
-            return ListView.builder(
+            return GridView.builder(
               shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 1,
+                childAspectRatio: 1,
+              ),
               itemCount: cubit.allFavoriteModel.totalResults,
               itemBuilder: (context, index) {
                 return Container(
-                  width: double.infinity,
+                  // width: double.infinity,
                   child: GestureDetector(
                     onTap: () => Navigator.pushNamed(
                         context, movieDetailsScreen,
                         arguments: cubit.allFavoriteModel.results![index].id
                             .toString()),
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      // padding: EdgeInsets.all(1),
                       child: Card(
                         elevation: 20,
                         margin:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         child: Image.network(
                           '$imageDisplay${cubit.allFavoriteModel.results![index].posterPath}',
                         ),

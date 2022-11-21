@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:imdb_demo/shared/data/repo/movies_repo/movies_repository.dart';
 
 import '../../shared/data/models/movies/now_playing.dart';
@@ -20,6 +21,7 @@ class MoviesCubit extends Cubit<MoviesState> {
   List<Results>? topRatedMoviesList = [];
   List<Results>? popularMoviesList = [];
   List<Results>? upComingMoviesList = [];
+  int? index = 0;
 
   Future<void> emitNowPlayingMovies() async {
     try {

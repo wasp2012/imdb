@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:imdb_demo/presentation/screen/log_in_screen.dart';
@@ -66,16 +67,22 @@ class MyApp extends StatelessWidget {
             ],
             child: BlocBuilder<ThemeCubit, SettingStateTheme>(
               builder: (context, state) {
-                return MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  darkTheme: AppTheme.darkTheme,
-                  theme: AppTheme.lightTheme,
-                  themeMode: cubitThemeCubit.savedTheme == true
-                      ? ThemeMode.dark
-                      : ThemeMode.light,
-                  initialRoute: home,
-                  onGenerateRoute: router.onGenerateRoute,
-                );
+                return ScreenUtilInit(
+                    designSize: const Size(360, 690),
+                    minTextAdapt: true,
+                    splitScreenMode: true,
+                    builder: (context, child) {
+                      return MaterialApp(
+                        debugShowCheckedModeBanner: false,
+                        darkTheme: AppTheme.darkTheme,
+                        theme: AppTheme.lightTheme,
+                        themeMode: cubitThemeCubit.savedTheme == true
+                            ? ThemeMode.dark
+                            : ThemeMode.light,
+                        initialRoute: home,
+                        onGenerateRoute: router.onGenerateRoute,
+                      );
+                    });
               },
             ),
           );

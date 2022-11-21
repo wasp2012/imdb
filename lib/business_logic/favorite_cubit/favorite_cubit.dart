@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
@@ -29,23 +30,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       String sessionId = await SharedPrefs.getStringValuesSF(sessionIdKey);
       int userId = await SharedPrefs.getIntValuesSF(userIdKey);
       try {
-        ApiResult<FavoriteModel?> response = await accountRepository
-            .markMovieAsFavorite(sessionId, userId, favoriteBody);
-        response.when(success: (favoriteResult) async {
-          favoriteModel = favoriteResult!;
-          if (favoriteResult.statusCode == 1) {
-            await emitGetFavoriteMovies();
-            checkIfFavorite(favoriteBody.mediaId ?? 0);
-            emit(FavoriteStateSaved(favoriteModel: favoriteResult));
-          } else if (favoriteResult.statusCode == 13) {
-            await emitGetFavoriteMovies();
-            checkIfFavorite(favoriteBody.mediaId ?? 0);
-
-            emit(FavoriteStateRemoved(favoriteModel: favoriteResult));
-          }
-        }, failure: (NetworkExceptions networkExceptions) {
-          emit(FavoriteStateError(networkExceptions));
-        });
+        await favoriteMovieResponse(sessionId, userId, favoriteBody);
       } catch (e) {
         print(e.toString());
       }
@@ -54,10 +39,49 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     }
   }
 
+  Future<void> favoriteMovieResponse(
+      String sessionId, int userId, FavoriteBody favoriteBody) async {
+    ApiResult<FavoriteModel?> response = await accountRepository
+        .markMovieAsFavorite(sessionId, userId, favoriteBody);
+    response.when(success: (favoriteResult) async {
+      favoriteModel = favoriteResult!;
+      await isSaved(
+        favoriteResult.statusCode ?? 0,
+        favoriteBody.mediaId ?? 0,
+        favoriteResult,
+      );
+    }, failure: (NetworkExceptions networkExceptions) {
+      emit(FavoriteStateError(networkExceptions));
+    });
+  }
+
+  Future<void> isSaved(
+    int statusCode,
+    int mediaId,
+    FavoriteModel favoriteModel,
+  ) async {
+    switch (statusCode) {
+      case 1:
+        await emitGetFavoriteMovies();
+        checkIfMovieExist(mediaId);
+        emit(FavoriteStateSaved(favoriteModel: favoriteModel));
+        break;
+      case 13:
+        await emitGetFavoriteMovies();
+        checkIfMovieExist(mediaId);
+        emit(FavoriteStateRemoved(favoriteModel: favoriteModel));
+        break;
+      case 12:
+        checkIfMovieExist(mediaId);
+        break;
+
+      default:
+    }
+  }
+
   AllFavoriteModel allFavoriteModel = AllFavoriteModel();
   List<Results>? favoriteMoviesList = [];
   Future<void> emitGetFavoriteMovies() async {
-    emit(FavoriteMoviesLoading());
     if (await SharedPrefs.checkValue(sessionIdKey) &&
         await SharedPrefs.checkValue(userIdKey)) {
       var sessionId = await SharedPrefs.getStringValuesSF(sessionIdKey);
@@ -68,6 +92,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       response.when(success: (favoriteMoviesResponse) {
         allFavoriteModel = favoriteMoviesResponse!;
         favoriteMoviesList = favoriteMoviesResponse.results;
+        print(favoriteMoviesList);
         emit(FavoriteMoviesSuccess(favoriteMoviesResponse));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(FavoriteMoviesError(networkExceptions));
@@ -78,15 +103,16 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   bool isFavorite = false;
-
-// allFavoriteModel.results!.where((element) => element.id == int.parse(id))
-  void checkIfFavorite(int id) {
-    var flag = favoriteMoviesList!.where((element) => element.id == id);
-    if (flag.isNotEmpty) {
+  IconData? iconData;
+  bool? isExist;
+  void checkIfMovieExist(int id) {
+    isExist = favoriteMoviesList!.map((item) => item.id).contains(id);
+    print(isExist);
+    if (isExist!) {
+      iconData = Icons.favorite;
       isFavorite = true;
-      emit(MarkFavoriteIcon(iconData: Icons.favorite));
     } else {
-      emit(MarkFavoriteIcon(iconData: Icons.favorite_border));
+      iconData = Icons.favorite_border;
       isFavorite = false;
     }
   }

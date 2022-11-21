@@ -13,6 +13,7 @@ const imageDisplay = 'http://image.tmdb.org/t/p/original';
 const gravatar = 'https://secure.gravatar.com/avatar/';
 const personImage =
     'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png';
+const popcornImage = 'assets/images/popcorn.png';
 
 //Shared Preference Key
 const darkThemeKey = "isDarkTheme";

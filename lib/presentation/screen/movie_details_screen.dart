@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
@@ -99,8 +100,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     print(widget.movieId);
     var movieCubit = BlocProvider.of<MovieDetailsCubit>(context);
     var favCubit = getIt<FavoriteCubit>();
-    favCubit.checkIfFavorite(int.parse(widget.movieId));
-    print('/////////////////////////////  ');
+    print('/// ${favCubit.isFavorite} \\');
+    favCubit.checkIfMovieExist(int.parse(widget.movieId));
+    print('/// ${favCubit.isFavorite} \\');
 
     return Scaffold(
       body: FutureBuilder(
@@ -267,48 +269,46 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   );
                 }
               })),
-      floatingActionButton: BlocListener<FavoriteCubit, FavoriteState>(
-        listener: (context, state) {
-          if (state is FavoriteStateLoading) {
-            Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is FavoriteStateSaved) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                duration: Duration(seconds: 1),
-                content: Text('Saved to Favorite'),
-              ),
-            );
-          } else if (state is FavoriteStateRemoved) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                duration: Duration(seconds: 1),
-                content: Text('Removed From Favorite'),
-              ),
-            );
-          }
-        },
-        child: FloatingActionButton(
+      floatingActionButton: BlocConsumer<FavoriteCubit, FavoriteState>(
+          listener: (context, state) {
+        if (state is FavoriteStateSaved) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: Duration(seconds: 1),
+              content: Text('Saved to Favorite'),
+            ),
+          );
+        } else if (state is FavoriteStateRemoved) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: Duration(seconds: 1),
+              content: Text('Removed From Favorite'),
+            ),
+          );
+        }
+      }, builder: (context, state) {
+        if (state is FavoriteStateLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return FloatingActionButton(
           onPressed: () async {
-            favCubit.isFavorite == true
-                ? await favCubit.emitMarkAsFavorite(FavoriteBody(
-                    mediaType: mediaTypeMovie,
-                    mediaId: int.parse(widget.movieId),
-                    favorite: false))
-                : await favCubit.emitMarkAsFavorite(
-                    FavoriteBody(
-                        mediaType: mediaTypeMovie,
-                        mediaId: int.parse(widget.movieId),
-                        favorite: true),
-                  );
+            if (favCubit.isExist!) {
+              favCubit.emitMarkAsFavorite(FavoriteBody(
+                  mediaType: mediaTypeMovie,
+                  mediaId: int.parse(widget.movieId),
+                  favorite: false));
+            } else {
+              favCubit.emitMarkAsFavorite(FavoriteBody(
+                  mediaType: mediaTypeMovie,
+                  mediaId: int.parse(widget.movieId),
+                  favorite: true));
+            }
           },
-          child:
-              // context.watch<FavoriteCubit>().isFavorite;
-
-              Icon(Icons.favorite),
-        ),
-      ),
+          child: Icon(favCubit.iconData),
+        );
+      }),
     );
   }
 }

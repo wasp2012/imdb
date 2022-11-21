@@ -44,7 +44,9 @@ class AppRouter {
                   create: (context) =>
                       MovieDetailsCubit(getIt<MoviesRepository>()),
                 ),
-                BlocProvider(create: (context) => getIt<FavoriteCubit>()),
+                BlocProvider.value(
+                  value: getIt<FavoriteCubit>(),
+                ),
                 BlocProvider(
                   create: (context) => ProfileCubit(
                     (getIt<AccountRepository>()),
@@ -105,9 +107,7 @@ class AppRouter {
             return MultiBlocProvider(
               providers: [
                 BlocProvider(
-                  create: (context) => FavoriteCubit(
-                    (getIt<AccountRepository>()),
-                  ),
+                  create: (context) => getIt<FavoriteCubit>(),
                 ),
                 BlocProvider(
                   create: (context) =>

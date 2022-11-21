@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imdb_demo/injection.dart';
 
 import '../../business_logic/movies_cubit/movies_cubit.dart';
@@ -49,15 +50,15 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                   ),
             ),
             SizedBox(
-              height: 170,
+              height: 350.h,
               child: cubit.nowPlayingMoviesList!.isNotEmpty
                   ? GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisSpacing: 1,
                         crossAxisCount: 1,
-                        childAspectRatio: 1.2,
-                        mainAxisSpacing: 1,
+                        childAspectRatio: 1.4,
+                        mainAxisSpacing: 10,
                       ),
                       scrollDirection: Axis.horizontal,
                       itemCount: cubit.nowPlayingMoviesList!.length,
@@ -71,7 +72,7 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
                     )
                   : Container(),
             ),
-            Divider(color: Theme.of(context).primaryColor),
+            // Divider(color: Theme.of(context).primaryColor),
           ],
         );
       });

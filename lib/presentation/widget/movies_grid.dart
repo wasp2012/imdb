@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, sort_child_properties_last, prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'package:imdb_demo/business_logic/movies_cubit/movies_cubit.dart';
+import 'package:imdb_demo/injection.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/data/models/movies/results.dart';
 
@@ -13,7 +15,6 @@ class MoviesGridWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('${movie.id} ${movie.backdropPath}');
     return Container(
       padding: EdgeInsetsDirectional.all(5),
       child: InkWell(
@@ -48,31 +49,20 @@ class MoviesGridWidget extends StatelessWidget {
                   valueColor: const AlwaysStoppedAnimation<Color>(Colors.green),
                 ),
                 Positioned.fill(
-                    child: Center(
-                  child: Text(
-                    '${movie.voteAverage}%',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        backgroundColor: Colors.white54),
+                  child: Center(
+                    child: Text(
+                      '${movie.voteAverage}%',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          backgroundColor: Colors.white54),
+                    ),
                   ),
-                )),
+                ),
               ],
             ),
           ],
         ),
-        // Text(
-        //   '${movie.title}',
-        //   style: TextStyle(
-        //     height: 1.3,
-        //     fontSize: 16,
-        //     color: Colors.white,
-        //     fontWeight: FontWeight.bold,
-        //   ),
-        //   overflow: TextOverflow.ellipsis,
-        //   maxLines: 2,
-        //   textAlign: TextAlign.center,
-        // ),
       ),
     );
   }
