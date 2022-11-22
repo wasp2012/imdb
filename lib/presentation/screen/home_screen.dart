@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:imdb_demo/shared/common/gradient.dart';
 import '../widget/blured_movie_image_widget.dart';
 import '../../shared/constants/strings.dart';
 
@@ -28,17 +29,15 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: Theme.of(context).backgroundColor,
         extendBody: true,
-        bottomNavigationBar: CurvedBottomNavbarWidget(currentPage: 0),
+        bottomNavigationBar: const CurvedBottomNavbarWidget(currentPage: 0),
         key: globalKey,
         // drawer: const NavigationDrawerWidget(),
         body: SingleChildScrollView(
           child: Container(
+            height: 1250,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.primary,
-                  Theme.of(context).colorScheme.secondary,
-                ],
+                colors: SharedGradient.gradientColors(context),
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -52,33 +51,46 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       if (cubit.nowPlayingMoviesList != null &&
                           cubit.nowPlayingMoviesList!.isNotEmpty)
-                        BluredMovieImageWidget(
-                            movie: cubit.nowPlayingMoviesList),
+                        BluredMovieImageWidget(movie: cubit.allCategories),
                       BackdropFilter(
                         filter: ImageFilter.blur(
                           sigmaX: 10.0,
                           sigmaY: 10.0,
                         ),
                         child: Container(
-                          color: Colors.black.withOpacity(0),
+                          margin: EdgeInsets.only(top: 20),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TextField(
                                 cursorColor: Colors.white,
                                 textAlign: TextAlign.start,
                                 textAlignVertical: TextAlignVertical.bottom,
                                 decoration: InputDecoration(
+                                  filled: true, //<-- SEE HERE
+                                  fillColor: Color.fromARGB(115, 158, 158, 158),
                                   hintText: 'Search',
-                                  suffixIcon: const Icon(Icons.search),
+                                  hoverColor: Colors.white,
+                                  focusColor: Colors.white,
+                                  suffixIcon: const Icon(
+                                    Icons.search,
+                                    color: Colors.white,
+                                  ),
                                   border: OutlineInputBorder(
-                                    gapPadding: 5,
                                     borderRadius: BorderRadius.circular(30),
+                                    borderSide: BorderSide(
+                                        color: Colors.transparent, width: 1.5),
                                   ),
                                 ),
+                                onTap: () {
+                                  FocusScopeNode currentFocus =
+                                      FocusScope.of(context);
+                                  if (!currentFocus.hasPrimaryFocus) {
+                                    currentFocus.unfocus();
+                                  }
+                                },
                               ),
                               SizedBox(
-                                height: 50.h,
+                                height: 20.h,
                               ),
                               const MovieSectionWidget(
                                   sectionTitle: 'Now Playing', flag: 1),

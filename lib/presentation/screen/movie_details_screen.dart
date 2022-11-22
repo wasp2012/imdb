@@ -12,6 +12,7 @@ import 'package:neon/neon.dart';
 
 import '../../business_logic/movie_detail_cubit/movie_details_cubit.dart';
 import '../../business_logic/movie_detail_cubit/movie_details_state.dart';
+import '../../shared/common/gradient.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final String movieId;
@@ -114,10 +115,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   return Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [
-                          Theme.of(context).colorScheme.primary,
-                          Theme.of(context).colorScheme.secondary,
-                        ],
+                        colors: SharedGradient.gradientColors(context),
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -321,7 +319,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   favorite: true));
             }
           },
-          child: Icon(favCubit.iconData),
+          child: Icon(
+            favCubit.iconData,
+            color: Colors.white,
+          ),
         );
       }),
     );

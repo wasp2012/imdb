@@ -21,6 +21,8 @@ class MoviesCubit extends Cubit<MoviesState> {
   List<Results>? topRatedMoviesList = [];
   List<Results>? popularMoviesList = [];
   List<Results>? upComingMoviesList = [];
+  List<Results>? allCategories = [];
+
   int? index = 0;
 
   Future<void> emitNowPlayingMovies() async {
@@ -31,6 +33,11 @@ class MoviesCubit extends Cubit<MoviesState> {
           await moviesRepository.getMoviesPlayingNow();
       response.when(success: (nowPlayingMovieModel) {
         nowPlayingMoviesList = nowPlayingMovieModel!.results!.cast<Results>();
+        nowPlayingMoviesList!.forEach((element) {
+          allCategories!.add(element);
+        });
+        debugPrint('${allCategories!.length}');
+
         emit(MoviesStateSuccess(nowPlayingMovieModel.results));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(MoviesStateError(networkExceptions));
@@ -47,6 +54,11 @@ class MoviesCubit extends Cubit<MoviesState> {
           await moviesRepository.getMoviesTopRated();
       response.when(success: (topRatedMovies) {
         topRatedMoviesList = topRatedMovies!.results!.cast<Results>();
+        topRatedMoviesList!.forEach((element) {
+          allCategories!.add(element);
+        });
+        debugPrint('${allCategories!.length}');
+
         emit(MoviesStateSuccess(topRatedMovies.results));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(MoviesStateError(networkExceptions));
@@ -63,6 +75,11 @@ class MoviesCubit extends Cubit<MoviesState> {
           await moviesRepository.getMoviesPopular();
       response.when(success: (popularMovies) {
         popularMoviesList = popularMovies!.results!.cast<Results>();
+
+        popularMoviesList!.forEach((element) {
+          allCategories!.add(element);
+        });
+        debugPrint('${allCategories!.length}');
         emit(MoviesStateSuccess(popularMovies.results));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(MoviesStateError(networkExceptions));
@@ -79,6 +96,11 @@ class MoviesCubit extends Cubit<MoviesState> {
           await moviesRepository.getMoviesUpComing();
       response.when(success: (upComingMovies) {
         upComingMoviesList = upComingMovies!.results!.cast<Results>();
+
+        upComingMoviesList!.forEach((element) {
+          allCategories!.add(element);
+        });
+        debugPrint('${allCategories!.length}');
         emit(MoviesStateSuccess(upComingMovies.results));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(MoviesStateError(networkExceptions));
@@ -86,5 +108,11 @@ class MoviesCubit extends Cubit<MoviesState> {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  @override
+  Future<void> close() {
+    allCategories = [];
+    return super.close();
   }
 }

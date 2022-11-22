@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imdb_demo/shared/common/gradient.dart';
 
 import '../widget/curved_bottom_navbar_widget.dart';
 
@@ -8,8 +9,17 @@ class WatchListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('WatchList')),
-      bottomNavigationBar: CurvedBottomNavbarWidget(currentPage: 2),
+      extendBody: true,
+      bottomNavigationBar: const CurvedBottomNavbarWidget(currentPage: 2),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: SharedGradient.gradientColors(context),
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+      ),
     );
   }
 }

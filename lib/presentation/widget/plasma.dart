@@ -42,27 +42,5 @@ class PlasmaBackground extends StatelessWidget {
         rotation: 0,
       ),
     );
-
-    //     Container(
-    //   decoration: BoxDecoration(
-    //     color: Theme.of(context).backgroundColor,
-    //     backgroundBlendMode: BlendMode.srcOver,
-    //   ),
-    //   child: PlasmaRenderer(
-    //     type: PlasmaType.infinity,
-    //     particles: 10,
-    //     color: Theme.of(context).particlesColor,
-    //     blur: 0.51,
-    //     size: 0.39,
-    //     speed: 1,
-    //     offset: 0,
-    //     blendMode: BlendMode.plus,
-    //     particleType: ParticleType.atlas,
-    //     variation1: 0,
-    //     variation2: 0,
-    //     variation3: 0,
-    //     rotation: 0,
-    //   ),
-    // );
   }
 }

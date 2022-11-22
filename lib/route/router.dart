@@ -45,8 +45,8 @@ class AppRouter {
                   create: (context) =>
                       MovieDetailsCubit(getIt<MoviesRepository>()),
                 ),
-                BlocProvider.value(
-                  value: getIt<FavoriteCubit>(),
+                BlocProvider(
+                  create: (context) => getIt<FavoriteCubit>(),
                 ),
                 BlocProvider(
                   create: (context) => ProfileCubit(
@@ -54,8 +54,13 @@ class AppRouter {
                   ),
                 ),
               ],
-              child: MovieDetailsScreen(
-                movieId: movieId as String,
+              child:
+                  //getIt<FavoriteCubit>()
+                  BlocProvider.value(
+                value: getIt<FavoriteCubit>(),
+                child: MovieDetailsScreen(
+                  movieId: movieId as String,
+                ),
               ),
             );
           },
