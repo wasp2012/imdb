@@ -1,15 +1,12 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../shared/constants/strings.dart';
 import '../../shared/data/models/account/favorite_model.dart';
 import '../../shared/data/repo/account_repo/acc_repo.dart';
 import '../../shared/offline_data.dart';
 import '../../shared/web_services/errors/api_result.dart';
 import '../../shared/web_services/errors/network_exceptions.dart';
-
-import '../../shared/data/models/account/profile_details_model.dart';
 
 part 'favorite_state.dart';
 

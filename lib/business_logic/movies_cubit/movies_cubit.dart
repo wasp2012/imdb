@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:imdb_demo/business_logic/movie_detail_cubit/movie_details_state.dart';
 import '../../shared/data/repo/movies_repo/movies_repository.dart';
 
 import '../../shared/data/models/movies/now_playing.dart';
@@ -33,8 +34,11 @@ class MoviesCubit extends Cubit<MoviesState> {
           await moviesRepository.getMoviesPlayingNow();
       response.when(success: (nowPlayingMovieModel) {
         nowPlayingMoviesList = nowPlayingMovieModel!.results!.cast<Results>();
+
         nowPlayingMoviesList!.forEach((element) {
-          allCategories!.add(element);
+          if (!allCategories!.contains(element)) {
+            allCategories!.add(element);
+          }
         });
         debugPrint('${allCategories!.length}');
 
@@ -54,8 +58,11 @@ class MoviesCubit extends Cubit<MoviesState> {
           await moviesRepository.getMoviesTopRated();
       response.when(success: (topRatedMovies) {
         topRatedMoviesList = topRatedMovies!.results!.cast<Results>();
-        topRatedMoviesList!.forEach((element) {
-          allCategories!.add(element);
+
+        topRatedMoviesList?.forEach((element) {
+          if (!allCategories!.contains(element)) {
+            allCategories!.add(element);
+          }
         });
         debugPrint('${allCategories!.length}');
 
@@ -77,7 +84,9 @@ class MoviesCubit extends Cubit<MoviesState> {
         popularMoviesList = popularMovies!.results!.cast<Results>();
 
         popularMoviesList!.forEach((element) {
-          allCategories!.add(element);
+          if (!allCategories!.contains(element)) {
+            allCategories!.add(element);
+          }
         });
         debugPrint('${allCategories!.length}');
         emit(MoviesStateSuccess(popularMovies.results));
@@ -98,7 +107,9 @@ class MoviesCubit extends Cubit<MoviesState> {
         upComingMoviesList = upComingMovies!.results!.cast<Results>();
 
         upComingMoviesList!.forEach((element) {
-          allCategories!.add(element);
+          if (!allCategories!.contains(element)) {
+            allCategories!.add(element);
+          }
         });
         debugPrint('${allCategories!.length}');
         emit(MoviesStateSuccess(upComingMovies.results));
@@ -108,11 +119,5 @@ class MoviesCubit extends Cubit<MoviesState> {
     } catch (e) {
       print(e.toString());
     }
-  }
-
-  @override
-  Future<void> close() {
-    allCategories = [];
-    return super.close();
   }
 }

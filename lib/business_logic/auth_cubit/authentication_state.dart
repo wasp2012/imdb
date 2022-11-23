@@ -15,15 +15,25 @@ class AuthenticationStateIdle extends AuthenticationState {}
 
 class AuthenticationStateLoading extends AuthenticationState {}
 
-class AuthenticationStateSuccess extends AuthenticationState {
-  RequestTokenModel? requestTokenObj;
-  SessionModel? sessionModel;
-  LoginModel? loginModelObj;
+class AuthenticationStateReqTokenSuccess extends AuthenticationState {
+  final RequestTokenModel? requestTokenObj;
 
-  AuthenticationStateSuccess.reqToken(this.requestTokenObj);
-  AuthenticationStateSuccess.session(this.sessionModel);
+  AuthenticationStateReqTokenSuccess(this.requestTokenObj);
+}
+
+class AuthenticationStateSessionModelSuccess extends AuthenticationState {
+  final SessionModel? sessionModel;
+
+  AuthenticationStateSessionModelSuccess(this.sessionModel);
+}
+
+class AuthenticationStateSuccess extends AuthenticationState {
+  final LoginModel? loginModelObj;
+
   AuthenticationStateSuccess.login(this.loginModelObj);
 }
+
+class AuthenticationStateFailed extends AuthenticationState {}
 
 class AuthenticationStateChangeText extends AuthenticationState {
   final IconData iconData;

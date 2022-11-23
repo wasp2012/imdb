@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:imdb_demo/business_logic/auth_cubit/authentication_cubit.dart';
@@ -14,6 +12,7 @@ import 'package:imdb_demo/presentation/screen/profile_screen.dart';
 import 'package:imdb_demo/presentation/screen/settings_screen.dart';
 import 'package:imdb_demo/presentation/screen/watch_list_screen.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
+import 'package:provider/provider.dart';
 
 import '../business_logic/movie_detail_cubit/movie_details_cubit.dart';
 import '../business_logic/movies_cubit/movies_cubit.dart';
@@ -31,7 +30,7 @@ class AppRouter {
           builder: (context) {
             return BlocProvider.value(
               value: getIt<MoviesCubit>(),
-              child: HomeScreen(),
+              child: const HomeScreen(),
             );
           },
         );
@@ -54,13 +53,8 @@ class AppRouter {
                   ),
                 ),
               ],
-              child:
-                  //getIt<FavoriteCubit>()
-                  BlocProvider.value(
-                value: getIt<FavoriteCubit>(),
-                child: MovieDetailsScreen(
-                  movieId: movieId as String,
-                ),
+              child: MovieDetailsScreen(
+                movieId: movieId as String,
               ),
             );
           },
@@ -83,16 +77,16 @@ class AppRouter {
           builder: (context) {
             return BlocProvider(
               create: (context) => getIt<ThemeCubit>(),
-              child: SettingsScreen(),
+              child: const SettingsScreen(),
             );
           },
         );
       case logInScreen:
         return MaterialPageRoute(
           builder: (context) {
-            return BlocProvider(
-              create: (context) => getIt<AuthenticationCubit>(),
-              child: LogInScreen(),
+            return BlocProvider.value(
+              value: getIt<AuthenticationCubit>(),
+              child: const LogInScreen(),
             );
           },
         );
@@ -101,7 +95,7 @@ class AppRouter {
           builder: (context) {
             return BlocProvider(
               create: (context) => getIt<ProfileCubit>(),
-              child: ProfileScreen(),
+              child: const ProfileScreen(),
             );
           },
         );
@@ -120,14 +114,14 @@ class AppRouter {
                       MovieDetailsCubit(getIt<MoviesRepository>()),
                 ),
               ],
-              child: FavoriteScreen(),
+              child: const FavoriteScreen(),
             );
           },
         );
       case watchListScreen:
         return MaterialPageRoute(
           builder: (context) {
-            return WatchListScreen();
+            return const WatchListScreen();
           },
         );
     }

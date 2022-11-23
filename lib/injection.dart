@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:imdb_demo/shared/constants/strings.dart';
+import 'package:imdb_demo/shared/offline_data.dart';
 import 'business_logic/favorite_cubit/favorite_cubit.dart';
 import 'business_logic/profile_cubit/profile_cubit.dart';
 import 'shared/data/repo/account_repo/acc_repo.dart';
@@ -50,23 +52,25 @@ void initGetIt() {
 
   getIt.registerSingletonAsync<FavoriteCubit>(() async {
     final allFavorite = FavoriteCubit(getIt<AccountRepository>());
-    await allFavorite.emitGetFavoriteMovies();
+    if (await SharedPrefs.checkValue(userTokenKey)) {
+      await allFavorite.emitGetFavoriteMovies();
+    }
     return allFavorite;
   });
 
   getIt.registerFactory<VideoForMovieCubit>(
       () => VideoForMovieCubit(getIt<MoviesRepository>()));
 
-  getIt.registerSingletonAsync<AuthenticationCubit>(() async {
-    final authentication = AuthenticationCubit(getIt<AuthRepository>());
-    await authentication.emitGetRequestToken();
+  getIt.registerLazySingleton<AuthenticationCubit>(
+      () => AuthenticationCubit(getIt<AuthRepository>()));
 
-    return authentication;
-  });
+  //    await authentication.emitGetRequestToken();
+
   getIt.registerSingletonAsync<ProfileCubit>(() async {
     final userDetail = ProfileCubit(getIt<AccountRepository>());
-    await userDetail.emitGetUserDetails();
-
+    if (await SharedPrefs.checkValue(userTokenKey)) {
+      await userDetail.emitGetUserDetails();
+    }
     return userDetail;
   });
 

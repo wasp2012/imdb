@@ -28,7 +28,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         requestTokenObj = requestToken!;
         await SharedPrefs.addStringToSF(
             requestTokenKey, requestToken.requestToken!);
-        emit(AuthenticationStateSuccess.reqToken(requestToken));
+        emit(AuthenticationStateReqTokenSuccess(requestToken));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(AuthenticationStateError(networkExceptions));
       });
@@ -44,11 +44,12 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   bool isLoggedIn = false;
 
   Future<void> logIn(String userName, String password) async {
-    print(userName);
-    print(password);
-
     print('Not Empty ${await SharedPrefs.getStringValuesSF(requestTokenKey)}');
     if (await SharedPrefs.checkValue(requestTokenKey)) {
+      String reqToken = await SharedPrefs.getStringValuesSF(requestTokenKey);
+      await sendDataToLogin(userName, password, reqToken);
+    } else {
+      emitGetRequestToken();
       String reqToken = await SharedPrefs.getStringValuesSF(requestTokenKey);
       await sendDataToLogin(userName, password, reqToken);
     }
@@ -69,8 +70,13 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         loginModelObj = loginResults;
         await SharedPrefs.addStringToSF(
             userTokenKey, loginResults!.requestToken!);
-        isLoggedIn = loginResults.success!;
-        emit(AuthenticationStateSuccess.login(loginResults));
+        if (loginModelObj?.success == true) {
+          isLoggedIn = loginResults.success!;
+          checkThenCreateSession();
+          emit(AuthenticationStateSuccess.login(loginResults));
+        } else {
+          emit(AuthenticationStateFailed());
+        }
       }, failure: (NetworkExceptions networkExceptions) {
         emit(AuthenticationStateError(networkExceptions));
       });
@@ -82,7 +88,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   bool isPasswordHidden = true;
   IconData icon = Icons.visibility_off;
 
-  showHidePassword() {
+  void showHidePassword() {
     isPasswordHidden = !isPasswordHidden;
     icon = isPasswordHidden == true ? Icons.visibility : Icons.visibility_off;
     print(isPasswordHidden);
@@ -100,15 +106,13 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   SessionModel? sessionModel;
 
   Future<void> emitSessionId(SessionBody sessionBody) async {
-    emit(AuthenticationStateLoading());
-
     try {
       ApiResult<SessionModel?> response =
           await authRepository.createSession(sessionBody);
       response.when(success: (sessionResult) async {
         sessionModel = sessionResult!;
         await SharedPrefs.addStringToSF(sessionIdKey, sessionResult.sessionId!);
-        emit(AuthenticationStateSuccess.session(sessionResult));
+        emit(AuthenticationStateSessionModelSuccess(sessionResult));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(AuthenticationStateError(networkExceptions));
       });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:imdb_demo/shared/common/gradient.dart';
+import 'package:imdb_demo/shared/offline_data.dart';
 import '../../business_logic/profile_cubit/profile_cubit.dart';
 import '../../business_logic/profile_cubit/profile_state.dart';
 import '../../injection.dart';
@@ -124,6 +125,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ],
                             )
                           : const SizedBox(),
+                      TextButton(
+                          onPressed: () async {
+                            await returnToLogin(context);
+                          },
+                          child: Text(
+                            'Log out',
+                            style: Theme.of(context).textTheme.bodyText2,
+                          )),
                     ],
                   );
                 }
@@ -133,5 +142,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> returnToLogin(BuildContext context) async {
+    await SharedPrefs.logOut();
+    Navigator.pushReplacementNamed(context, logInScreen);
   }
 }

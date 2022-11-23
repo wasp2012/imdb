@@ -25,7 +25,7 @@ class _BluredMovieImageWidgetState extends State<BluredMovieImageWidget> {
   ScrollController _scrollController = ScrollController();
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     if (widget.movie!.isNotEmpty) {
       Future.delayed(const Duration(seconds: 1), () {
         _scrollController.animateTo(_scrollController.position.maxScrollExtent,
@@ -33,8 +33,7 @@ class _BluredMovieImageWidgetState extends State<BluredMovieImageWidget> {
             curve: Curves.linear);
       });
     }
-
-    super.initState();
+    super.didChangeDependencies();
   }
 
   @override

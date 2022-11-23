@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "866608175485",
+    "project_id": "imdb-54042",
+    "storage_bucket": "imdb-54042.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866608175485:android:968e56bb19605888fe5414",
+        "android_client_info": {
+          "package_name": "com.youss.imdb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866608175485-174fsdspac52b6aqmv8oe8bc7bhvb519.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0sbboJ-zwI-Cm4H7klQwIEDSwz42_paA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866608175485-174fsdspac52b6aqmv8oe8bc7bhvb519.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
