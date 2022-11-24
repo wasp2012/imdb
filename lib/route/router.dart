@@ -45,9 +45,6 @@ class AppRouter {
                       MovieDetailsCubit(getIt<MoviesRepository>()),
                 ),
                 BlocProvider(
-                  create: (context) => getIt<FavoriteCubit>(),
-                ),
-                BlocProvider(
                   create: (context) => ProfileCubit(
                     (getIt<AccountRepository>()),
                   ),
@@ -75,19 +72,13 @@ class AppRouter {
       case settingsScreen:
         return MaterialPageRoute(
           builder: (context) {
-            return BlocProvider(
-              create: (context) => getIt<ThemeCubit>(),
-              child: const SettingsScreen(),
-            );
+            return const SettingsScreen();
           },
         );
       case logInScreen:
         return MaterialPageRoute(
           builder: (context) {
-            return BlocProvider.value(
-              value: getIt<AuthenticationCubit>(),
-              child: const LogInScreen(),
-            );
+            return const LogInScreen();
           },
         );
       case profileScreen:
@@ -106,9 +97,6 @@ class AppRouter {
 
             return MultiBlocProvider(
               providers: [
-                BlocProvider(
-                  create: (context) => getIt<FavoriteCubit>(),
-                ),
                 BlocProvider(
                   create: (context) =>
                       MovieDetailsCubit(getIt<MoviesRepository>()),

@@ -321,7 +321,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           },
           child: Icon(
             favCubit.iconData,
-            color: Colors.white,
+            color: Colors.amber[900],
           ),
         );
       }),

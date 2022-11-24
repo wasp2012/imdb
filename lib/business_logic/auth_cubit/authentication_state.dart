@@ -30,7 +30,7 @@ class AuthenticationStateSessionModelSuccess extends AuthenticationState {
 class AuthenticationStateSuccess extends AuthenticationState {
   final LoginModel? loginModelObj;
 
-  AuthenticationStateSuccess.login(this.loginModelObj);
+  AuthenticationStateSuccess(this.loginModelObj);
 }
 
 class AuthenticationStateFailed extends AuthenticationState {}

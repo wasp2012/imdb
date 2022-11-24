@@ -47,18 +47,14 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     print('Not Empty ${await SharedPrefs.getStringValuesSF(requestTokenKey)}');
     if (await SharedPrefs.checkValue(requestTokenKey)) {
       String reqToken = await SharedPrefs.getStringValuesSF(requestTokenKey);
-      await sendDataToLogin(userName, password, reqToken);
+      await emitPostLogin(LogInBodyModel(
+          username: userName, password: password, requestToken: reqToken));
     } else {
       emitGetRequestToken();
       String reqToken = await SharedPrefs.getStringValuesSF(requestTokenKey);
-      await sendDataToLogin(userName, password, reqToken);
+      await emitPostLogin(LogInBodyModel(
+          username: userName, password: password, requestToken: reqToken));
     }
-  }
-
-  Future<void> sendDataToLogin(
-      String userName, String password, String reqToken) async {
-    emitPostLogin(LogInBodyModel(
-        username: userName, password: password, requestToken: reqToken));
   }
 
   Future<void> emitPostLogin(LogInBodyModel logInBodyModel) async {
@@ -73,7 +69,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         if (loginModelObj?.success == true) {
           isLoggedIn = loginResults.success!;
           checkThenCreateSession();
-          emit(AuthenticationStateSuccess.login(loginResults));
+          emit(AuthenticationStateSuccess(loginResults));
         } else {
           emit(AuthenticationStateFailed());
         }
@@ -106,6 +102,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   SessionModel? sessionModel;
 
   Future<void> emitSessionId(SessionBody sessionBody) async {
+    emit(AuthenticationStateLoading());
     try {
       ApiResult<SessionModel?> response =
           await authRepository.createSession(sessionBody);

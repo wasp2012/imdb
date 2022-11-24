@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:imdb_demo/business_logic/auth_cubit/authentication_cubit.dart';
+import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/constants/themes.dart';
 
@@ -66,6 +67,9 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => getIt<AuthenticationCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<FavoriteCubit>(),
               ),
             ],
             child: BlocBuilder<ThemeCubit, SettingStateTheme>(
