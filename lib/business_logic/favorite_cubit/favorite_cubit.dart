@@ -95,7 +95,6 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         emit(FavoriteMoviesError(networkExceptions));
       });
     } else {
-      Navigator.defaultRouteName;
       throw const NetworkExceptions.notFound('Session ID Or UserId');
     }
   }

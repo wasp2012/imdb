@@ -44,11 +44,6 @@ class AppRouter {
                   create: (context) =>
                       MovieDetailsCubit(getIt<MoviesRepository>()),
                 ),
-                BlocProvider(
-                  create: (context) => ProfileCubit(
-                    (getIt<AccountRepository>()),
-                  ),
-                ),
               ],
               child: MovieDetailsScreen(
                 movieId: movieId as String,
@@ -84,10 +79,7 @@ class AppRouter {
       case profileScreen:
         return MaterialPageRoute(
           builder: (context) {
-            return BlocProvider(
-              create: (context) => getIt<ProfileCubit>(),
-              child: const ProfileScreen(),
-            );
+            return const ProfileScreen();
           },
         );
       case favoriteScreen:

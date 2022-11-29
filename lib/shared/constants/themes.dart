@@ -17,7 +17,7 @@ class AppTheme {
     headline2: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
     bodyText2: TextStyle(
         color: Color.fromARGB(255, 105, 104, 104), fontWeight: FontWeight.w500),
-    subtitle1: TextStyle(color: Colors.grey),
+    subtitle1: TextStyle(color: Color.fromARGB(255, 10, 10, 10)),
   );
 
   static Color darkBackgroundColor = const Color.fromARGB(255, 27, 27, 27);
@@ -34,7 +34,7 @@ class AppTheme {
     headline2: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
     bodyText2: TextStyle(
         color: Color.fromARGB(255, 165, 164, 164), fontWeight: FontWeight.w500),
-    subtitle1: TextStyle(color: Colors.blueGrey),
+    subtitle1: TextStyle(color: Colors.white),
   );
 
   const AppTheme._();

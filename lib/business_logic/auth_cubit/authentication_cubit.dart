@@ -64,11 +64,15 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       var response = await authRepository.postLogIn(logInBodyModel);
       response.when(success: (LoginModel? loginResults) async {
         loginModelObj = loginResults;
-        await SharedPrefs.addStringToSF(
-            userTokenKey, loginResults!.requestToken!);
+
         if (loginModelObj?.success == true) {
+          await SharedPrefs.addStringToSF(
+              userTokenKey, loginResults!.requestToken!);
+
           isLoggedIn = loginResults.success!;
+
           checkThenCreateSession();
+
           emit(AuthenticationStateSuccess(loginResults));
         } else {
           emit(AuthenticationStateFailed());

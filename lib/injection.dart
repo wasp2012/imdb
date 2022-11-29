@@ -52,7 +52,7 @@ void initGetIt() {
 
   getIt.registerSingletonAsync<FavoriteCubit>(() async {
     final allFavorite = FavoriteCubit(getIt<AccountRepository>());
-    if (await SharedPrefs.checkValue(userTokenKey)) {
+    if (await SharedPrefs.checkValue(userIdKey)) {
       await allFavorite.emitGetFavoriteMovies();
     }
     return allFavorite;
@@ -68,7 +68,7 @@ void initGetIt() {
 
   getIt.registerSingletonAsync<ProfileCubit>(() async {
     final userDetail = ProfileCubit(getIt<AccountRepository>());
-    if (await SharedPrefs.checkValue(userTokenKey)) {
+    if (await SharedPrefs.checkValue(sessionIdKey)) {
       await userDetail.emitGetUserDetails();
     }
     return userDetail;

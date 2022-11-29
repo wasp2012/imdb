@@ -10,7 +10,7 @@ const watchListScreen = '/watch_list_screen';
 
 //Links
 const youtubeLink = 'https://www.youtube.com/watch?v=';
-const imageDisplay = 'http://image.tmdb.org/t/p/original';
+const imageDisplay = 'https://image.tmdb.org/t/p/original';
 const gravatar = 'https://secure.gravatar.com/avatar/';
 const personImage =
     'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png';

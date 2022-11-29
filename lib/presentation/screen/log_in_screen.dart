@@ -134,18 +134,13 @@ class _LogInScreenState extends State<LogInScreen> {
                             } else if (state is AuthenticationStateFailed) {
                               cantLogInDialog(context);
                             } else if (state is AuthenticationStateError) {
-                              cantLogInDialog(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Error Logging in')));
                             }
                           },
                           child: ElevatedButton(
                             onPressed: () async {
                               await logInOnPress(context, cubit);
-
-                              // const CircularProgressIndicator();
-
-                              // cubit.checkThenCreateSession();
-
-                              // cantLogInDialog(context);
                             },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(

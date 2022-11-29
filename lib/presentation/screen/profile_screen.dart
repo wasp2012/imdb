@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imdb_demo/shared/common/gradient.dart';
 import 'package:imdb_demo/shared/offline_data.dart';
 import '../../business_logic/profile_cubit/profile_cubit.dart';
@@ -18,6 +19,10 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    final double coverHeight = 280;
+    final double profileHeight = 160;
+    final double top = coverHeight - profileHeight / 2;
+
     final cubit = getIt<ProfileCubit>();
     return Scaffold(
       extendBody: true,
@@ -31,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         child: FutureBuilder(
-          future: getIt<ProfileCubit>().emitGetUserDetails(),
+          future: getIt.allReady(),
           builder: (context, snapshot) {
             return BlocBuilder<ProfileCubit, ProfileState>(
               builder: (context, state) {
@@ -49,13 +54,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(bottom: 20),
-                        alignment: Alignment.center,
                         child: Stack(
+                          clipBehavior: Clip.none,
+                          alignment: Alignment.center,
                           children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              radius: 60.0,
+                            Container(
+                              color: Colors.grey,
+                              child: Image.network(
+                                cubit.userDetails?.avatar?.tmdb?.avatarPath ==
+                                        null
+                                    ? personImage
+                                    : imageDisplay +
+                                        cubit.userDetails!.avatar!.tmdb!
+                                            .avatarPath!,
+                                width: double.infinity,
+                                height: coverHeight.h,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned(
+                              top: top,
                               child: CircleAvatar(
+                                radius: profileHeight / 2,
+                                backgroundColor: Colors.grey.shade800,
                                 backgroundImage: NetworkImage(cubit.userDetails
                                             ?.avatar?.tmdb?.avatarPath ==
                                         null
@@ -63,76 +84,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     : imageDisplay +
                                         cubit.userDetails!.avatar!.tmdb!
                                             .avatarPath!),
-                                radius: 50.0,
-                              ),
-                            ),
-                            Positioned(
-                              top: 90,
-                              left: 80,
-                              child: Container(
-                                width: 25,
-                                height: 25,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image: NetworkImage(cubit.userDetails
-                                                  ?.avatar?.gravatar?.hash ==
-                                              null
-                                          ? ''
-                                          : '$gravatar${cubit.userDetails?.avatar?.gravatar?.hash}')),
-                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      cubit.userDetails?.username != null
-                          ? Row(
-                              children: [
-                                const Text('Username: '),
-                                Text(
-                                  cubit.userDetails!.username!,
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ],
-                            )
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      cubit.userDetails?.username != null ||
+                              cubit.userDetails?.username != ''
+                          ? buildUserInfo(context, 'Username: ',
+                              cubit.userDetails!.username!)
                           : const SizedBox(),
                       cubit.userDetails?.name != null &&
                               cubit.userDetails!.name != ''
-                          ? Row(
-                              children: [
-                                const Text('Name: '),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  cubit.userDetails!.name!,
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ],
-                            )
+                          ? buildUserInfo(
+                              context, 'name: ', cubit.userDetails!.name!)
                           : const SizedBox(),
                       cubit.userDetails?.includeAdult != null
-                          ? Row(
-                              children: [
-                                const Text('Adult: '),
-                                Text(
-                                  cubit.userDetails!.includeAdult! == true
-                                      ? 'Yes'
-                                      : 'No!',
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ],
-                            )
+                          ? buildUserInfo(
+                              context,
+                              'Adult: ',
+                              cubit.userDetails?.includeAdult == true
+                                  ? '+18 content'
+                                  : 'Child')
                           : const SizedBox(),
-                      TextButton(
+                      Container(
+                        alignment: Alignment.bottomCenter,
+                        child: ElevatedButton(
                           onPressed: () async {
                             await returnToLogin(context);
                           },
                           child: Text(
                             'Log out',
-                            style: Theme.of(context).textTheme.bodyText2,
-                          )),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.sp),
+                          ),
+                        ),
+                      )
                     ],
                   );
                 }
@@ -140,6 +132,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget buildUserInfo(BuildContext context, String title, String content) {
+    return Container(
+      margin: EdgeInsets.only(left: 8),
+      child: Row(
+        children: [
+          Text(title, style: Theme.of(context).textTheme.subtitle1),
+          Text(
+            content,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ],
       ),
     );
   }

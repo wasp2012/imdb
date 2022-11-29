@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:imdb_demo/business_logic/auth_cubit/authentication_cubit.dart';
 import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
+import 'package:imdb_demo/business_logic/profile_cubit/profile_cubit.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/constants/themes.dart';
 
@@ -21,6 +22,8 @@ import 'business_logic/theme_cubit/theme_state.dart';
 import 'injection.dart';
 import 'route/router.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
+import 'shared/data/repo/account_repo/acc_repo.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -70,6 +73,9 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => getIt<FavoriteCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<ProfileCubit>(),
               ),
             ],
             child: BlocBuilder<ThemeCubit, SettingStateTheme>(
