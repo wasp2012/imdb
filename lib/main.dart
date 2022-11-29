@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
                 create: (context) => getIt<ProfileCubit>(),
               ),
             ],
-            child: BlocBuilder<ThemeCubit, SettingStateTheme>(
+            child: BlocBuilder<ThemeCubit, SettingState>(
               builder: (context, state) {
                 return ScreenUtilInit(
                     designSize: const Size(360, 690),

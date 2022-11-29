@@ -1,14 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, sort_child_properties_last, prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:imdb_demo/business_logic/movies_cubit/movies_cubit.dart';
-import 'package:imdb_demo/injection.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/data/models/movies/results.dart';
 
 class MoviesGridWidget extends StatelessWidget {
-  Results movie;
+  final Results movie;
 
-  MoviesGridWidget({
+  const MoviesGridWidget({
     Key? key,
     required this.movie,
   }) : super(key: key);
@@ -16,7 +13,7 @@ class MoviesGridWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsetsDirectional.all(5),
+      padding: const EdgeInsetsDirectional.all(5),
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, movieDetailsScreen,
             arguments: movie.id.toString()),
@@ -52,7 +49,7 @@ class MoviesGridWidget extends StatelessWidget {
                   child: Center(
                     child: Text(
                       '${movie.voteAverage}%',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           backgroundColor: Colors.white54),

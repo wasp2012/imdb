@@ -41,11 +41,11 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     ApiResult<FavoriteModel?> response = await accountRepository
         .markMovieAsFavorite(sessionId, userId, favoriteBody);
     response.when(success: (favoriteResult) async {
-      favoriteModel = favoriteResult!;
+      favoriteModel = favoriteResult;
       await isSaved(
-        favoriteResult.statusCode ?? 0,
+        favoriteResult?.statusCode ?? 0,
         favoriteBody.mediaId ?? 0,
-        favoriteResult,
+        favoriteResult!,
       );
     }, failure: (NetworkExceptions networkExceptions) {
       emit(FavoriteStateError(networkExceptions));

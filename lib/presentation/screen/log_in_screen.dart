@@ -5,10 +5,7 @@ import '../../business_logic/auth_cubit/authentication_state.dart';
 import '../../injection.dart';
 import '../widget/plasma.dart';
 import '../../shared/constants/strings.dart';
-import '../../shared/data/models/authentication/login_model.dart';
-import '../../shared/data/models/authentication/req_token.dart';
 import '../../shared/helper.dart';
-import '../../shared/offline_data.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});
@@ -135,7 +132,8 @@ class _LogInScreenState extends State<LogInScreen> {
                               cantLogInDialog(context);
                             } else if (state is AuthenticationStateError) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Error Logging in')));
+                                  const SnackBar(
+                                      content: Text('Error Logging in')));
                             }
                           },
                           child: ElevatedButton(

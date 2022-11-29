@@ -1,36 +1,36 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:imdb_demo/shared/common/animation_enum.dart';
 
-import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
-import 'package:imdb_demo/shared/data/models/account/profile_details_model.dart';
 import 'package:imdb_demo/shared/offline_data.dart';
-import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 
 import '../../shared/constants/themes.dart';
-import '../../shared/data/repo/account_repo/acc_repo.dart';
-import '../../shared/web_services/errors/api_result.dart';
 import 'theme_state.dart';
+import 'package:rive/rive.dart';
 
-class ThemeCubit extends Cubit<SettingStateTheme> {
-  ThemeCubit() : super(SettingStateTheme(themeMode: AppTheme.lightTheme));
-  bool isDark = false;
-//SettingStateTheme(themeMode: AppTheme.lightTheme)
+class ThemeCubit extends Cubit<SettingState> {
+  ThemeCubit() : super(SettingStateIdle()) {
+    SettingStateTheme(themeMode: AppTheme.lightTheme);
+  }
+
+  late RiveAnimationController switchNightController;
+  late RiveAnimationController dayIdleController;
+  late RiveAnimationController nightIdleController;
+  late RiveAnimationController switchDayController;
+  Artboard? riveArtBoard;
+
   toggleSwitch(bool value) {
-    SettingStateTheme updatedState;
-    if (state.themeMode == AppTheme.lightTheme) {
+    SettingStateTheme? updatedState;
+    if (updatedState?.themeMode == AppTheme.lightTheme) {
       saveTheme(value);
-
-      updatedState = SettingStateTheme(themeMode: AppTheme.darkTheme);
-      emit(updatedState);
+      emit(SettingStateTheme(themeMode: AppTheme.darkTheme));
     } else {
       saveTheme(value);
-
-      updatedState = SettingStateTheme(themeMode: AppTheme.lightTheme);
-      emit(updatedState);
+      emit(SettingStateTheme(themeMode: AppTheme.lightTheme));
     }
   }
 
@@ -42,5 +42,83 @@ class ThemeCubit extends Cubit<SettingStateTheme> {
   bool? savedTheme;
   getSavedTheme() async {
     savedTheme = await SharedPrefs.getBoolValuesSF(darkThemeKey);
+  }
+
+  void removeAllControllers() {
+    riveArtBoard?.artboard.removeController(switchNightController);
+    riveArtBoard?.artboard.removeController(dayIdleController);
+    riveArtBoard?.artboard.removeController(nightIdleController);
+    riveArtBoard?.artboard.removeController(switchDayController);
+  }
+
+  void addDayIdleController() {
+    removeAllControllers();
+
+    riveArtBoard?.artboard.addController(dayIdleController);
+    debugPrint("idleee day");
+  }
+
+  void addNightIdleController() {
+    removeAllControllers();
+
+    riveArtBoard?.artboard.addController(nightIdleController);
+    debugPrint("idleee night");
+  }
+
+  void addSwitchNightController() {
+    removeAllControllers();
+
+    riveArtBoard?.artboard.addController(switchNightController);
+    debugPrint("switch night");
+  }
+
+  void addSwitchDayController() {
+    removeAllControllers();
+
+    riveArtBoard?.artboard.addController(switchDayController);
+    debugPrint("switch day");
+  }
+
+  void switchToDark() {
+    addSwitchNightController();
+
+    Future.delayed(
+      Duration(milliseconds: 300),
+      () {
+        addNightIdleController();
+      },
+    );
+  }
+
+  void switchToLight() {
+    addSwitchDayController();
+
+    Future.delayed(
+      Duration(milliseconds: 300),
+      () {
+        addDayIdleController();
+      },
+    );
+  }
+
+  void settingUpTheArtBoard() {
+    switchNightController = SimpleAnimation(AnimationEnum.switch_night.name);
+
+    dayIdleController = SimpleAnimation(AnimationEnum.day_idle.name);
+
+    nightIdleController = SimpleAnimation(AnimationEnum.night_idle.name);
+
+    switchDayController = SimpleAnimation(AnimationEnum.switch_day.name);
+
+    rootBundle.load('assets/images/theme_switch.riv').then((data) {
+      final file = RiveFile.import(data);
+      final artBoard = file.mainArtboard;
+
+      artBoard.addController(
+          savedTheme == true ? nightIdleController : dayIdleController);
+
+      riveArtBoard = artBoard;
+      emit(InitRive());
+    });
   }
 }

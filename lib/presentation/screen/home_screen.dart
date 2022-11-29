@@ -5,13 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imdb_demo/shared/common/gradient.dart';
 import '../widget/blured_movie_image_widget.dart';
-import '../../shared/constants/strings.dart';
 
 import '../../business_logic/movies_cubit/movies_cubit.dart';
 import '../../injection.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
 import '../widget/movie_section_widget.dart';
-import '../widget/nav_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -143,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

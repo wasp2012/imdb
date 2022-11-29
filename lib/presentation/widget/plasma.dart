@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../shared/constants/themes.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 class PlasmaBackground extends StatelessWidget {

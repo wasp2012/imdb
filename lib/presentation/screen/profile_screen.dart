@@ -9,24 +9,19 @@ import '../../injection.dart';
 import '../../shared/constants/strings.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
   Widget build(BuildContext context) {
-    final double coverHeight = 280;
-    final double profileHeight = 160;
-    final double top = coverHeight - profileHeight / 2;
+    const double coverHeight = 280;
+    const double profileHeight = 160;
+    const double top = coverHeight - profileHeight / 2;
 
     final cubit = getIt<ProfileCubit>();
     return Scaffold(
       extendBody: true,
-      bottomNavigationBar: CurvedBottomNavbarWidget(currentPage: 3),
+      bottomNavigationBar: const CurvedBottomNavbarWidget(currentPage: 3),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -36,7 +31,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         child: FutureBuilder(
-          future: getIt.allReady(),
+          future: Future.wait([
+            getIt.allReady(),
+            cubit.emitGetUserDetails(),
+          ]),
           builder: (context, snapshot) {
             return BlocBuilder<ProfileCubit, ProfileState>(
               builder: (context, state) {
@@ -92,8 +90,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      cubit.userDetails?.username != null ||
-                              cubit.userDetails?.username != ''
+                      cubit.userDetails?.username != null
                           ? buildUserInfo(context, 'Username: ',
                               cubit.userDetails!.username!)
                           : const SizedBox(),
@@ -136,14 +133,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget buildUserInfo(BuildContext context, String title, String content) {
+  Widget buildUserInfo(BuildContext context, String title, String? content) {
     return Container(
-      margin: EdgeInsets.only(left: 8),
+      margin: const EdgeInsets.only(left: 8),
       child: Row(
         children: [
           Text(title, style: Theme.of(context).textTheme.subtitle1),
           Text(
-            content,
+            content ?? '',
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ],

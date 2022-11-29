@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
@@ -24,6 +23,13 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    var cubit = getIt<FavoriteCubit>();
+    cubit.checkIfMovieExist(int.parse(widget.movieId));
+  }
+
   Widget characterInfo(String title, String value, BuildContext context) {
     return RichText(
       maxLines: 1,
@@ -88,22 +94,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    print(widget.movieId);
     var movieCubit = BlocProvider.of<MovieDetailsCubit>(context);
     var favCubit = getIt<FavoriteCubit>();
-    print('/// ${favCubit.isFavorite} \\');
-    favCubit.checkIfMovieExist(int.parse(widget.movieId));
-    print('/// ${favCubit.isFavorite} \\');
 
     return Scaffold(
       body: FutureBuilder(
           future: Future.wait([
+            getIt.allReady(),
             movieCubit.emitMovieDetails(widget.movieId),
           ]),
           builder: (context, snapshot) =>
@@ -256,7 +254,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                     const SizedBox(
                                       height: 50,
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: double.infinity,
                                       height: 50,
                                       child: displayRandomQuoteOrEmptySpace(

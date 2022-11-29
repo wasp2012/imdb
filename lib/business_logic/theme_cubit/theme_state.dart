@@ -25,8 +25,14 @@ class SettingStateError extends SettingState {
   SettingStateError(this.networkExceptions);
 }
 
-class SettingStateTheme {
+class SettingStateTheme extends SettingState {
   final ThemeData themeMode;
 
   SettingStateTheme({required this.themeMode});
 }
+
+class SwitchToDark extends SettingState {}
+
+class SwitchToLight extends SettingState {}
+
+class InitRive extends SettingState {}

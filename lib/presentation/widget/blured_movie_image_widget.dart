@@ -1,18 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:imdb_demo/shared/constants/strings.dart';
-import 'package:imdb_demo/shared/data/models/movies/now_playing.dart';
 
-import '../../business_logic/movies_cubit/movies_cubit.dart';
-import '../../business_logic/movies_cubit/movies_state.dart';
-import '../../injection.dart';
 import '../../shared/data/models/movies/results.dart';
 
 class BluredMovieImageWidget extends StatefulWidget {
-  List<Results>? movie;
-  BluredMovieImageWidget({
+  final List<Results>? movie;
+  const BluredMovieImageWidget({
     Key? key,
     this.movie,
   }) : super(key: key);
@@ -22,7 +17,7 @@ class BluredMovieImageWidget extends StatefulWidget {
 }
 
 class _BluredMovieImageWidgetState extends State<BluredMovieImageWidget> {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void didChangeDependencies() {

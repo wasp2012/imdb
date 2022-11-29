@@ -14,7 +14,10 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = getIt<FavoriteCubit>();
     return FutureBuilder(
-        future: getIt.allReady(),
+        future: Future.wait([
+          getIt.allReady(),
+          cubit.emitGetFavoriteMovies(),
+        ]),
         builder: (context, AsyncSnapshot) {
           return Scaffold(
             extendBody: true,
@@ -55,13 +58,16 @@ class FavoriteScreen extends StatelessWidget {
                                   .allFavoriteModel.results![index].id
                                   .toString()),
                           child: Card(
-                            color: Colors.transparent,
-                            borderOnForeground: true,
-                            elevation: 20,
-                            child: Image.network(
-                              '$imageDisplay${cubit.allFavoriteModel.results?[index].posterPath}',
-                            ),
-                          ),
+                              color: Colors.transparent,
+                              borderOnForeground: true,
+                              elevation: 20,
+                              child: cubit.allFavoriteModel.results != null &&
+                                      cubit.allFavoriteModel.results![index]
+                                          .posterPath!.isNotEmpty
+                                  ? Image.network(
+                                      '$imageDisplay${cubit.allFavoriteModel.results?[index].posterPath}',
+                                    )
+                                  : Image.asset(personImage)),
                         );
                       },
                     );

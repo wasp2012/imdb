@@ -1,13 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, unused_field
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:imdb_demo/presentation/widget/plasma.dart';
 import 'package:imdb_demo/shared/data/models/movies/movies_id/movies_video_by_id_model.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YouTubePlayerWidget extends StatefulWidget {
   final List<VideoForMovieResult?> results;
-  YouTubePlayerWidget({
+  const YouTubePlayerWidget({
     Key? key,
     required this.results,
   }) : super(key: key);
@@ -47,9 +45,9 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.results.isEmpty || widget.results == null) {
-      return Center(
-        child: Container(child: Text('Nothing to show')),
+    if (widget.results.isEmpty) {
+      return const Center(
+        child: Text('Nothing to show'),
       );
     } else {
       return GridView.builder(
@@ -68,7 +66,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
             );
             return Container(
               color: Theme.of(context).backgroundColor,
-              margin: EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
               child: YoutubePlayer(
                 controller: _controller,
                 showVideoProgressIndicator: true,

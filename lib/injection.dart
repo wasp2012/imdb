@@ -52,9 +52,8 @@ void initGetIt() {
 
   getIt.registerSingletonAsync<FavoriteCubit>(() async {
     final allFavorite = FavoriteCubit(getIt<AccountRepository>());
-    if (await SharedPrefs.checkValue(userIdKey)) {
-      await allFavorite.emitGetFavoriteMovies();
-    }
+    await allFavorite.emitGetFavoriteMovies();
+
     return allFavorite;
   });
 
