@@ -13,7 +13,7 @@ import '../../shared/web_services/errors/network_exceptions.dart';
 import 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  AccountRepository accountRepository;
+  AccountRepository? accountRepository;
 
   ProfileCubit(
     this.accountRepository,
@@ -27,7 +27,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         emit(ProfileStateLoading());
         var sessionID = await SharedPrefs.getStringValuesSF(sessionIdKey);
         ApiResult<UserDetailsModel?> response =
-            await accountRepository.getUserDetails(sessionID);
+            await accountRepository!.getUserDetails(sessionID);
         response.when(
           success: (userDetailsResult) {
             userDetails = userDetailsResult!;

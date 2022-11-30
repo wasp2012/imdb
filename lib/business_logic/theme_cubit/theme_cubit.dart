@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:imdb_demo/shared/common/animation_enum.dart';
-
 import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/offline_data.dart';
+import 'package:rive/rive.dart';
 
 import '../../shared/constants/themes.dart';
 import 'theme_state.dart';
-import 'package:rive/rive.dart';
 
 class ThemeCubit extends Cubit<SettingState> {
   ThemeCubit() : super(SettingStateIdle()) {

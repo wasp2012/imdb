@@ -9,8 +9,8 @@ import '../../business_logic/movies_cubit/movies_state.dart';
 import 'movies_grid.dart';
 
 class MovieSectionWidget extends StatefulWidget {
-  final String sectionTitle;
-  final int flag;
+  final String? sectionTitle;
+  final int? flag;
 
   const MovieSectionWidget({
     super.key,

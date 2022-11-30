@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+
 import '../../shared/constants/strings.dart';
 import '../../shared/data/models/authentication/login_model.dart';
 import '../../shared/data/models/authentication/req_token.dart';
@@ -8,11 +9,10 @@ import '../../shared/data/repo/auth_repo/auth_repo.dart';
 import '../../shared/offline_data.dart';
 import '../../shared/web_services/errors/api_result.dart';
 import '../../shared/web_services/errors/network_exceptions.dart';
-
 import 'authentication_state.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
-  AuthRepository authRepository;
+  AuthRepository? authRepository;
 
   AuthenticationCubit(this.authRepository) : super(AuthenticationStateIdle());
 
@@ -23,7 +23,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
     try {
       ApiResult<RequestTokenModel?> response =
-          await authRepository.getRequestToken();
+          await authRepository!.getRequestToken();
       response.when(success: (requestToken) async {
         requestTokenObj = requestToken!;
         await SharedPrefs.addStringToSF(
@@ -61,7 +61,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     emit(AuthenticationStateLoading());
 
     try {
-      var response = await authRepository.postLogIn(logInBodyModel);
+      ApiResult<LoginModel?> response =
+          await authRepository!.postLogIn(logInBodyModel);
       response.when(success: (LoginModel? loginResults) async {
         loginModelObj = loginResults;
 
@@ -109,7 +110,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     emit(AuthenticationStateLoading());
     try {
       ApiResult<SessionModel?> response =
-          await authRepository.createSession(sessionBody);
+          await authRepository!.createSession(sessionBody);
       response.when(success: (sessionResult) async {
         sessionModel = sessionResult!;
         await SharedPrefs.addStringToSF(sessionIdKey, sessionResult.sessionId!);

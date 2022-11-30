@@ -8,7 +8,7 @@ import '../../shared/data/models/movies/movie_details.dart';
 import 'movie_details_state.dart';
 
 class MovieDetailsCubit extends Cubit<MovieDetailsState> {
-  MoviesRepository moviesRepository;
+  MoviesRepository? moviesRepository;
 
   MovieDetailsCubit(
     this.moviesRepository,
@@ -20,7 +20,7 @@ class MovieDetailsCubit extends Cubit<MovieDetailsState> {
       emit(MovieDetailsLoading());
 
       ApiResult<MovieDetailsModel?> response =
-          await moviesRepository.getMovieDetails(id);
+          await moviesRepository!.getMovieDetails(id);
 
       response.when(success: (movieDetailsResult) {
         movieDetailsModel = movieDetailsResult!;

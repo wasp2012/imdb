@@ -1,6 +1,6 @@
-import 'dart:convert';
-
 import '../../../constants/apis.dart';
+import '../../../web_services/errors/api_result.dart';
+import '../../../web_services/errors/network_exceptions.dart';
 import '../../models/movies/movie_details.dart';
 import '../../models/movies/movies_id/movies_video_by_id_model.dart';
 import '../../models/movies/now_playing.dart';
@@ -8,18 +8,14 @@ import '../../models/movies/popular.dart';
 import '../../models/movies/top_rated.dart';
 import '../../models/movies/upcoming.dart';
 import 'movies_repo_interface.dart';
-import '../../../web_services/errors/api_result.dart';
-import '../../../web_services/errors/network_exceptions.dart';
 
 class MoviesRepository extends MoviesRepositoryInterface {
   @override
-  Future<ApiResult<NowPlayingMovieModel>> getMoviesPlayingNow() async {
+  Future<ApiResult<NowPlayingMovieModel?>> getMoviesPlayingNow() async {
     try {
       var response = await webServicesForMovies?.getMoviesPlayingNow(
         ApisUrl.apiKey,
       );
-
-      // print(jsonEncode(response));
       return ApiResult.success(response!);
     } catch (error) {
       return ApiResult.failure(
@@ -37,7 +33,6 @@ class MoviesRepository extends MoviesRepositoryInterface {
         ApisUrl.apiKey,
       );
 
-      // print(jsonEncode(response));
       return ApiResult.success(response!);
     } catch (error) {
       return ApiResult.failure(
@@ -55,7 +50,6 @@ class MoviesRepository extends MoviesRepositoryInterface {
         ApisUrl.apiKey,
       );
 
-      // print(jsonEncode(response));
       return ApiResult.success(response!);
     } catch (error) {
       return ApiResult.failure(
@@ -73,7 +67,6 @@ class MoviesRepository extends MoviesRepositoryInterface {
         ApisUrl.apiKey,
       );
 
-      // print(jsonEncode(response));
       return ApiResult.success(response!);
     } catch (error) {
       return ApiResult.failure(
@@ -91,7 +84,6 @@ class MoviesRepository extends MoviesRepositoryInterface {
         ApisUrl.apiKey,
         id,
       );
-      print(response!.title);
 
       return ApiResult.success(response);
     } catch (error) {
@@ -110,7 +102,6 @@ class MoviesRepository extends MoviesRepositoryInterface {
         ApisUrl.apiKey,
         id,
       );
-      print(jsonEncode(response));
       return ApiResult.success(response);
     } catch (error) {
       print(error);

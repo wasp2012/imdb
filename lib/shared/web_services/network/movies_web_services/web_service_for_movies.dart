@@ -19,40 +19,30 @@ abstract class WebServicesForMovies {
   @GET('/now_playing')
   Future<NowPlayingMovieModel> getMoviesPlayingNow(
     @Query('api_key') String apiKey,
-    // @Query('language') String language,
-    // @Query('page') String page
   );
   @GET('/popular')
   Future<PopularMovieModel> getMoviesPopular(
     @Query('api_key') String apiKey,
-    // @Query('language') String language,
-    // @Query('page') String page
   );
 
   @GET('/top_rated')
   Future<TopRatedMovieModel> getMoviesTopRated(
     @Query('api_key') String apiKey,
-    // @Query('language') String language,
-    // @Query('page') String page
   );
 
   @GET('/upcoming')
   Future<UpcomingMovieModel> getMoviesUpComing(
     @Query('api_key') String apiKey,
-    // @Query('language') String language,
-    // @Query('page') String page
   );
   @GET('/{id}')
   Future<MovieDetailsModel> getMovieDetails(
     @Query('api_key') String apiKey,
     @Path() String id,
-    // @Query('page') String page
   );
 
   @GET('/{movie_id}/videos')
   Future<MovieVideoById> getMovieVideos(
     @Query('api_key') String apiKey,
     @Path('movie_id') String id,
-    // @Query('page') String page
   );
 }

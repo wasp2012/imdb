@@ -11,7 +11,7 @@ import '../../shared/web_services/errors/network_exceptions.dart';
 part 'favorite_state.dart';
 
 class FavoriteCubit extends Cubit<FavoriteState> {
-  AccountRepository accountRepository;
+  AccountRepository? accountRepository;
 
   FavoriteCubit(
     this.accountRepository,
@@ -38,7 +38,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
 
   Future<void> favoriteMovieResponse(
       String sessionId, int userId, FavoriteBody favoriteBody) async {
-    ApiResult<FavoriteModel?> response = await accountRepository
+    ApiResult<FavoriteModel?> response = await accountRepository!
         .markMovieAsFavorite(sessionId, userId, favoriteBody);
     response.when(success: (favoriteResult) async {
       favoriteModel = favoriteResult;
@@ -76,7 +76,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     }
   }
 
-  AllFavoriteModel allFavoriteModel = AllFavoriteModel();
+  AllFavoriteModel? allFavoriteModel;
   List<Results>? favoriteMoviesList = [];
   Future<void> emitGetFavoriteMovies() async {
     if (await SharedPrefs.checkValue(sessionIdKey) &&
@@ -85,11 +85,10 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       var userId = await SharedPrefs.getIntValuesSF(userIdKey);
 
       ApiResult<AllFavoriteModel?> response =
-          await accountRepository.getFavoriteMovies(sessionId, userId);
+          await accountRepository!.getFavoriteMovies(sessionId, userId);
       response.when(success: (favoriteMoviesResponse) {
         allFavoriteModel = favoriteMoviesResponse!;
         favoriteMoviesList = favoriteMoviesResponse.results;
-        print(favoriteMoviesList);
         emit(FavoriteMoviesSuccess(favoriteMoviesResponse));
       }, failure: (NetworkExceptions networkExceptions) {
         emit(FavoriteMoviesError(networkExceptions));
@@ -99,7 +98,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     }
   }
 
-  bool isFavorite = false;
+  bool? isFavorite = false;
   IconData? iconData;
   bool? isExist;
   void checkIfMovieExist(int id) {

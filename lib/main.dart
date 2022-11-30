@@ -2,28 +2,24 @@
 import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:imdb_demo/business_logic/auth_cubit/authentication_cubit.dart';
 import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
 import 'package:imdb_demo/business_logic/profile_cubit/profile_cubit.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/constants/themes.dart';
-
 import 'package:imdb_demo/shared/offline_data.dart';
 
 import 'bloc_observer.dart';
-
 import 'business_logic/theme_cubit/theme_cubit.dart';
 import 'business_logic/theme_cubit/theme_state.dart';
 import 'injection.dart';
 import 'route/router.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-
-import 'shared/data/repo/account_repo/acc_repo.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -51,11 +47,15 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({required this.router, required this.home, Key? key}) : super(key: key);
 
-  final AppRouter router;
-  final String home;
+  final AppRouter? router;
+  final String? home;
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return FutureBuilder(
       future: getIt.allReady(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
                             ? ThemeMode.dark
                             : ThemeMode.light,
                         initialRoute: home,
-                        onGenerateRoute: router.onGenerateRoute,
+                        onGenerateRoute: router?.onGenerateRoute,
                       );
                     });
               },

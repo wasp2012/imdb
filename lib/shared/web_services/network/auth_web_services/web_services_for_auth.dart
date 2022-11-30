@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:retrofit/retrofit.dart';
+
 import '../../../constants/apis.dart';
 import '../../../data/models/authentication/login_model.dart';
 import '../../../data/models/authentication/req_token.dart';
 import '../../../data/models/authentication/session_model.dart';
-import 'package:retrofit/retrofit.dart';
 
 part 'web_services_for_auth.g.dart';
 

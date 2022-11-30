@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:imdb_demo/business_logic/movie_detail_cubit/movie_details_state.dart';
+import '../movie_detail_cubit/movie_details_state.dart';
 import '../../shared/data/repo/movies_repo/movies_repository.dart';
 
 import '../../shared/data/models/movies/now_playing.dart';
@@ -13,7 +13,7 @@ import '../../shared/web_services/errors/network_exceptions.dart';
 import 'movies_state.dart';
 
 class MoviesCubit extends Cubit<MoviesState> {
-  MoviesRepository moviesRepository;
+  MoviesRepository? moviesRepository;
 
   MoviesCubit(
     this.moviesRepository,
@@ -31,7 +31,7 @@ class MoviesCubit extends Cubit<MoviesState> {
       emit(MoviesStateLoading());
 
       ApiResult<NowPlayingMovieModel?> response =
-          await moviesRepository.getMoviesPlayingNow();
+          await moviesRepository!.getMoviesPlayingNow();
       response.when(success: (nowPlayingMovieModel) {
         nowPlayingMoviesList = nowPlayingMovieModel!.results!.cast<Results>();
 
@@ -55,7 +55,7 @@ class MoviesCubit extends Cubit<MoviesState> {
     try {
       emit(MoviesStateLoading());
       ApiResult<TopRatedMovieModel?> response =
-          await moviesRepository.getMoviesTopRated();
+          await moviesRepository!.getMoviesTopRated();
       response.when(success: (topRatedMovies) {
         topRatedMoviesList = topRatedMovies!.results!.cast<Results>();
 
@@ -79,7 +79,7 @@ class MoviesCubit extends Cubit<MoviesState> {
     try {
       emit(MoviesStateLoading());
       ApiResult<PopularMovieModel?> response =
-          await moviesRepository.getMoviesPopular();
+          await moviesRepository!.getMoviesPopular();
       response.when(success: (popularMovies) {
         popularMoviesList = popularMovies!.results!.cast<Results>();
 
@@ -102,7 +102,7 @@ class MoviesCubit extends Cubit<MoviesState> {
     try {
       emit(MoviesStateLoading());
       ApiResult<UpcomingMovieModel?> response =
-          await moviesRepository.getMoviesUpComing();
+          await moviesRepository!.getMoviesUpComing();
       response.when(success: (upComingMovies) {
         upComingMoviesList = upComingMovies!.results!.cast<Results>();
 

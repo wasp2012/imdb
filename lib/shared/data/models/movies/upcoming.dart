@@ -1,7 +1,6 @@
-import 'results.dart';
-
 import 'package:json_annotation/json_annotation.dart';
-import 'package:flutter/foundation.dart';
+
+import 'results.dart';
 
 part 'upcoming.g.dart';
 

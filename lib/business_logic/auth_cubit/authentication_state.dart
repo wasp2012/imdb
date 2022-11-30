@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 
 import '../../shared/data/models/authentication/login_model.dart';

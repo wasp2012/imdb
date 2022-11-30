@@ -1,11 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
-import 'package:imdb_demo/injection.dart';
-import 'package:imdb_demo/shared/constants/strings.dart';
-import 'package:imdb_demo/shared/data/models/account/favorite_model.dart';
+import '../../business_logic/favorite_cubit/favorite_cubit.dart';
+import '../../injection.dart';
+import '../../shared/constants/strings.dart';
+import '../../shared/data/models/account/favorite_model.dart';
 import 'package:intl/intl.dart';
 import 'package:neon/neon.dart';
 
@@ -14,7 +13,7 @@ import '../../business_logic/movie_detail_cubit/movie_details_state.dart';
 import '../../shared/common/gradient.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
-  final String movieId;
+  final String? movieId;
 
   const MovieDetailsScreen({Key? key, required this.movieId}) : super(key: key);
 
@@ -23,11 +22,12 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+  late final cubit;
   @override
   void initState() {
     super.initState();
-    var cubit = getIt<FavoriteCubit>();
-    cubit.checkIfMovieExist(int.parse(widget.movieId));
+    cubit = getIt<FavoriteCubit>();
+    cubit.checkIfMovieExist(int.parse(widget.movieId!));
   }
 
   Widget characterInfo(String title, String value, BuildContext context) {
@@ -69,10 +69,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       return Center(
         child: DefaultTextStyle(
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20,
             color: Color.fromARGB(255, 180, 37, 27),
-            shadows: const [
+            shadows: [
               Shadow(
                 blurRadius: 7,
                 color: Colors.deepPurpleAccent,
@@ -102,13 +102,13 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       body: FutureBuilder(
           future: Future.wait([
             getIt.allReady(),
-            movieCubit.emitMovieDetails(widget.movieId),
+            movieCubit.emitMovieDetails(widget.movieId!),
           ]),
           builder: (context, snapshot) =>
               BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
                   builder: (context, state) {
                 if (state is MovieDetailsLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else {
                   return Container(
                     decoration: BoxDecoration(
@@ -155,8 +155,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           delegate: SliverChildListDelegate(
                             [
                               Container(
-                                margin: EdgeInsets.fromLTRB(14, 14, 14, 0),
-                                padding: EdgeInsets.all(8),
+                                margin:
+                                    const EdgeInsets.fromLTRB(14, 14, 14, 0),
+                                padding: const EdgeInsets.all(8),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,8 +249,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                     Text(
                                       ' ${movieCubit.movieDetailsModel!.overview!}',
                                       textAlign: TextAlign.start,
-                                      style:
-                                          TextStyle(fontSize: 16, height: 1.1),
+                                      style: const TextStyle(
+                                          fontSize: 16, height: 1.1),
                                     ),
                                     const SizedBox(
                                       height: 50,
@@ -268,7 +269,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                         onPressed: () => Navigator.pushNamed(
                                             context, videoScreen,
                                             arguments: widget.movieId),
-                                        child: Text('Trailers')),
+                                        child: const Text('Trailers')),
                                   ],
                                 ),
                               ),
@@ -284,14 +285,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           listener: (context, state) {
         if (state is FavoriteStateSaved) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               duration: Duration(seconds: 1),
               content: Text('Saved to Favorite'),
             ),
           );
         } else if (state is FavoriteStateRemoved) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               duration: Duration(seconds: 1),
               content: Text('Removed From Favorite'),
             ),
@@ -299,7 +300,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         }
       }, builder: (context, state) {
         if (state is FavoriteStateLoading) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -308,12 +309,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             if (favCubit.isExist!) {
               favCubit.emitMarkAsFavorite(FavoriteBody(
                   mediaType: mediaTypeMovie,
-                  mediaId: int.parse(widget.movieId),
+                  mediaId: int.parse(widget.movieId!),
                   favorite: false));
             } else {
               favCubit.emitMarkAsFavorite(FavoriteBody(
                   mediaType: mediaTypeMovie,
-                  mediaId: int.parse(widget.movieId),
+                  mediaId: int.parse(widget.movieId!),
                   favorite: true));
             }
           },

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:imdb_demo/shared/constants/strings.dart';
-import 'package:imdb_demo/shared/offline_data.dart';
+import 'shared/constants/strings.dart';
+import 'shared/offline_data.dart';
 import 'business_logic/favorite_cubit/favorite_cubit.dart';
 import 'business_logic/profile_cubit/profile_cubit.dart';
 import 'shared/data/repo/account_repo/acc_repo.dart';
@@ -52,8 +52,10 @@ void initGetIt() {
 
   getIt.registerSingletonAsync<FavoriteCubit>(() async {
     final allFavorite = FavoriteCubit(getIt<AccountRepository>());
-    await allFavorite.emitGetFavoriteMovies();
-
+    if (await SharedPrefs.checkValue(sessionIdKey) ||
+        await SharedPrefs.checkValue(userIdKey)) {
+      await allFavorite.emitGetFavoriteMovies();
+    }
     return allFavorite;
   });
 

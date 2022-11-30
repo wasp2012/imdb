@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imdb_demo/shared/common/gradient.dart';
+import '../../shared/common/gradient.dart';
 
 import '../widget/curved_bottom_navbar_widget.dart';
 

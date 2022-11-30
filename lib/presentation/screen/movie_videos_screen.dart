@@ -6,7 +6,7 @@ import '../../injection.dart';
 import '../widget/youtube_player_widget.dart';
 
 class MovieVideosScreen extends StatelessWidget {
-  final String movieId;
+  final String? movieId;
   const MovieVideosScreen({super.key, required this.movieId});
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class MovieVideosScreen extends StatelessWidget {
           title: const Text('YouTube'),
         ),
         body: FutureBuilder(
-          future: cubit.getMovieVideos(movieId),
+          future: cubit.getMovieVideos(movieId!),
           builder: (context, snapshot) =>
               BlocBuilder<VideoForMovieCubit, VideoForMovieState>(
             builder: (context, state) {
@@ -31,9 +31,9 @@ class MovieVideosScreen extends StatelessWidget {
                   child: Text('Something wrong happened'),
                 );
               } else {
-                if (cubit.videoForMovieResultsList.isNotEmpty) {
+                if (cubit.videoForMovieResultsList!.isNotEmpty) {
                   return YouTubePlayerWidget(
-                      results: cubit.videoForMovieResultsList);
+                      results: cubit.videoForMovieResultsList!);
                 } else {
                   return const Center(child: CircularProgressIndicator());
                 }

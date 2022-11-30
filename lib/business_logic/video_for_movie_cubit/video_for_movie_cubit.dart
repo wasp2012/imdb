@@ -9,18 +9,18 @@ import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 import 'video_for_movie_state.dart';
 
 class VideoForMovieCubit extends Cubit<VideoForMovieState> {
-  final MoviesRepository moviesRepository;
+  final MoviesRepository? moviesRepository;
   VideoForMovieCubit(
     this.moviesRepository,
   ) : super(VideoForMovieStateIdle());
-  List<VideoForMovieResult> videoForMovieResultsList = [];
+  List<VideoForMovieResult>? videoForMovieResultsList = [];
 
   Future<void> getMovieVideos(String id) async {
     emit(VideoForMovieStateLoading());
 
     try {
       ApiResult<MovieVideoById?> response =
-          await moviesRepository.getMovieVideos(id);
+          await moviesRepository!.getMovieVideos(id);
 
       response.when(success: (videoResults) {
         videoForMovieResultsList = videoResults!.results ?? [];

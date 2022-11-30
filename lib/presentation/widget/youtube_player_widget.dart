@@ -15,17 +15,17 @@ class YouTubePlayerWidget extends StatefulWidget {
 }
 
 class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
-  late PlayerState _playerState;
-  late YoutubeMetaData _videoMetaData;
+  late PlayerState? _playerState;
+  late YoutubeMetaData? _videoMetaData;
 
   final bool _isPlayerReady = false;
-  late YoutubePlayerController _controller;
+  late YoutubePlayerController? _controller;
 
   void listener() {
-    if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
+    if (_isPlayerReady && mounted && !_controller!.value.isFullScreen) {
       setState(() {
-        _playerState = _controller.value.playerState;
-        _videoMetaData = _controller.metadata;
+        _playerState = _controller?.value.playerState;
+        _videoMetaData = _controller?.metadata;
       });
     }
   }
@@ -33,13 +33,13 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
   @override
   void deactivate() {
     // Pauses video while navigating to next page.
-    _controller.pause();
+    _controller?.pause();
     super.deactivate();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -68,7 +68,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
               color: Theme.of(context).backgroundColor,
               margin: const EdgeInsets.all(10),
               child: YoutubePlayer(
-                controller: _controller,
+                controller: _controller!,
                 showVideoProgressIndicator: true,
                 progressIndicatorColor: Colors.amber,
                 progressColors: const ProgressBarColors(
@@ -76,7 +76,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
                   handleColor: Colors.amberAccent,
                 ),
                 onReady: () {
-                  _controller.addListener(listener);
+                  _controller?.addListener(listener);
                 },
               ),
             );

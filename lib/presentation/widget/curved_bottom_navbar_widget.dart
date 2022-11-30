@@ -6,7 +6,7 @@ import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/offline_data.dart';
 
 class CurvedBottomNavbarWidget extends StatefulWidget {
-  final int currentPage;
+  final int? currentPage;
   const CurvedBottomNavbarWidget({
     Key? key,
     required this.currentPage,
@@ -49,7 +49,7 @@ class _CurvedBottomNavbarWidgetState extends State<CurvedBottomNavbarWidget> {
       color: Colors.deepPurple,
       animationDuration: const Duration(microseconds: 300),
       height: 50.h,
-      index: widget.currentPage,
+      index: widget.currentPage!,
       onTap: (index) {
         if (widget.currentPage != index) {
           switchTab(index, context);
