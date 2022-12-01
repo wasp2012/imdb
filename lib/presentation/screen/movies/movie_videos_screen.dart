@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
-import '../../business_logic/video_for_movie_cubit/video_for_movie_state.dart';
-import '../../injection.dart';
-import '../widget/youtube_player_widget.dart';
+
+import '../../../business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
+import '../../../business_logic/video_for_movie_cubit/video_for_movie_state.dart';
+import '../../../injection.dart';
+import '../../widget/youtube_player_widget.dart';
 
 class MovieVideosScreen extends StatelessWidget {
   final String? movieId;
@@ -34,10 +35,6 @@ class MovieVideosScreen extends StatelessWidget {
                 if (cubit.videoForMovieResultsList!.isNotEmpty) {
                   return YouTubePlayerWidget(
                     results: cubit.videoForMovieResultsList!,
-                    // controller: cubit.controller,
-                    // isPlayerReady: cubit.isPlayerReady,
-                    // playerState: cubit.playerState,
-                    // videoMetaData: cubit.videoMetaData,
                   );
                 } else {
                   return const Center(child: CircularProgressIndicator());

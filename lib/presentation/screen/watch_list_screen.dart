@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../shared/common/gradient.dart';
 
+import '../../shared/common/gradient.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
 
 class WatchListScreen extends StatelessWidget {

@@ -1,6 +1,4 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/diagnostics.dart';
 
 class CustomMaterialPageRoute<T> extends MaterialPageRoute<T> {
   CustomMaterialPageRoute({

@@ -4,7 +4,7 @@ import 'package:imdb_demo/shared/data/repo/movies_repo/movies_repository.dart';
 import 'package:imdb_demo/shared/web_services/errors/api_result.dart';
 import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 
-import '../../shared/data/models/movies/movie_details.dart';
+import '../../../shared/data/models/movies/movie_details.dart';
 import 'movie_details_state.dart';
 
 class MovieDetailsCubit extends Cubit<MovieDetailsState> {

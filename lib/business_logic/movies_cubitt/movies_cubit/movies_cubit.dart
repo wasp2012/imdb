@@ -1,15 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import '../movie_detail_cubit/movie_details_state.dart';
-import '../../shared/data/repo/movies_repo/movies_repository.dart';
+import '../../../shared/data/models/movies/top_rated.dart';
+import '../../../shared/data/models/movies/now_playing.dart';
+import '../../../shared/data/models/movies/popular.dart';
+import '../../../shared/data/models/movies/results.dart';
+import '../../../shared/data/models/movies/upcoming.dart';
+import '../../../shared/data/repo/movies_repo/movies_repository.dart';
+import '../../../shared/web_services/errors/api_result.dart';
+import '../../../shared/web_services/errors/network_exceptions.dart';
 
-import '../../shared/data/models/movies/now_playing.dart';
-import '../../shared/data/models/movies/popular.dart';
-import '../../shared/data/models/movies/results.dart';
-import '../../shared/data/models/movies/top_rated.dart';
-import '../../shared/data/models/movies/upcoming.dart';
-import '../../shared/web_services/errors/api_result.dart';
-import '../../shared/web_services/errors/network_exceptions.dart';
 import 'movies_state.dart';
 
 class MoviesCubit extends Cubit<MoviesState> {

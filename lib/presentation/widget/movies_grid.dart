@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../shared/constants/strings.dart';
 import '../../shared/data/models/movies/results.dart';
 

@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import '../../../constants/apis.dart';
+import '../../../web_services/errors/api_result.dart';
+import '../../../web_services/errors/network_exceptions.dart';
 import '../../models/authentication/login_model.dart';
 import '../../models/authentication/req_token.dart';
 import '../../models/authentication/session_model.dart';
 import 'auth_repo_interface.dart';
-import '../../../web_services/errors/api_result.dart';
-import '../../../web_services/errors/network_exceptions.dart';
 
 class AuthRepository extends AuthRepositoryInterface {
   @override

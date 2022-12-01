@@ -1,16 +1,16 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../business_logic/favorite_cubit/favorite_cubit.dart';
-import '../../injection.dart';
-import '../../shared/constants/strings.dart';
-import '../../shared/data/models/account/favorite_model.dart';
 import 'package:intl/intl.dart';
 import 'package:neon/neon.dart';
 
-import '../../business_logic/movie_detail_cubit/movie_details_cubit.dart';
-import '../../business_logic/movie_detail_cubit/movie_details_state.dart';
-import '../../shared/common/gradient.dart';
+import '../../../business_logic/favorite_cubit/favorite_cubit.dart';
+import '../../../business_logic/movies_cubitt/movie_detail_cubit/movie_details_cubit.dart';
+import '../../../business_logic/movies_cubitt/movie_detail_cubit/movie_details_state.dart';
+import '../../../injection.dart';
+import '../../../shared/common/gradient.dart';
+import '../../../shared/constants/strings.dart';
+import '../../../shared/data/models/account/favorite_model.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final String? movieId;

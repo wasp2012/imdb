@@ -1,24 +1,23 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'shared/constants/strings.dart';
-import 'shared/offline_data.dart';
+
+import 'business_logic/auth_cubit/authentication_cubit.dart';
 import 'business_logic/favorite_cubit/favorite_cubit.dart';
+
+import 'business_logic/movies_cubitt/movie_detail_cubit/movie_details_cubit.dart';
+import 'business_logic/movies_cubitt/movies_cubit/movies_cubit.dart';
 import 'business_logic/profile_cubit/profile_cubit.dart';
+import 'business_logic/theme_cubit/theme_cubit.dart';
+import 'business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
+import 'route/router.dart';
+import 'shared/constants/strings.dart';
 import 'shared/data/repo/account_repo/acc_repo.dart';
 import 'shared/data/repo/auth_repo/auth_repo.dart';
 import 'shared/data/repo/movies_repo/movies_repository.dart';
+import 'shared/offline_data.dart';
+import 'shared/web_services/network/account_web_services/web_service_for_account.dart';
 import 'shared/web_services/network/auth_web_services/web_services_for_auth.dart';
 import 'shared/web_services/network/movies_web_services/web_service_for_movies.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'business_logic/auth_cubit/authentication_cubit.dart';
-import 'business_logic/theme_cubit/theme_cubit.dart';
-import 'business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
-
-import 'route/router.dart';
-
-import 'business_logic/movie_detail_cubit/movie_details_cubit.dart';
-import 'business_logic/movies_cubit/movies_cubit.dart';
-import 'shared/web_services/network/account_web_services/web_service_for_account.dart';
 
 final getIt = GetIt.instance;
 

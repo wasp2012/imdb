@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart' as riveImport;
-import '../../shared/common/gradient.dart';
 
 import '../../business_logic/theme_cubit/theme_cubit.dart';
 import '../../business_logic/theme_cubit/theme_state.dart';
 import '../../injection.dart';
+import '../../shared/common/gradient.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
 
 class SettingsScreen extends StatefulWidget {

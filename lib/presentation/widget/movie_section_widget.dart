@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../business_logic/movies_cubitt/movies_cubit/movies_cubit.dart';
+import '../../business_logic/movies_cubitt/movies_cubit/movies_state.dart';
 import '../../injection.dart';
-
-import '../../business_logic/movies_cubit/movies_cubit.dart';
-import '../../business_logic/movies_cubit/movies_state.dart';
-
 import 'movies_grid.dart';
 
 class MovieSectionWidget extends StatefulWidget {

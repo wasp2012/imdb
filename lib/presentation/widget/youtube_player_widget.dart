@@ -1,9 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, unused_field
 import 'package:flutter/material.dart';
 import 'package:imdb_demo/injection.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
 import 'package:imdb_demo/shared/data/models/movies/movies_id/movies_video_by_id_model.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
 

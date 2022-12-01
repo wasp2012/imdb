@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import '../../../constants/apis.dart';
-import '../../../data/models/account/profile_details_model.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../../constants/apis.dart';
 import '../../../data/models/account/favorite_model.dart';
+import '../../../data/models/account/profile_details_model.dart';
 
 part 'web_service_for_account.g.dart';
 

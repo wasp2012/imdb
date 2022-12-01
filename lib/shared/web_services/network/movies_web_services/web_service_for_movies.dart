@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:retrofit/retrofit.dart';
+
+import '../../../constants/apis.dart';
 import '../../../data/models/movies/movie_details.dart';
 import '../../../data/models/movies/movies_id/movies_video_by_id_model.dart';
-import 'package:retrofit/retrofit.dart';
-import '../../../constants/apis.dart';
 import '../../../data/models/movies/now_playing.dart';
 import '../../../data/models/movies/popular.dart';
 import '../../../data/models/movies/top_rated.dart';
 import '../../../data/models/movies/upcoming.dart';
-import '../../errors/api_result.dart';
 
 part 'web_service_for_movies.g.dart';
 

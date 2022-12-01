@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../widget/curved_bottom_navbar_widget.dart';
-import '../../shared/common/gradient.dart';
 
 import '../../business_logic/favorite_cubit/favorite_cubit.dart';
 import '../../injection.dart';
+import '../../shared/common/gradient.dart';
 import '../../shared/constants/strings.dart';
+import '../widget/curved_bottom_navbar_widget.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key});

@@ -1,10 +1,9 @@
 import '../../../constants/apis.dart';
-import '../../models/account/favorite_model.dart';
-import '../../models/account/profile_details_model.dart';
-import '../../models/authentication/login_model.dart';
-import 'acc_repo_interface.dart';
 import '../../../web_services/errors/api_result.dart';
 import '../../../web_services/errors/network_exceptions.dart';
+import '../../models/account/favorite_model.dart';
+import '../../models/account/profile_details_model.dart';
+import 'acc_repo_interface.dart';
 
 class AccountRepository extends AccountRepositoryInterface {
   @override
