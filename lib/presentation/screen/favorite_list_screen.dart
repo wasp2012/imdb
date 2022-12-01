@@ -20,65 +20,62 @@ class FavoriteScreen extends StatelessWidget {
           cubit.emitGetFavoriteMovies(),
         ]),
         builder: (context, AsyncSnapshot) {
-          return SafeArea(
-            child: Scaffold(
-              extendBody: true,
-              bottomNavigationBar:
-                  const CurvedBottomNavbarWidget(currentPage: 1),
-              body: Container(
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: SharedGradient.gradientColors(context),
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
+          return Scaffold(
+            extendBody: true,
+            bottomNavigationBar: const CurvedBottomNavbarWidget(currentPage: 1),
+            body: Container(
+              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: SharedGradient.gradientColors(context),
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
-                child: BlocBuilder<FavoriteCubit, FavoriteState>(
-                  builder: (context, state) {
-                    if (state is FavoriteMoviesLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state is FavoriteMoviesError) {
-                      return const Center(
-                        child: Text('Error Occured'),
-                      );
-                    } else {
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 1,
-                          childAspectRatio: 1,
-                        ),
-                        itemCount: cubit.allFavoriteModel?.totalResults,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () => Navigator.pushNamed(
-                                context, movieDetailsScreen,
-                                arguments: cubit
-                                    .allFavoriteModel?.results![index].id
-                                    .toString()),
-                            child: Card(
-                              color: Colors.transparent,
-                              borderOnForeground: true,
-                              elevation: 20,
-                              child: cubit.allFavoriteModel?.results != null &&
-                                      cubit.allFavoriteModel!.results![index]
-                                          .posterPath!.isNotEmpty
-                                  ? Image.network(
-                                      '$imageDisplay${cubit.allFavoriteModel?.results?[index].posterPath}',
-                                    )
-                                  : Image.asset(personImage),
-                            ),
-                          );
-                        },
-                      );
-                    }
-                  },
-                ),
+              ),
+              child: BlocBuilder<FavoriteCubit, FavoriteState>(
+                builder: (context, state) {
+                  if (state is FavoriteMoviesLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is FavoriteMoviesError) {
+                    return const Center(
+                      child: Text('Error Occured'),
+                    );
+                  } else {
+                    return GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 1,
+                        childAspectRatio: 1,
+                      ),
+                      itemCount: cubit.allFavoriteModel?.totalResults,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () => Navigator.pushNamed(
+                              context, movieDetailsScreen,
+                              arguments: cubit
+                                  .allFavoriteModel?.results![index].id
+                                  .toString()),
+                          child: Card(
+                            color: Colors.transparent,
+                            borderOnForeground: true,
+                            elevation: 20,
+                            child: cubit.allFavoriteModel?.results != null &&
+                                    cubit.allFavoriteModel!.results![index]
+                                        .posterPath!.isNotEmpty
+                                ? Image.network(
+                                    '$imageDisplay${cubit.allFavoriteModel?.results?[index].posterPath}',
+                                  )
+                                : Image.asset(personImage),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
               ),
             ),
           );

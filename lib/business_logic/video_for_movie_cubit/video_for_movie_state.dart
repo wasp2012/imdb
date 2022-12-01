@@ -23,3 +23,5 @@ class VideoForMovieStateError extends VideoForMovieState {
     this.networkExceptions,
   );
 }
+
+class AddingListenerSucceeded extends VideoForMovieState {}

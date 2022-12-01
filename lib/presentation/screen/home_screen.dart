@@ -34,108 +34,104 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             var cubit = getIt<MoviesCubit>();
-            return SafeArea(
-              child: Scaffold(
-                backgroundColor: Theme.of(context).backgroundColor,
-                extendBody: true,
-                bottomNavigationBar:
-                    const CurvedBottomNavbarWidget(currentPage: 0),
-                key: globalKey,
-                // drawer: const NavigationDrawerWidget(),
-                body: SingleChildScrollView(
-                  child: Container(
-                    height: 1250,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: SharedGradient.gradientColors(context),
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
+            return Scaffold(
+              backgroundColor: Theme.of(context).backgroundColor,
+              extendBody: true,
+              bottomNavigationBar:
+                  const CurvedBottomNavbarWidget(currentPage: 0),
+              key: globalKey,
+              // drawer: const NavigationDrawerWidget(),
+              body: SingleChildScrollView(
+                child: Container(
+                  height: 1250,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: SharedGradient.gradientColors(context),
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.7,
-                          child: Stack(
-                            children: [
-                              if (cubit.nowPlayingMoviesList != null &&
-                                  cubit.nowPlayingMoviesList!.isNotEmpty)
-                                BluredMovieImageWidget(
-                                    movie: cubit.allCategories),
-                              BackdropFilter(
-                                filter: ImageFilter.blur(
-                                  sigmaX: 10.0,
-                                  sigmaY: 10.0,
-                                ),
-                                child: Container(
-                                  margin: const EdgeInsets.only(top: 20),
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        width: 400,
-                                        height: 50,
-                                        child: TextFormField(
-                                          cursorColor: Colors.white,
-                                          textAlign: TextAlign.start,
-                                          textAlignVertical:
-                                              TextAlignVertical.bottom,
-                                          decoration: InputDecoration(
-                                            filled: true, //<-- SEE HERE
-                                            fillColor: const Color.fromARGB(
-                                                115, 158, 158, 158),
-                                            hintText: 'Search',
-                                            hoverColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            suffixIcon: const Icon(
-                                              Icons.search,
-                                              color: Colors.white,
-                                            ),
-                                            border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                borderSide: const BorderSide(
-                                                    color: Colors.transparent)),
-                                            focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                borderSide: const BorderSide(
-                                                    color: Colors.white)),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: Stack(
+                          children: [
+                            if (cubit.nowPlayingMoviesList != null &&
+                                cubit.nowPlayingMoviesList!.isNotEmpty)
+                              BluredMovieImageWidget(
+                                  movie: cubit.allCategories),
+                            BackdropFilter(
+                              filter: ImageFilter.blur(
+                                sigmaX: 10.0,
+                                sigmaY: 10.0,
+                              ),
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 20),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      width: 400,
+                                      height: 50,
+                                      child: TextFormField(
+                                        cursorColor: Colors.white,
+                                        textAlign: TextAlign.start,
+                                        textAlignVertical:
+                                            TextAlignVertical.bottom,
+                                        decoration: InputDecoration(
+                                          filled: true, //<-- SEE HERE
+                                          fillColor: const Color.fromARGB(
+                                              115, 158, 158, 158),
+                                          hintText: 'Search',
+                                          hoverColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          suffixIcon: const Icon(
+                                            Icons.search,
+                                            color: Colors.white,
                                           ),
-                                          onTap: () {
-                                            FocusScopeNode currentFocus =
-                                                FocusScope.of(context);
-                                            if (!currentFocus.hasPrimaryFocus ||
-                                                !currentFocus.isFirstFocus) {
-                                              currentFocus.unfocus();
-                                            }
-                                          },
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                  color: Colors.transparent)),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              borderSide: const BorderSide(
+                                                  color: Colors.white)),
                                         ),
+                                        onTap: () {
+                                          FocusScopeNode currentFocus =
+                                              FocusScope.of(context);
+                                          if (!currentFocus.hasPrimaryFocus ||
+                                              !currentFocus.isFirstFocus) {
+                                            currentFocus.unfocus();
+                                          }
+                                        },
                                       ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      const MovieSectionWidget(
-                                          sectionTitle: 'Now Playing', flag: 1),
-                                    ],
-                                  ),
+                                    ),
+                                    SizedBox(
+                                      height: 20.h,
+                                    ),
+                                    const MovieSectionWidget(
+                                        sectionTitle: 'Now Playing', flag: 1),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                        Column(
-                          children: const [
-                            MovieSectionWidget(
-                                sectionTitle: 'Top Rated', flag: 2),
-                            MovieSectionWidget(
-                                sectionTitle: 'Popular', flag: 3),
-                            MovieSectionWidget(
-                                sectionTitle: 'Upcoming', flag: 4),
+                            ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Column(
+                        children: const [
+                          MovieSectionWidget(
+                              sectionTitle: 'Top Rated', flag: 2),
+                          MovieSectionWidget(sectionTitle: 'Popular', flag: 3),
+                          MovieSectionWidget(sectionTitle: 'Upcoming', flag: 4),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),

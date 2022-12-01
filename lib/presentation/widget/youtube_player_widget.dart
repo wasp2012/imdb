@@ -1,11 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, unused_field
 import 'package:flutter/material.dart';
-import 'package:imdb_demo/shared/data/models/movies/movies_id/movies_video_by_id_model.dart';
+import 'package:imdb_demo/injection.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import 'package:imdb_demo/shared/data/models/movies/movies_id/movies_video_by_id_model.dart';
+
+import '../../business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
 
 class YouTubePlayerWidget extends StatefulWidget {
   final List<VideoForMovieResult?> results;
-  const YouTubePlayerWidget({
+
+  YouTubePlayerWidget({
     Key? key,
     required this.results,
   }) : super(key: key);
@@ -15,32 +20,33 @@ class YouTubePlayerWidget extends StatefulWidget {
 }
 
 class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
-  late PlayerState? _playerState;
-  late YoutubeMetaData? _videoMetaData;
+  VideoForMovieCubit? cubit;
 
-  final bool _isPlayerReady = false;
-  late YoutubePlayerController? _controller;
-
-  void listener() {
-    if (_isPlayerReady && mounted && !_controller!.value.isFullScreen) {
-      setState(() {
-        _playerState = _controller?.value.playerState;
-        _videoMetaData = _controller?.metadata;
-      });
-    }
+  @override
+  void initState() {
+    super.initState();
+    cubit = getIt<VideoForMovieCubit>();
   }
 
   @override
   void deactivate() {
     // Pauses video while navigating to next page.
-    _controller?.pause();
+    cubit?.controller.pause();
     super.deactivate();
   }
 
   @override
   void dispose() {
-    _controller?.dispose();
+    cubit?.controller.dispose();
     super.dispose();
+  }
+
+  void listener() {
+    if (cubit!.isPlayerReady &&
+        mounted &&
+        !cubit!.controller.value.isFullScreen) {
+      cubit?.listener();
+    }
   }
 
   @override
@@ -57,7 +63,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
           ),
           itemCount: widget.results.length,
           itemBuilder: (BuildContext context, int index) {
-            _controller = YoutubePlayerController(
+            cubit?.controller = YoutubePlayerController(
               initialVideoId: widget.results[index]!.key!,
               flags: const YoutubePlayerFlags(
                 autoPlay: false,
@@ -68,7 +74,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
               color: Theme.of(context).backgroundColor,
               margin: const EdgeInsets.all(10),
               child: YoutubePlayer(
-                controller: _controller!,
+                controller: cubit!.controller,
                 showVideoProgressIndicator: true,
                 progressIndicatorColor: Colors.amber,
                 progressColors: const ProgressBarColors(
@@ -76,7 +82,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
                   handleColor: Colors.amberAccent,
                 ),
                 onReady: () {
-                  _controller?.addListener(listener);
+                  cubit?.controller.addListener(listener);
                 },
               ),
             );

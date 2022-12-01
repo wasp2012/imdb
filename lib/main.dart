@@ -85,15 +85,17 @@ class MyApp extends StatelessWidget {
                     minTextAdapt: true,
                     splitScreenMode: true,
                     builder: (context, child) {
-                      return MaterialApp(
-                        debugShowCheckedModeBanner: false,
-                        darkTheme: AppTheme.darkTheme,
-                        theme: AppTheme.lightTheme,
-                        themeMode: cubitThemeCubit.savedTheme == true
-                            ? ThemeMode.dark
-                            : ThemeMode.light,
-                        initialRoute: home,
-                        onGenerateRoute: router?.onGenerateRoute,
+                      return SafeArea(
+                        child: MaterialApp(
+                          debugShowCheckedModeBanner: false,
+                          darkTheme: AppTheme.darkTheme,
+                          theme: AppTheme.lightTheme,
+                          themeMode: cubitThemeCubit.savedTheme == true
+                              ? ThemeMode.dark
+                              : ThemeMode.light,
+                          initialRoute: home,
+                          onGenerateRoute: router?.onGenerateRoute,
+                        ),
                       );
                     });
               },

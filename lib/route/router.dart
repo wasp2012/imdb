@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:imdb_demo/shared/common/custom_material_page_route.dart';
 
 import '../injection.dart';
 import '../presentation/screen/favorite_list_screen.dart';
@@ -21,7 +24,7 @@ class AppRouter {
   Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case homeScreen:
-        return MaterialPageRoute(
+        return CustomMaterialPageRoute(
           builder: (context) {
             return BlocProvider.value(
               value: getIt<MoviesCubit>(),
@@ -30,7 +33,7 @@ class AppRouter {
           },
         );
       case movieDetailsScreen:
-        return MaterialPageRoute(
+        return CustomMaterialPageRoute(
           builder: (context) {
             var movieId = settings.arguments;
             return MultiBlocProvider(
@@ -47,7 +50,7 @@ class AppRouter {
           },
         );
       case videoScreen:
-        return MaterialPageRoute(
+        return CustomMaterialPageRoute(
           builder: (context) {
             var movieId = settings.arguments;
 
@@ -60,25 +63,25 @@ class AppRouter {
           },
         );
       case settingsScreen:
-        return MaterialPageRoute(
+        return CustomMaterialPageRoute(
           builder: (context) {
             return const SettingsScreen();
           },
         );
       case logInScreen:
-        return MaterialPageRoute(
+        return CustomMaterialPageRoute(
           builder: (context) {
             return const LogInScreen();
           },
         );
       case profileScreen:
-        return MaterialPageRoute(
+        return CustomMaterialPageRoute(
           builder: (context) {
             return const ProfileScreen();
           },
         );
       case favoriteScreen:
-        return MaterialPageRoute(
+        return CustomMaterialPageRoute(
           builder: (context) {
             var movieId = settings.arguments;
 
@@ -94,7 +97,7 @@ class AppRouter {
           },
         );
       case watchListScreen:
-        return MaterialPageRoute(
+        return CustomMaterialPageRoute(
           builder: (context) {
             return const WatchListScreen();
           },

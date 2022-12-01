@@ -33,7 +33,12 @@ class MovieVideosScreen extends StatelessWidget {
               } else {
                 if (cubit.videoForMovieResultsList!.isNotEmpty) {
                   return YouTubePlayerWidget(
-                      results: cubit.videoForMovieResultsList!);
+                    results: cubit.videoForMovieResultsList!,
+                    // controller: cubit.controller,
+                    // isPlayerReady: cubit.isPlayerReady,
+                    // playerState: cubit.playerState,
+                    // videoMetaData: cubit.videoMetaData,
+                  );
                 } else {
                   return const Center(child: CircularProgressIndicator());
                 }

@@ -19,56 +19,55 @@ class _LogInScreenState extends State<LogInScreen> {
   @override
   Widget build(BuildContext context) {
     final cubit = getIt<AuthenticationCubit>();
-    return SafeArea(
-      child: FutureBuilder(
-          future: cubit.emitGetRequestToken(),
-          builder: (context, snapshot) {
-            return Scaffold(
-              body: Stack(
-                children: [
-                  const PlasmaBackground(),
-                  Positioned(
-                      left: 30.w,
-                      right: 30.w,
-                      top: 20.h,
-                      child: Image.asset(
-                        alignment: Alignment.center,
-                        'assets/images/popcorn.png',
-                        height: 300.h,
-                        width: 270.w,
-                      )),
-                  Positioned(
-                    bottom: 30.h,
-                    right: 30.w,
+    return FutureBuilder(
+        future: cubit.emitGetRequestToken(),
+        builder: (context, snapshot) {
+          return Scaffold(
+            resizeToAvoidBottomInset: true,
+            body: Stack(
+              children: [
+                const PlasmaBackground(),
+                Positioned(
                     left: 30.w,
-                    top: 300.h,
-                    child: Column(
-                      children: [
-                        Text(
-                          'Log In Now',
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.sp,
-                                    color: Colors.white,
-                                  ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Text(
-                          'Please enter the details below to continue',
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14.sp,
-                                    color: const Color(0xfffc5185),
-                                  ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Column(
+                    right: 30.w,
+                    top: 20.h,
+                    child: Image.asset(
+                      alignment: Alignment.center,
+                      'assets/images/popcorn.png',
+                      height: 300.h,
+                      width: 270.w,
+                    )),
+                Positioned(
+                  bottom: 30.h,
+                  right: 30.w,
+                  left: 30.w,
+                  top: 300.h,
+                  child: Column(
+                    children: [
+                      Text(
+                        'Log In Now',
+                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.sp,
+                              color: Colors.white,
+                            ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Text(
+                        'Please enter the details below to continue',
+                        style: Theme.of(context).textTheme.headline1!.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.sp,
+                              color: Color.fromARGB(255, 46, 32, 36),
+                            ),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      SingleChildScrollView(
+                        child: Column(
                           children: [
                             TextFormField(
                               controller: cubit.userName,
@@ -82,6 +81,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 hintText: 'Username',
+                                hintStyle: TextStyle(color: Colors.black54),
                                 filled: true,
                                 fillColor: const Color(0xffdee1ec),
                               ),
@@ -103,6 +103,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                     child: Icon(cubit.icon),
                                   ),
                                   hintText: "Password",
+                                  hintStyle: TextStyle(color: Colors.black54),
                                   isDense: true,
                                   constraints: BoxConstraints(
                                       maxHeight: 50.h, minHeight: 20.h),
@@ -171,14 +172,14 @@ class _LogInScreenState extends State<LogInScreen> {
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          }),
-    );
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   Future<void> logInOnPress(
