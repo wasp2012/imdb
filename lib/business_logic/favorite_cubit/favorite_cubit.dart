@@ -70,6 +70,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         break;
       case 12:
         checkIfMovieExist(mediaId);
+        emit(AlreadyFavorite());
         break;
 
       default:

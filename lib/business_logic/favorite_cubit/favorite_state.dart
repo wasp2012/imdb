@@ -65,3 +65,5 @@ class UnMarkFavoriteIcon extends FavoriteState {
     required this.iconData,
   });
 }
+
+class AlreadyFavorite extends FavoriteState {}

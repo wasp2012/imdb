@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:neon/neon.dart';
-
 import '../../../business_logic/favorite_cubit/favorite_cubit.dart';
 import '../../../business_logic/movies_cubitt/movie_detail_cubit/movie_details_cubit.dart';
 import '../../../business_logic/movies_cubitt/movie_detail_cubit/movie_details_state.dart';
 import '../../../injection.dart';
 import '../../../shared/common/gradient.dart';
 import '../../../shared/constants/strings.dart';
-import '../../../shared/data/models/account/favorite_model.dart';
+import '../../widget/movie_details/character_info_widget.dart';
+import '../../widget/movie_details/floating_action_button_widget.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   final String? movieId;
@@ -28,40 +28,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     super.initState();
     cubit = getIt<FavoriteCubit>();
     cubit.checkIfMovieExist(int.parse(widget.movieId!));
-  }
-
-  Widget characterInfo(String title, String value, BuildContext context) {
-    return RichText(
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: title,
-            style: Theme.of(context).textTheme.headline1!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-          ),
-          TextSpan(
-            text: value,
-            style: Theme.of(context).textTheme.headline1!.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildDivider(double endIndent, BuildContext context) {
-    return Divider(
-      height: 30,
-      endIndent: endIndent,
-      color: Theme.of(context).primaryColor,
-      thickness: 2,
-    );
   }
 
   Widget displayRandomQuoteOrEmptySpace(String tagLine) {
@@ -162,44 +128,36 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    characterInfo(
-                                        'Title : ',
-                                        movieCubit
-                                            .movieDetailsModel!.originalTitle!,
-                                        context),
-                                    buildDivider(315, context),
-                                    // characterInfo('Budget: ',
-                                    //     '${movieDetailsModel.budget}$ '),
-                                    characterInfo(
-                                        'Budget: ',
-                                        movieCubit.movieDetailsModel!.budget
-                                                    .toString()
-                                                    .isNotEmpty &&
-                                                movieCubit.movieDetailsModel!
-                                                        .budget !=
-                                                    0
-                                            ? '${NumberFormat("#,###", "en_US").format(movieCubit.movieDetailsModel!.budget)} \$'
-                                            : 'Budget Not Supported!',
-                                        context),
-                                    buildDivider(250, context),
-                                    characterInfo(
-                                        'Release date : ',
-                                        movieCubit
-                                            .movieDetailsModel!.releaseDate!,
-                                        context),
-                                    buildDivider(
-                                        movieCubit.movieDetailsModel!
-                                                .releaseDate!.length *
-                                            30.0,
-                                        context),
-                                    characterInfo(
-                                        'Adult : ',
-                                        movieCubit.movieDetailsModel!.adult ==
-                                                true
-                                            ? '+18'
-                                            : 'Family',
-                                        context),
-                                    buildDivider(300, context),
+                                    CharacterInfoWIdget(
+                                      title: 'Title : ',
+                                      value: movieCubit
+                                          .movieDetailsModel!.originalTitle!,
+                                    ),
+                                    CharacterInfoWIdget(
+                                      title: 'Budget: ',
+                                      value: movieCubit
+                                                  .movieDetailsModel!.budget
+                                                  .toString()
+                                                  .isNotEmpty &&
+                                              movieCubit.movieDetailsModel!
+                                                      .budget !=
+                                                  0
+                                          ? '${NumberFormat("#,###", "en_US").format(movieCubit.movieDetailsModel!.budget)} \$'
+                                          : 'Budget Not Supported!',
+                                    ),
+                                    CharacterInfoWIdget(
+                                      title: 'Release date : ',
+                                      value: movieCubit
+                                          .movieDetailsModel!.releaseDate!,
+                                    ),
+                                    CharacterInfoWIdget(
+                                      title: 'Adult : ',
+                                      value:
+                                          movieCubit.movieDetailsModel!.adult ==
+                                                  true
+                                              ? '+18'
+                                              : 'Family',
+                                    ),
                                     Container(
                                       decoration: BoxDecoration(
                                           borderRadius:
@@ -212,46 +170,41 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          characterInfo(
-                                              'Rate: ',
-                                              '${movieCubit.movieDetailsModel!.voteAverage.toString()} /10',
-                                              context),
-                                          characterInfo(
-                                              'Vote Count: ',
-                                              movieCubit
-                                                  .movieDetailsModel!.voteCount
-                                                  .toString(),
-                                              context)
+                                          CharacterInfoWIdget(
+                                            title: 'Rate: ',
+                                            value:
+                                                '${movieCubit.movieDetailsModel!.voteAverage.toString()} /10',
+                                          ),
+                                          CharacterInfoWIdget(
+                                            title: 'Vote Count: ',
+                                            value: movieCubit
+                                                .movieDetailsModel!.voteCount
+                                                .toString(),
+                                          )
                                         ],
                                       ),
                                     ),
                                     const SizedBox(
                                       height: 30,
                                     ),
-                                    // characterInfo(
-                                    //     'Popularity: ',
-                                    //     '${(cubit.movieDetailsModel!.popularity!.floor() / 100.0).toString()} %',
-                                    //     context),
-                                    // buildDivider(300, context),
                                     RichText(
                                       text: TextSpan(
                                         text: 'Overview :',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headline1!
+                                            .subtitle1!
                                             .copyWith(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18,
                                             ),
                                       ),
                                     ),
-                                    buildDivider(300, context),
                                     Text(
-                                      ' ${movieCubit.movieDetailsModel!.overview!}',
-                                      textAlign: TextAlign.start,
-                                      style: const TextStyle(
-                                          fontSize: 16, height: 1.1),
-                                    ),
+                                        ' ${movieCubit.movieDetailsModel!.overview!}',
+                                        textAlign: TextAlign.start,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1!),
                                     const SizedBox(
                                       height: 50,
                                     ),
@@ -281,49 +234,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   );
                 }
               })),
-      floatingActionButton: BlocConsumer<FavoriteCubit, FavoriteState>(
-          listener: (context, state) {
-        if (state is FavoriteStateSaved) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              duration: Duration(seconds: 1),
-              content: Text('Saved to Favorite'),
-            ),
-          );
-        } else if (state is FavoriteStateRemoved) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              duration: Duration(seconds: 1),
-              content: Text('Removed From Favorite'),
-            ),
-          );
-        }
-      }, builder: (context, state) {
-        if (state is FavoriteStateLoading) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        return FloatingActionButton(
-          onPressed: () async {
-            if (favCubit.isExist!) {
-              favCubit.emitMarkAsFavorite(FavoriteBody(
-                  mediaType: mediaTypeMovie,
-                  mediaId: int.parse(widget.movieId!),
-                  favorite: false));
-            } else {
-              favCubit.emitMarkAsFavorite(FavoriteBody(
-                  mediaType: mediaTypeMovie,
-                  mediaId: int.parse(widget.movieId!),
-                  favorite: true));
-            }
-          },
-          child: Icon(
-            favCubit.iconData,
-            color: Colors.amber[900],
-          ),
-        );
-      }),
+      floatingActionButton: FloatingActionButtonWidget(
+          favCubit: favCubit, movieId: widget.movieId),
     );
   }
 }
