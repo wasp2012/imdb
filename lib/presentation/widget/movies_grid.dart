@@ -26,8 +26,6 @@ class MoviesGridWidget extends StatelessWidget {
                 child: Card(
                   margin: EdgeInsets.zero,
                   color: Colors.transparent,
-                  // shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.all(Radius.circular(10))),
                   elevation: 30,
                   child: movie.posterPath!.isNotEmpty
                       ? Image.network(

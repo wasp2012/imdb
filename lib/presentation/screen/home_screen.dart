@@ -28,8 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = getIt<MoviesCubit>();
+
     return FutureBuilder(
-      future: getIt.allReady(),
+      future: Future.wait([
+        getIt.allReady(),
+        cubit.emitNowPlayingMovies(),
+        cubit.emitTopRatedMovies(),
+        cubit.emitMoviesPopular(),
+        cubit.emitMoviesUpComing(),
+      ]),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           var cubit = getIt<MoviesCubit>();

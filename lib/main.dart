@@ -69,7 +69,8 @@ class MyApp extends StatelessWidget {
           final cubitThemeCubit = getIt<SettingsCubit>();
 
           return MultiBlocProvider(
-              providers: [
+              providers: [ 
+                
                 BlocProvider(
                   create: (context) => getIt<SettingsCubit>(),
                 ),

@@ -73,8 +73,11 @@ class HomeScreenWidget extends StatelessWidget {
                       SizedBox(
                         height: 20.h,
                       ),
-                      const MovieSectionWidget(
-                          sectionTitle: 'Now Playing', flag: 1),
+                      MovieSectionWidget(
+                        sectionTitle: 'Now Playing',
+                        moviesList: cubit.nowPlayingMoviesList,
+                        adaptiveHeight: 350,
+                      ),
                     ],
                   ),
                 ),
@@ -83,10 +86,19 @@ class HomeScreenWidget extends StatelessWidget {
           ),
         ),
         Column(
-          children: const [
-            MovieSectionWidget(sectionTitle: 'Top Rated', flag: 2),
-            MovieSectionWidget(sectionTitle: 'Popular', flag: 3),
-            MovieSectionWidget(sectionTitle: 'Upcoming', flag: 4),
+          children: [
+            MovieSectionWidget(
+                sectionTitle: 'Top Rated',
+                moviesList: cubit.topRatedMoviesList,
+                adaptiveHeight: 150),
+            MovieSectionWidget(
+                sectionTitle: 'Popular',
+                moviesList: cubit.popularMoviesList,
+                adaptiveHeight: 150),
+            MovieSectionWidget(
+                sectionTitle: 'Upcoming',
+                moviesList: cubit.upComingMoviesList,
+                adaptiveHeight: 150),
           ],
         ),
       ],

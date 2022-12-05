@@ -11,6 +11,7 @@ class AppTheme {
   static Color lightHoverColor = const Color(0xffdee1ec);
   static Color lightGradientColorOne = Color.fromARGB(255, 128, 47, 146);
   static Color lightGradientColorTwo = Colors.white;
+  static Color lightStrokeTextColor = Colors.black;
 
   static TextTheme lightTextTheme = const TextTheme(
     headline1: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -28,6 +29,7 @@ class AppTheme {
   static Color darkHoverColor = const Color(0xff0e153a);
   static Color darkGradientColorOne = const Color(0xff490957);
   static Color darkGradientColorTwo = const Color(0xff090408);
+  static Color darkStrokeTextColor = Colors.white;
 
   static TextTheme darkTextTheme = const TextTheme(
     headline1: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -51,6 +53,7 @@ class AppTheme {
       primary: lightGradientColorOne,
       secondary: lightGradientColorTwo,
     ),
+    indicatorColor: lightStrokeTextColor,
   );
 
   static Brightness get currentSystemBrightness =>
@@ -68,7 +71,8 @@ class AppTheme {
     colorScheme: ColorScheme.dark(
       primary: darkGradientColorOne,
       secondary: darkGradientColorTwo,
-    ),
+    ),    indicatorColor: darkStrokeTextColor,
+
   );
 
   static setStatusBarAndNavigationBarColors(ThemeMode themeMode) {
