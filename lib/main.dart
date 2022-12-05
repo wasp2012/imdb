@@ -10,19 +10,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imdb_demo/business_logic/auth_cubit/authentication_cubit.dart';
 import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
+import 'package:imdb_demo/business_logic/internet_cubit/internet_cubit.dart';
 import 'package:imdb_demo/business_logic/profile_cubit/profile_cubit.dart';
+import 'package:imdb_demo/presentation/screen/check_internet_screen.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/constants/themes.dart';
 import 'package:imdb_demo/shared/offline_data.dart';
 
 import 'bloc_observer.dart';
-import 'business_logic/theme_cubit/theme_cubit.dart';
-import 'business_logic/theme_cubit/theme_state.dart';
+import 'business_logic/theme_cubit/settings_cubit.dart';
+import 'business_logic/theme_cubit/settings_state.dart';
 import 'injection.dart';
 import 'route/router.dart';
 
 void main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   initGetIt();
 // Initialize Firebase.
   await Firebase.initializeApp();
@@ -45,7 +47,11 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({required this.router, required this.home, Key? key}) : super(key: key);
+  const MyApp({
+    Key? key,
+    this.router,
+    this.home,
+  }) : super(key: key);
 
   final AppRouter? router;
   final String? home;
@@ -57,50 +63,76 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return FutureBuilder(
-      future: getIt.allReady(),
+      future: Future.wait([getIt.allReady()]),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          final cubitThemeCubit = getIt<ThemeCubit>();
+          final cubitThemeCubit = getIt<SettingsCubit>();
 
-          print(cubitThemeCubit.savedTheme);
           return MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => getIt<ThemeCubit>(),
-              ),
-              BlocProvider(
-                create: (context) => getIt<AuthenticationCubit>(),
-              ),
-              BlocProvider(
-                create: (context) => getIt<FavoriteCubit>(),
-              ),
-              BlocProvider(
-                create: (context) => getIt<ProfileCubit>(),
-              ),
-            ],
-            child: BlocBuilder<ThemeCubit, SettingState>(
-              builder: (context, state) {
-                return ScreenUtilInit(
-                    designSize: const Size(360, 690),
-                    minTextAdapt: true,
-                    splitScreenMode: true,
-                    builder: (context, child) {
-                      return SafeArea(
-                        child: MaterialApp(
-                          debugShowCheckedModeBanner: false,
-                          darkTheme: AppTheme.darkTheme,
-                          theme: AppTheme.lightTheme,
-                          themeMode: cubitThemeCubit.savedTheme == true
-                              ? ThemeMode.dark
-                              : ThemeMode.light,
-                          initialRoute: home,
-                          onGenerateRoute: router?.onGenerateRoute,
-                        ),
-                      );
-                    });
-              },
-            ),
-          );
+              providers: [
+                BlocProvider(
+                  create: (context) => getIt<SettingsCubit>(),
+                ),
+                BlocProvider(
+                  create: (context) => getIt<AuthenticationCubit>(),
+                ),
+                BlocProvider(
+                  create: (context) => getIt<FavoriteCubit>(),
+                ),
+                BlocProvider(
+                  create: (context) => getIt<ProfileCubit>(),
+                ),
+                BlocProvider(
+                  create: (context) => getIt<InternetCubit>(),
+                ),
+              ],
+              child: BlocBuilder<InternetCubit, InternetState>(
+                  builder: (context, state) {
+                if (state is InternetDisconnected) {
+                  return MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    darkTheme: AppTheme.darkTheme,
+                    theme: AppTheme.lightTheme,
+                    themeMode: cubitThemeCubit.savedTheme == true
+                        ? ThemeMode.dark
+                        : ThemeMode.light,
+                    home: const CheckInternetScreen(),
+                  );
+                } else if (state is InternetConnected) {
+                  return BlocBuilder<SettingsCubit, SettingState>(
+                    builder: (context, state) {
+                      return ScreenUtilInit(
+                          designSize: const Size(360, 690),
+                          minTextAdapt: true,
+                          splitScreenMode: true,
+                          builder: (context, child) {
+                            return SafeArea(
+                              child: MaterialApp(
+                                debugShowCheckedModeBanner: false,
+                                darkTheme: AppTheme.darkTheme,
+                                theme: AppTheme.lightTheme,
+                                themeMode: cubitThemeCubit.savedTheme == true
+                                    ? ThemeMode.dark
+                                    : ThemeMode.light,
+                                initialRoute: home,
+                                onGenerateRoute: router?.onGenerateRoute,
+                              ),
+                            );
+                          });
+                    },
+                  );
+                } else {
+                  return MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    darkTheme: AppTheme.darkTheme,
+                    theme: AppTheme.lightTheme,
+                    themeMode: cubitThemeCubit.savedTheme == true
+                        ? ThemeMode.dark
+                        : ThemeMode.light,
+                    home: const Center(child: CircularProgressIndicator()),
+                  );
+                }
+              }));
         } else {
           return const CircularProgressIndicator();
         }

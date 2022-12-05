@@ -15,8 +15,7 @@ class VideoForMovieCubit extends Cubit<VideoForMovieState> {
   YoutubeMetaData? videoMetaData = null;
 
   final bool isPlayerReady = false;
-  YoutubePlayerController controller =
-      YoutubePlayerController(initialVideoId: '');
+  late YoutubePlayerController controller;
 
   VideoForMovieCubit(
     this.moviesRepository,
@@ -45,5 +44,11 @@ class VideoForMovieCubit extends Cubit<VideoForMovieState> {
     playerState = controller.value.playerState;
     videoMetaData = controller.metadata;
     emit(AddingListenerSucceeded());
+  }
+
+  @override
+  Future<void> close() {
+    controller.dispose();
+    return super.close();
   }
 }

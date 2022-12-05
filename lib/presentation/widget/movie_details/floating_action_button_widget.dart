@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
-import 'package:imdb_demo/shared/data/models/account/favorite_model.dart';
+import '../../../business_logic/favorite_cubit/favorite_cubit.dart';
+import '../../../shared/data/models/account/favorite_model.dart';
 
 import '../../../shared/constants/strings.dart';
 

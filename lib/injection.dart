@@ -1,5 +1,7 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'business_logic/internet_cubit/internet_cubit.dart';
 
 import 'business_logic/auth_cubit/authentication_cubit.dart';
 import 'business_logic/favorite_cubit/favorite_cubit.dart';
@@ -7,7 +9,7 @@ import 'business_logic/favorite_cubit/favorite_cubit.dart';
 import 'business_logic/movies_cubitt/movie_detail_cubit/movie_details_cubit.dart';
 import 'business_logic/movies_cubitt/movies_cubit/movies_cubit.dart';
 import 'business_logic/profile_cubit/profile_cubit.dart';
-import 'business_logic/theme_cubit/theme_cubit.dart';
+import 'business_logic/theme_cubit/settings_cubit.dart';
 import 'business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
 import 'route/router.dart';
 import 'shared/constants/strings.dart';
@@ -74,11 +76,21 @@ void initGetIt() {
     return userDetail;
   });
 
-  getIt.registerSingletonAsync<ThemeCubit>(() async {
-    final themeCubit = ThemeCubit();
+  getIt.registerSingletonAsync<SettingsCubit>(() async {
+    final themeCubit = SettingsCubit();
     await themeCubit.getSavedTheme();
     return themeCubit;
   });
+
+  getIt.registerSingletonAsync<SettingsCubit>(() async {
+    final themeCubit = SettingsCubit();
+    await themeCubit.getSavedTheme();
+    return themeCubit;
+  });
+
+  getIt.registerSingleton<InternetCubit>(
+      InternetCubit(connectivity: Connectivity()));
+
   //
 
   getIt.registerLazySingleton<AppRouter>(() => AppRouter());

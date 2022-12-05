@@ -20,13 +20,12 @@ class _BluredMovieImageWidgetState extends State<BluredMovieImageWidget> {
 
   @override
   void didChangeDependencies() {
-    if (widget.movie!.isNotEmpty) {
-      Future.delayed(const Duration(seconds: 1), () {
-        _scrollController.animateTo(_scrollController.position.maxScrollExtent,
-            duration: Duration(seconds: widget.movie!.length * 20),
-            curve: Curves.linear);
-      });
-    }
+    Future.delayed(const Duration(seconds: 1), () {
+      _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+          duration: Duration(seconds: widget.movie!.length * 20),
+          curve: Curves.linear);
+    });
+
     super.didChangeDependencies();
   }
 
@@ -46,7 +45,6 @@ class _BluredMovieImageWidgetState extends State<BluredMovieImageWidget> {
           controller: _scrollController,
           crossAxisCount: 1,
           scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
           physics: const AlwaysScrollableScrollPhysics(),
           children: widget.movie!.map(
             (movie) {

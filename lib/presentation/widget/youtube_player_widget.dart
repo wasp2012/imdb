@@ -9,7 +9,7 @@ import '../../business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
 class YouTubePlayerWidget extends StatefulWidget {
   final List<VideoForMovieResult?> results;
 
-  YouTubePlayerWidget({
+  const YouTubePlayerWidget({
     Key? key,
     required this.results,
   }) : super(key: key);
@@ -19,12 +19,13 @@ class YouTubePlayerWidget extends StatefulWidget {
 }
 
 class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
-  VideoForMovieCubit? cubit;
+  late VideoForMovieCubit? cubit;
 
   @override
   void initState() {
-    super.initState();
     cubit = getIt<VideoForMovieCubit>();
+
+    super.initState();
   }
 
   @override
@@ -38,14 +39,6 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
   void dispose() {
     cubit?.controller.dispose();
     super.dispose();
-  }
-
-  void listener() {
-    if (cubit!.isPlayerReady &&
-        mounted &&
-        !cubit!.controller.value.isFullScreen) {
-      cubit?.listener();
-    }
   }
 
   @override
@@ -65,6 +58,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
             cubit?.controller = YoutubePlayerController(
               initialVideoId: widget.results[index]!.key!,
               flags: const YoutubePlayerFlags(
+                showLiveFullscreenButton: false,
                 autoPlay: false,
                 mute: true,
               ),
@@ -75,14 +69,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
               child: YoutubePlayer(
                 controller: cubit!.controller,
                 showVideoProgressIndicator: true,
-                progressIndicatorColor: Colors.amber,
-                progressColors: const ProgressBarColors(
-                  playedColor: Colors.amber,
-                  handleColor: Colors.amberAccent,
-                ),
-                onReady: () {
-                  cubit?.controller.addListener(listener);
-                },
+                controlsTimeOut: Duration(seconds: 2),
               ),
             );
           });

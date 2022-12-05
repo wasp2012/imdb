@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rive/rive.dart' as riveImport;
 
-import '../../business_logic/theme_cubit/theme_cubit.dart';
-import '../../business_logic/theme_cubit/theme_state.dart';
+import '../../business_logic/theme_cubit/settings_cubit.dart';
+import '../../business_logic/theme_cubit/settings_state.dart';
 import '../../injection.dart';
 import '../../shared/common/gradient.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
@@ -20,16 +20,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    cubit = getIt<ThemeCubit>();
+    cubit = getIt<SettingsCubit>();
     cubit.settingUpTheArtBoard();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = getIt<ThemeCubit>();
+    final cubit = getIt<SettingsCubit>();
 
     return BlocProvider.value(
-      value: getIt<ThemeCubit>(),
+      value: getIt<SettingsCubit>(),
       child: Scaffold(
         extendBody: true,
         bottomNavigationBar: const CurvedBottomNavbarWidget(currentPage: 4),
@@ -57,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               fontSize: 18,
                             ),
                       ),
-                      BlocBuilder<ThemeCubit, SettingState>(
+                      BlocBuilder<SettingsCubit, SettingState>(
                         builder: (context, state) {
                           return Container(
                             color: Colors.transparent,

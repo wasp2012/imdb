@@ -12,20 +12,30 @@ class CharacterInfoWIdget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      text: TextSpan(
-        children: [
-          TextSpan(
+    if ((title!.isNotEmpty && title != null) &&
+        (value!.isNotEmpty && value != null)) {
+      return RichText(
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        text: TextSpan(
+          children: [
+            TextSpan(
               text: title,
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1!
-                  .copyWith(fontWeight: FontWeight.bold)),
-          TextSpan(text: value, style: Theme.of(context).textTheme.subtitle1!),
-        ],
-      ),
-    );
+              style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Colors.greenAccent,
+                    letterSpacing: 2,
+                    decorationThickness: 2,
+                  ),
+            ),
+            TextSpan(
+                text: value, style: Theme.of(context).textTheme.subtitle1!),
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 }

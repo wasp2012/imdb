@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,19 +11,14 @@ import 'package:imdb_demo/shared/offline_data.dart';
 import 'package:rive/rive.dart';
 
 import '../../shared/constants/themes.dart';
-import 'theme_state.dart';
+import 'settings_state.dart';
 
-class ThemeCubit extends Cubit<SettingState> {
-  ThemeCubit() : super(SettingStateIdle()) {
+class SettingsCubit extends Cubit<SettingState> {
+  SettingsCubit() : super(SettingStateIdle()) {
     SettingStateTheme(themeMode: AppTheme.lightTheme);
   }
 
-  late RiveAnimationController switchNightController;
-  late RiveAnimationController dayIdleController;
-  late RiveAnimationController nightIdleController;
-  late RiveAnimationController switchDayController;
-  Artboard? riveArtBoard;
-
+  //DarkMode theme
   toggleSwitch(bool value) {
     SettingStateTheme? updatedState;
     if (updatedState?.themeMode == AppTheme.lightTheme) {
@@ -42,6 +39,13 @@ class ThemeCubit extends Cubit<SettingState> {
   getSavedTheme() async {
     savedTheme = await SharedPrefs.getBoolValuesSF(darkThemeKey);
   }
+
+  //Rive Animation
+  late RiveAnimationController switchNightController;
+  late RiveAnimationController dayIdleController;
+  late RiveAnimationController nightIdleController;
+  late RiveAnimationController switchDayController;
+  Artboard? riveArtBoard;
 
   void removeAllControllers() {
     riveArtBoard?.artboard.removeController(switchNightController);
@@ -82,7 +86,7 @@ class ThemeCubit extends Cubit<SettingState> {
     addSwitchNightController();
 
     Future.delayed(
-      Duration(milliseconds: 300),
+      const Duration(milliseconds: 300),
       () {
         addNightIdleController();
       },
@@ -93,7 +97,7 @@ class ThemeCubit extends Cubit<SettingState> {
     addSwitchDayController();
 
     Future.delayed(
-      Duration(milliseconds: 300),
+      const Duration(milliseconds: 300),
       () {
         addDayIdleController();
       },
@@ -120,4 +124,6 @@ class ThemeCubit extends Cubit<SettingState> {
       emit(InitRive());
     });
   }
+
+  
 }
