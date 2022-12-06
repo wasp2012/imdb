@@ -44,7 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
           return Scaffold(
             backgroundColor: Theme.of(context).backgroundColor,
             extendBody: true,
-            bottomNavigationBar: const CurvedBottomNavbarWidget(currentPage: 0),
+            bottomNavigationBar: const CurvedBottomNavbarWidget(
+              currentPage: 0,
+            ),
             key: globalKey,
             body: SingleChildScrollView(
               child: Container(

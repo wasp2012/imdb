@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../business_logic/auth_cubit/authentication_cubit.dart';
-import '../../injection.dart';
-import '../widget/login/login_fields_widget.dart';
-import '../widget/plasma.dart';
+import '../../../business_logic/auth_cubit/authentication_cubit.dart';
+import '../../../injection.dart';
+import '../../widget/login/login_fields_widget.dart';
+import '../../widget/plasma.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({super.key});

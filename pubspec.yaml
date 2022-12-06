@@ -65,6 +65,7 @@ dependencies:
   rive: ^0.9.1
   shared_preferences: ^2.0.15
   simple_animations: ^3.0.0
+  webview_flutter: ^3.0.4
   youtube_player_flutter: ^8.1.1
 
 dev_dependencies:

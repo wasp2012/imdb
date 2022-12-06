@@ -46,3 +46,9 @@ class AuthenticationStateError extends AuthenticationState {
 
   AuthenticationStateError(this.networkExceptions);
 }
+
+class WebViewPageOnProgress extends AuthenticationState {}
+
+class WebViewPageStarted extends AuthenticationState {}
+
+class WebViewPageLoaded extends AuthenticationState {}

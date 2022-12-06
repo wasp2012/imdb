@@ -51,4 +51,5 @@ class VideoForMovieCubit extends Cubit<VideoForMovieState> {
     controller.dispose();
     return super.close();
   }
+  
 }

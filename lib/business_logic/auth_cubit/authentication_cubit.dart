@@ -122,4 +122,22 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       print(e.toString());
     }
   }
+
+  var loadingPercentage = 0;
+
+  void emitPageOnProgress(int progress) {
+    loadingPercentage = progress;
+    emit(WebViewPageOnProgress());
+  }
+
+  void emitPageStarted() {
+    loadingPercentage = 0;
+
+    emit(WebViewPageStarted());
+  }
+
+  void emitPageLoaded() {
+    loadingPercentage = 100;
+    emit(WebViewPageLoaded());
+  }
 }

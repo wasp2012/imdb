@@ -49,6 +49,7 @@ class _CurvedBottomNavbarWidgetState extends State<CurvedBottomNavbarWidget> {
       color: Colors.deepPurple,
       animationDuration: const Duration(microseconds: 300),
       height: 50.h,
+      animationCurve: Curves.bounceInOut,
       index: widget.currentPage!,
       onTap: (index) {
         if (widget.currentPage != index) {

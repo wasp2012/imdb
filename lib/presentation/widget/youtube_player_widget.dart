@@ -36,12 +36,6 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
   }
 
   @override
-  void dispose() {
-    cubit?.controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     if (widget.results.isEmpty) {
       return const Center(

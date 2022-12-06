@@ -7,7 +7,7 @@ class AppTheme {
   static Color lightPrimaryColor = const Color(0xff5BD3C7);
   static Color lightAccentColor = Colors.blueGrey.shade400;
   static Color lightParticlesColor = const Color(0xffFFFFFF);
-  static Color lightButtonColor = const Color(0xff1f4287);
+  static Color lightButtonColor = Color.fromARGB(255, 63, 25, 107);
   static Color lightHoverColor = const Color(0xffdee1ec);
   static Color lightGradientColorOne = Color.fromARGB(255, 128, 47, 146);
   static Color lightGradientColorTwo = Colors.white;
@@ -71,8 +71,8 @@ class AppTheme {
     colorScheme: ColorScheme.dark(
       primary: darkGradientColorOne,
       secondary: darkGradientColorTwo,
-    ),    indicatorColor: darkStrokeTextColor,
-
+    ),
+    indicatorColor: darkStrokeTextColor,
   );
 
   static setStatusBarAndNavigationBarColors(ThemeMode themeMode) {

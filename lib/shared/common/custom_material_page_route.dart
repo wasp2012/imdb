@@ -9,23 +9,7 @@ class CustomMaterialPageRoute<T> extends MaterialPageRoute<T> {
           settings: settings,
         );
 
-  // List<Alignment> randomTransitions = [
-  //   Alignment.bottomCenter,
-  //   Alignment.bottomLeft,
-  //   Alignment.bottomRight,
-  //   Alignment.center,
-  //   Alignment.centerLeft,
-  //   Alignment.centerRight,
-  //   Alignment.topCenter,
-  //   Alignment.topLeft,
-  //   Alignment.topRight,
-  // ];
 
-  // Alignment randomAlignment() {
-  //   var randomAlignment = Random();
-  //   int randomIndex = randomAlignment.nextInt(randomTransitions.length - 1);
-  //   return randomTransitions[randomIndex];
-  // }
 
   @override
   Widget buildTransitions(BuildContext context, Animation<double> animation,
