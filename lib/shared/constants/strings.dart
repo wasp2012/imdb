@@ -1,7 +1,6 @@
 //Screens
 const homeScreen = '/';
 const movieDetailsScreen = '/movie_details_screen';
-const videoScreen = '/movie_videos_screen';
 const settingsScreen = '/settings_screen';
 const logInScreen = '/log_in_screen';
 const profileScreen = '/profile_screen';

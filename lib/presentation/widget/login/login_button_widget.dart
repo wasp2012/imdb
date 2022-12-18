@@ -32,6 +32,7 @@ class _LoginButtonWidgetState extends State<LoginButtonWidget> {
       margin: const EdgeInsets.symmetric(vertical: 20),
       alignment: Alignment.center,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           BlocListener<AuthenticationCubit, AuthenticationState>(
             listener: (context, state) {

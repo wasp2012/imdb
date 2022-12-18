@@ -34,36 +34,38 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
     return Scaffold(
       body: FutureBuilder(
-          future: Future.wait([
-            getIt.allReady(),
-            movieCubit.emitMovieDetails(widget.movieId!),
-          ]),
-          builder: (context, snapshot) =>
-              BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
-                  builder: (context, state) {
-                if (state is MovieDetailsLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else {
-                  return Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: SharedGradient.gradientColors(context),
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      ),
-                    ),
-                    child: CustomScrollView(
-                      slivers: [
-                        SliverAppBarWidget(movieCubit: movieCubit),
-                        SliverListMovieDetailsWidget(
-                          movieCubit: movieCubit,
-                          movieId: widget.movieId,
-                        )
-                      ],
-                    ),
-                  );
-                }
-              })),
+        future: Future.wait([
+          getIt.allReady(),
+          movieCubit.emitMovieDetails(widget.movieId!),
+        ]),
+        builder: (context, snapshot) =>
+            BlocBuilder<MovieDetailsCubit, MovieDetailsState>(
+          builder: (context, state) {
+            if (state is MovieDetailsLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              return Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: SharedGradient.gradientColors(context),
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverAppBarWidget(movieCubit: movieCubit),
+                    SliverListMovieDetailsWidget(
+                      movieCubit: movieCubit,
+                      movieId: widget.movieId,
+                    )
+                  ],
+                ),
+              );
+            }
+          },
+        ),
+      ),
       floatingActionButton: FloatingActionButtonWidget(
           favCubit: favCubit, movieId: widget.movieId),
     );

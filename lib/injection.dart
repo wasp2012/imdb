@@ -10,7 +10,6 @@ import 'business_logic/movies_cubitt/movie_detail_cubit/movie_details_cubit.dart
 import 'business_logic/movies_cubitt/movies_cubit/movies_cubit.dart';
 import 'business_logic/profile_cubit/profile_cubit.dart';
 import 'business_logic/theme_cubit/settings_cubit.dart';
-import 'business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
 import 'route/router.dart';
 import 'shared/constants/strings.dart';
 import 'shared/data/repo/account_repo/acc_repo.dart';
@@ -59,9 +58,6 @@ void initGetIt() {
     }
     return allFavorite;
   });
-
-  getIt.registerFactory<VideoForMovieCubit>(
-      () => VideoForMovieCubit(getIt<MoviesRepository>()));
 
   getIt.registerLazySingleton<AuthenticationCubit>(
       () => AuthenticationCubit(getIt<AuthRepository>()));

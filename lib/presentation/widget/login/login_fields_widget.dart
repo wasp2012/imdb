@@ -6,7 +6,7 @@ import '../../../business_logic/auth_cubit/authentication_cubit.dart';
 import '../../../shared/helper.dart';
 import 'login_button_widget.dart';
 
-class LoginFieldsWidget extends StatelessWidget {
+class LoginFieldsWidget extends StatefulWidget {
   final Function(BuildContext, AuthenticationCubit) logInOnPress;
   final Function(BuildContext) cantLogInDialog;
   final AuthenticationCubit cubit;
@@ -17,13 +17,19 @@ class LoginFieldsWidget extends StatelessWidget {
       required this.cubit});
 
   @override
+  State<LoginFieldsWidget> createState() => _LoginFieldsWidgetState();
+}
+
+class _LoginFieldsWidgetState extends State<LoginFieldsWidget> {
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      reverse: true,
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           TextFormField(
-            controller: cubit.userName,
+            controller: widget.cubit.userName,
             validator: (value) => Validator.validateName(value ?? ""),
             decoration: InputDecoration(
               isDense: true,
@@ -38,18 +44,18 @@ class LoginFieldsWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 5.h,
+            height: 10.h,
           ),
           Builder(builder: (context) {
             return TextFormField(
-              controller: cubit.password,
+              controller: widget.cubit.password,
               validator: (value) => Validator.validatePassword(value ?? ""),
               obscureText:
                   context.watch<AuthenticationCubit>().isPasswordHidden,
               decoration: InputDecoration(
                 suffixIcon: InkWell(
-                  onTap: cubit.showHidePassword,
-                  child: Icon(cubit.icon),
+                  onTap: widget.cubit.showHidePassword,
+                  child: Icon(widget.cubit.icon),
                 ),
                 hintText: "Password",
                 hintStyle: TextStyle(color: Colors.black54),
@@ -65,9 +71,10 @@ class LoginFieldsWidget extends StatelessWidget {
             );
           }),
           LoginButtonWidget(
-            cantLogInDialog: (p0) => cantLogInDialog(context),
-            cubit: cubit,
-            logInOnPress: (p0, p1) => logInOnPress(context, cubit),
+            cantLogInDialog: (p0) => widget.cantLogInDialog(context),
+            cubit: widget.cubit,
+            logInOnPress: (p0, p1) =>
+                widget.logInOnPress(context, widget.cubit),
           ),
         ],
       ),

@@ -58,7 +58,7 @@ class SliverListMovieDetailsWidget extends StatelessWidget {
                   value: movieCubit?.movieDetailsModel!.originalTitle!,
                 ),
                 SizedBox(
-                  height: 7.h,
+                  height: 30.h,
                 ),
                 CharacterInfoWIdget(
                   title: 'Budget: ',
@@ -70,14 +70,14 @@ class SliverListMovieDetailsWidget extends StatelessWidget {
                       : 'Budget Not Supported!',
                 ),
                 SizedBox(
-                  height: 7.h,
+                  height: 30.h,
                 ),
                 CharacterInfoWIdget(
                   title: 'Release date : ',
                   value: movieCubit!.movieDetailsModel!.releaseDate!,
                 ),
                 SizedBox(
-                  height: 7.h,
+                  height: 30.h,
                 ),
                 CharacterInfoWIdget(
                   title: 'Adult : ',
@@ -86,7 +86,7 @@ class SliverListMovieDetailsWidget extends StatelessWidget {
                       : 'Family',
                 ),
                 SizedBox(
-                  height: 7.h,
+                  height: 30.h,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -95,7 +95,7 @@ class SliverListMovieDetailsWidget extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       )),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       CharacterInfoWIdget(
                         title: 'Rate: ',
@@ -110,8 +110,8 @@ class SliverListMovieDetailsWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
+                SizedBox(
+                  height: 50.h,
                 ),
                 RichText(
                   text: TextSpan(
@@ -122,32 +122,24 @@ class SliverListMovieDetailsWidget extends StatelessWidget {
                         ),
                   ),
                 ),
+                SizedBox(
+                  height: 20.h,
+                ),
                 Text(' ${movieCubit!.movieDetailsModel!.overview!}',
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.subtitle1!),
-                const SizedBox(
-                  height: 50,
+                SizedBox(
+                  height: 80.h,
                 ),
                 SizedBox(
                   width: double.infinity,
-                  height: 50,
+                  height: 50.h,
                   child: displayRandomQuoteOrEmptySpace(
                       movieCubit!.movieDetailsModel!.tagline!),
                 ),
-                const SizedBox(
-                  height: 200,
+                SizedBox(
+                  height: 200.h,
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).buttonColor,
-                  ),
-                  onPressed: () => Navigator.pushNamed(context, videoScreen,
-                      arguments: movieId),
-                  child: const Text('Trailers'),
-                ),
-                const SizedBox(
-                  height: 100,
-                )
               ],
             ),
           ),

@@ -23,8 +23,6 @@ class CharacterInfoWIdget extends StatelessWidget {
               text: title,
               style: Theme.of(context).textTheme.subtitle1!.copyWith(
                     fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.underline,
-                    decorationColor: Colors.greenAccent,
                     letterSpacing: 2,
                     decorationThickness: 2,
                   ),

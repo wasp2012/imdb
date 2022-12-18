@@ -32,52 +32,64 @@ class _LogInScreenState extends State<LogInScreen> {
               body: Stack(
                 children: [
                   const PlasmaBackground(),
-                  Positioned(
-                      left: 30.w,
-                      right: 30.w,
-                      top: 20.h,
-                      child: Image.asset(
-                        alignment: Alignment.center,
-                        'assets/images/popcorn.png',
-                        height: 300.h,
-                        width: 270.w,
-                      )),
-                  Positioned(
-                    bottom: 30.h,
-                    right: 30.w,
-                    left: 30.w,
-                    top: 300.h,
+                  SingleChildScrollView(
                     child: Column(
                       children: [
-                        Text(
-                          'Log In Now',
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.sp,
-                                    color: Colors.white,
-                                  ),
+                        Positioned(
+                          left: 30.w,
+                          right: 30.w,
+                          top: 20.h,
+                          child: Image.asset(
+                            alignment: Alignment.center,
+                            'assets/images/popcorn.png',
+                            height: 300.h,
+                            width: 270.w,
+                          ),
                         ),
-                        SizedBox(
-                          height: 10.h,
+                        Positioned(
+                          bottom: 1.h,
+                          right: 30.w,
+                          left: 30.w,
+                          top: 300.h,
+                          child: Column(
+                            children: [
+                              Text(
+                                'Log In Now',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20.sp,
+                                      color: Colors.white,
+                                    ),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Text(
+                                'Please enter the details below to continue',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1!
+                                    .copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14.sp,
+                                      color: Color.fromARGB(255, 46, 32, 36),
+                                    ),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              LoginFieldsWidget(
+                                  cantLogInDialog: (p0) =>
+                                      cantLogInDialog(context),
+                                  cubit: cubit,
+                                  logInOnPress: (p0, p1) =>
+                                      logInOnPress(context, cubit)),
+                            ],
+                          ),
                         ),
-                        Text(
-                          'Please enter the details below to continue',
-                          style:
-                              Theme.of(context).textTheme.headline1!.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14.sp,
-                                    color: Color.fromARGB(255, 46, 32, 36),
-                                  ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        LoginFieldsWidget(
-                            cantLogInDialog: (p0) => cantLogInDialog(context),
-                            cubit: cubit,
-                            logInOnPress: (p0, p1) =>
-                                logInOnPress(context, cubit)),
                       ],
                     ),
                   ),

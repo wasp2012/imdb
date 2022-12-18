@@ -68,7 +68,7 @@ class FavoriteScreen extends StatelessWidget {
                                 ? Image.network(
                                     '$imageDisplay${cubit.allFavoriteModel?.results?[index].posterPath}',
                                   )
-                                : Image.asset(personImage),
+                                : Image.asset(placeHolder),
                           ),
                         );
                       },

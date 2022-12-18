@@ -34,7 +34,8 @@ class HomeScreenWidget extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 20),
                   child: Column(
                     children: [
-                      SizedBox(
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20.w),
                         width: 400,
                         height: 50,
                         child: TextFormField(

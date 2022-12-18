@@ -6,14 +6,12 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import '../business_logic/movies_cubitt/movie_detail_cubit/movie_details_cubit.dart';
 import '../business_logic/movies_cubitt/movies_cubit/movies_cubit.dart';
-import '../business_logic/video_for_movie_cubit/video_for_movie_cubit.dart';
 import '../injection.dart';
 import '../presentation/screen/check_internet_screen.dart';
 import '../presentation/screen/favorite_list_screen.dart';
 import '../presentation/screen/home_screen.dart';
 import '../presentation/screen/registration/log_in_screen.dart';
 import '../presentation/screen/movies/movie_details_screen.dart';
-import '../presentation/screen/movies/movie_videos_screen.dart';
 import '../presentation/screen/profile_screen.dart';
 import '../presentation/screen/registration/sign_up_webview_screen.dart';
 import '../presentation/screen/settings_screen.dart';
@@ -51,19 +49,7 @@ class AppRouter {
             );
           },
         );
-      case videoScreen:
-        return CustomMaterialPageRoute(
-          builder: (context) {
-            var movieId = settings.arguments;
 
-            return BlocProvider(
-              create: (context) => getIt<VideoForMovieCubit>(),
-              child: MovieVideosScreen(
-                movieId: movieId as String,
-              ),
-            );
-          },
-        );
       case settingsScreen:
         return CustomMaterialPageRoute(
           builder: (context) {
