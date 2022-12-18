@@ -38,7 +38,7 @@ class _LoginFieldsWidgetState extends State<LoginFieldsWidget> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               hintText: 'Username',
-              hintStyle: TextStyle(color: Colors.black54),
+              hintStyle: const TextStyle(color: Colors.black54),
               filled: true,
               fillColor: const Color(0xffdee1ec),
             ),
@@ -58,7 +58,7 @@ class _LoginFieldsWidgetState extends State<LoginFieldsWidget> {
                   child: Icon(widget.cubit.icon),
                 ),
                 hintText: "Password",
-                hintStyle: TextStyle(color: Colors.black54),
+                hintStyle: const TextStyle(color: Colors.black54),
                 isDense: true,
                 constraints: BoxConstraints(maxHeight: 50.h, minHeight: 20.h),
                 border: OutlineInputBorder(
