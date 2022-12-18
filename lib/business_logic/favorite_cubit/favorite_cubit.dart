@@ -80,6 +80,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   AllFavoriteModel? allFavoriteModel;
   List<Results>? favoriteMoviesList = [];
   Future<void> emitGetFavoriteMovies() async {
+    emit(FavoriteStateLoading());
     if (await SharedPrefs.checkValue(sessionIdKey) &&
         await SharedPrefs.checkValue(userIdKey)) {
       var sessionId = await SharedPrefs.getStringValuesSF(sessionIdKey);

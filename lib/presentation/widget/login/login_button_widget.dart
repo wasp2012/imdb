@@ -55,26 +55,33 @@ class _LoginButtonWidgetState extends State<LoginButtonWidget> {
                 onPressed: () async {
                   await widget.logInOnPress(context, widget.cubit);
                 },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
                   ),
-                  backgroundColor: Theme.of(context).buttonColor,
-                  elevation: 10,
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Theme.of(context).buttonColor),
                   alignment: Alignment.center,
-                  textStyle: Theme.of(context).textTheme.headline1!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.sp,
-                      ),
+                  elevation: MaterialStateProperty.all<double>(8.0),
+                  textStyle: MaterialStateProperty.all<TextStyle>(
+                    TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                child: const Text('Log In'),
+                child: const Text('Log In',
+                    style:
+                        TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
               ),
             ),
           ),
           SizedBox(
             height: 40.h,
             width: 150.w,
-            child: ElevatedButton(
+            child: TextButton(
               onPressed: () {
                 Navigator.pushNamed(
                   context,
@@ -82,21 +89,18 @@ class _LoginButtonWidgetState extends State<LoginButtonWidget> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                  side: BorderSide(
-                    color: Colors.transparent,
-                  ),
+                shape: const BeveledRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
                 ),
                 // backgroundColor: Colors.white,
                 alignment: Alignment.center,
                 textStyle: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16.sp,
-                  color: Colors.black,
                 ),
               ),
-              child: const Text('SignUp'),
+              child:
+                  const Text('SignUp', style: TextStyle(color: Colors.black)),
             ),
           ),
         ],

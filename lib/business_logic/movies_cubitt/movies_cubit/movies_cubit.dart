@@ -119,4 +119,10 @@ class MoviesCubit extends Cubit<MoviesState> {
       print(e.toString());
     }
   }
+
+  @override
+  void onChange(Change<MoviesState> change) {
+    // TODO: implement onChange
+    super.onChange(change);
+  }
 }

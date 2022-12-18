@@ -87,18 +87,27 @@ class HomeScreenWidget extends StatelessWidget {
         ),
         Column(
           children: [
-            MovieSectionWidget(
-                sectionTitle: 'Top Rated',
-                moviesList: cubit.topRatedMoviesList,
-                adaptiveHeight: 150),
-            MovieSectionWidget(
-                sectionTitle: 'Popular',
-                moviesList: cubit.popularMoviesList,
-                adaptiveHeight: 150),
-            MovieSectionWidget(
-                sectionTitle: 'Upcoming',
-                moviesList: cubit.upComingMoviesList,
-                adaptiveHeight: 150),
+            cubit.topRatedMoviesList!.isNotEmpty &&
+                    cubit.topRatedMoviesList != null
+                ? MovieSectionWidget(
+                    sectionTitle: 'Top Rated',
+                    moviesList: cubit.topRatedMoviesList,
+                    adaptiveHeight: 150)
+                : CircularProgressIndicator(),
+            cubit.popularMoviesList!.isNotEmpty &&
+                    cubit.popularMoviesList != null
+                ? MovieSectionWidget(
+                    sectionTitle: 'Popular',
+                    moviesList: cubit.popularMoviesList,
+                    adaptiveHeight: 150)
+                : CircularProgressIndicator(),
+            cubit.upComingMoviesList!.isNotEmpty &&
+                    cubit.upComingMoviesList != null
+                ? MovieSectionWidget(
+                    sectionTitle: 'Upcoming',
+                    moviesList: cubit.upComingMoviesList,
+                    adaptiveHeight: 150)
+                : CircularProgressIndicator(),
           ],
         ),
       ],

@@ -56,7 +56,7 @@ class _MovieSectionWidgetState extends State<MovieSectionWidget> {
             ),
             SizedBox(
               height: widget.adaptiveHeight?.h,
-              child: widget.moviesList!.isNotEmpty
+              child: widget.moviesList!.isNotEmpty && widget.moviesList != null
                   ? GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(

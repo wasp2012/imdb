@@ -59,6 +59,7 @@ class _SignUpWebViewScreenState extends State<SignUpWebViewScreen> {
               }
               return NavigationDecision.navigate;
             },
+          
             javascriptMode: JavascriptMode.unrestricted,
             javascriptChannels: _createJavascriptChannels(context),
           ),
