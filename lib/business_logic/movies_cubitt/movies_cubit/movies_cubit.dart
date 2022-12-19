@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:imdb_demo/shared/data/models/movies/results.dart';
 
 import '../../../shared/data/models/movies/now_playing.dart';
 import '../../../shared/data/models/movies/popular.dart';
-import '../../../shared/data/models/movies/results.dart';
+import '../../../shared/data/models/movies/searched_movies.dart';
 import '../../../shared/data/models/movies/top_rated.dart';
 import '../../../shared/data/models/movies/upcoming.dart';
 import '../../../shared/data/repo/movies_repo/movies_repository.dart';
@@ -22,6 +23,7 @@ class MoviesCubit extends Cubit<MoviesState> {
   List<Results>? popularMoviesList = [];
   List<Results>? upComingMoviesList = [];
   List<Results>? allCategories = [];
+  List<Results>? searchedMovies = [];
 
   int? index = 0;
 
@@ -120,9 +122,45 @@ class MoviesCubit extends Cubit<MoviesState> {
     }
   }
 
-  @override
-  void onChange(Change<MoviesState> change) {
-    // TODO: implement onChange
-    super.onChange(change);
+  bool isSearching = false;
+  final searchTextController = TextEditingController();
+
+  Future<void> emitSearchedMovies(String query) async {
+    try {
+      emit(MoviesStateLoading());
+
+      query = query.toLowerCase();
+
+      ApiResult<SearchedMovies?> response =
+          await moviesRepository!.getSearchedMovies(query);
+      response.when(success: (searchedMoviesList) {
+        searchedMovies = searchedMoviesList?.results;
+
+        debugPrint('${searchedMovies!.length}');
+
+        emit(MoviesStateSuccess(searchedMovies));
+      }, failure: (NetworkExceptions networkExceptions) {
+        emit(MoviesStateError(networkExceptions));
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void _startSearch(BuildContext context) {
+    ModalRoute.of(context)!
+        .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
+    isSearching = true;
+    emit(MoviesStateSearchingStarted());
+  }
+
+  void _stopSearching() {
+    _clearSearch();
+    isSearching = false;
+    emit(MoviesStateSearchingStopped());
+  }
+
+  void _clearSearch() {
+    searchTextController.clear();
   }
 }

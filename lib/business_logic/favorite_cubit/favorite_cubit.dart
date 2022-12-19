@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:imdb_demo/shared/data/models/movies/results.dart';
 
 import '../../shared/constants/strings.dart';
 import '../../shared/data/models/account/favorite_model.dart';

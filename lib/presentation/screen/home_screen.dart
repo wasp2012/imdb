@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:imdb_demo/business_logic/movies_cubitt/movies_cubit/movies_state.dart';
+import 'package:imdb_demo/presentation/widget/movies_list_widget.dart';
 import '../../business_logic/internet_cubit/internet_cubit.dart';
 import 'check_internet_screen.dart';
 import '../widget/home_screen_widget.dart';
@@ -58,7 +60,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     end: Alignment.bottomCenter,
                   ),
                 ),
-                child: HomeScreenWidget(cubit: cubit),
+                child: BlocBuilder<MoviesCubit, MoviesState>(
+                  builder: (context, state) {
+                    if (state is MoviesStateSuccess) {
+                      return HomeScreenWidget(cubit: cubit);
+                    } else if (state is MoviesStateError) {
+                      return const Center(
+                        child: Text('something went wrong'),
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
               ),
             ),
           );

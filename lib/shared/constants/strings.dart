@@ -8,6 +8,7 @@ const favoriteScreen = 'favorite_screen';
 const watchListScreen = '/watch_list_screen';
 const checkInternetScreen = '/check_internet_screen';
 const signUpWebViewScreen = '/sign_up_webview_screen';
+const moviesListScreen = '/movies_list_screen';
 
 //Links
 const youtubeLink = 'https://www.youtube.com/watch?v=';

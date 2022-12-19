@@ -13,7 +13,7 @@ class _WebServicesForMovies implements WebServicesForMovies {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://api.themoviedb.org/3/movie';
+    baseUrl ??= 'https://api.themoviedb.org/3';
   }
 
   final Dio _dio;
@@ -34,7 +34,7 @@ class _WebServicesForMovies implements WebServicesForMovies {
     )
             .compose(
               _dio.options,
-              '/now_playing',
+              '/movie/now_playing',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -57,7 +57,7 @@ class _WebServicesForMovies implements WebServicesForMovies {
     )
             .compose(
               _dio.options,
-              '/popular',
+              '/movie/popular',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -80,7 +80,7 @@ class _WebServicesForMovies implements WebServicesForMovies {
     )
             .compose(
               _dio.options,
-              '/top_rated',
+              '/movie/top_rated',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -103,7 +103,7 @@ class _WebServicesForMovies implements WebServicesForMovies {
     )
             .compose(
               _dio.options,
-              '/upcoming',
+              '/movie/upcoming',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -129,7 +129,7 @@ class _WebServicesForMovies implements WebServicesForMovies {
     )
             .compose(
               _dio.options,
-              '/${id}',
+              '/movie/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -155,12 +155,41 @@ class _WebServicesForMovies implements WebServicesForMovies {
     )
             .compose(
               _dio.options,
-              '/${id}/videos',
+              '/movie/${id}/videos',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MovieVideoById.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<SearchedMovies> getSearchedMovies(
+    apiKey,
+    query,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'api_key': apiKey,
+      r'query': query,
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<SearchedMovies>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/search/movie',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SearchedMovies.fromJson(_result.data!);
     return value;
   }
 

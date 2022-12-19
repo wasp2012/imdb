@@ -1,6 +1,6 @@
 class ApisUrl {
   static const baseUrl = 'https://api.themoviedb.org/3';
-  static const baseurlForMovies = 'https://api.themoviedb.org/3/movie';
+  static const baseurlForMovies = 'https://api.themoviedb.org/3';
   static const baseurlForAuth = 'https://api.themoviedb.org/3/authentication';
 
   static const apiKey = '8e143f202808def25a2cdae96e28954c';

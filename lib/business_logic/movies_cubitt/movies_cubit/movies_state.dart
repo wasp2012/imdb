@@ -23,3 +23,6 @@ class MoviesStateError extends MoviesState {
     this.networkExceptions,
   );
 }
+
+class MoviesStateSearchingStarted extends MoviesState {}
+class MoviesStateSearchingStopped extends MoviesState {}

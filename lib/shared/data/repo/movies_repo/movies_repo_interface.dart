@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:imdb_demo/shared/data/models/movies/results.dart';
+import 'package:imdb_demo/shared/data/models/movies/searched_movies.dart';
 import '../../../constants/apis.dart';
 import '../../models/movies/movie_details.dart';
 import '../../models/movies/movies_id/movies_video_by_id_model.dart';
@@ -25,4 +27,5 @@ abstract class MoviesRepositoryInterface {
   Future<ApiResult<UpcomingMovieModel?>> getMoviesUpComing();
   Future<ApiResult<MovieDetailsModel?>> getMovieDetails(String id);
   Future<ApiResult<MovieVideoById?>> getMovieVideos(String id);
+  Future<ApiResult<SearchedMovies?>> getSearchedMovies(String query);
 }

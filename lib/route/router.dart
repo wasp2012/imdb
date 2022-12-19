@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:imdb_demo/presentation/screen/movies/movies_list_screen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../business_logic/movies_cubitt/movie_detail_cubit/movie_details_cubit.dart';
@@ -102,7 +103,18 @@ class AppRouter {
             return const SignUpWebViewScreen();
           },
         );
+      case moviesListScreen:
+        return CustomMaterialPageRoute(
+          builder: (context) {
+            var cubit = settings.arguments as MoviesCubit;
+            return BlocProvider.value(
+              value: getIt<MoviesCubit>(),
+              child: MoviesListScreen(cubit: cubit),
+            );
+          },
+        );
     }
+
     return null;
   }
 }

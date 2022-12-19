@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
+import 'package:imdb_demo/shared/data/models/movies/searched_movies.dart';
+
 import '../../../constants/apis.dart';
 import '../../../web_services/errors/api_result.dart';
 import '../../../web_services/errors/network_exceptions.dart';
@@ -5,6 +10,7 @@ import '../../models/movies/movie_details.dart';
 import '../../models/movies/movies_id/movies_video_by_id_model.dart';
 import '../../models/movies/now_playing.dart';
 import '../../models/movies/popular.dart';
+import '../../../data/models/movies/results.dart';
 import '../../models/movies/top_rated.dart';
 import '../../models/movies/upcoming.dart';
 import 'movies_repo_interface.dart';
@@ -101,6 +107,22 @@ class MoviesRepository extends MoviesRepositoryInterface {
       var response = await webServicesForMovies?.getMovieVideos(
         ApisUrl.apiKey,
         id,
+      );
+      return ApiResult.success(response);
+    } catch (error) {
+      print(error);
+      return ApiResult.failure(
+        NetworkExceptions.getDioException(error),
+      );
+    }
+  }
+
+  @override
+  Future<ApiResult<SearchedMovies?>> getSearchedMovies(String query) async {
+    try {
+      var response = await webServicesForMovies?.getSearchedMovies(
+        ApisUrl.apiKey,
+        query,
       );
       return ApiResult.success(response);
     } catch (error) {

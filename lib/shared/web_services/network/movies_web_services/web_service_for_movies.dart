@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:imdb_demo/shared/data/models/movies/searched_movies.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../constants/apis.dart';
@@ -16,33 +17,39 @@ abstract class WebServicesForMovies {
   factory WebServicesForMovies(Dio dio, {String baseUrl}) =
       _WebServicesForMovies;
 
-  @GET('/now_playing')
+  @GET('/movie/now_playing')
   Future<NowPlayingMovieModel> getMoviesPlayingNow(
     @Query('api_key') String apiKey,
   );
-  @GET('/popular')
+  @GET('/movie/popular')
   Future<PopularMovieModel> getMoviesPopular(
     @Query('api_key') String apiKey,
   );
 
-  @GET('/top_rated')
+  @GET('/movie/top_rated')
   Future<TopRatedMovieModel> getMoviesTopRated(
     @Query('api_key') String apiKey,
   );
 
-  @GET('/upcoming')
+  @GET('/movie/upcoming')
   Future<UpcomingMovieModel> getMoviesUpComing(
     @Query('api_key') String apiKey,
   );
-  @GET('/{id}')
+  @GET('/movie/{id}')
   Future<MovieDetailsModel> getMovieDetails(
     @Query('api_key') String apiKey,
     @Path() String id,
   );
 
-  @GET('/{movie_id}/videos')
+  @GET('/movie/{movie_id}/videos')
   Future<MovieVideoById> getMovieVideos(
     @Query('api_key') String apiKey,
     @Path('movie_id') String id,
+  );
+
+  @GET('/search/movie')
+  Future<SearchedMovies> getSearchedMovies(
+    @Query('api_key') String apiKey,
+    @Query('query') String query,
   );
 }
