@@ -19,21 +19,22 @@ class FloatingActionButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<FavoriteCubit, FavoriteState>(
       listener: (context, state) {
-        if (state is FavoriteStateSaved) {
+        if (state is FavoriteStateSaved || state is WatchListStateSaved) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               duration: Duration(seconds: 1),
-              content: Text('Saved to Favorite'),
+              content: Text('Saved '),
             ),
           );
-        } else if (state is FavoriteStateRemoved) {
+        } else if (state is FavoriteStateRemoved ||
+            state is WatchListStateRemoved) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               duration: Duration(seconds: 1),
-              content: Text('Removed From Favorite'),
+              content: Text('Removed '),
             ),
           );
-        } else if (state is AlreadyFavorite) {
+        } else if (state is AlreadyFavorite || state is AlreadyInWatchList) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               duration: Duration(seconds: 1),

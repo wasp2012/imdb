@@ -120,7 +120,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     }
   }
 
-  Future<void> emitAddToWatchList(WatchListBody? watchListBody) async {
+  Future emitAddToWatchList(WatchListBody? watchListBody) async {
     emit(FavoriteStateLoading());
 
     if (await SharedPrefs.checkValue(sessionIdKey) &&
@@ -146,7 +146,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
         .addToWatchList(sessionId, userId, watchListBody!);
     response.when(success: (watchListModelResponse) async {
       watchListModel = watchListModelResponse;
-              print(watchListModel?.statusCode);
+      print(watchListModel?.statusCode);
 
       if (watchListModelResponse?.statusCode == 1) {
         emit(WatchListStateSaved(watchListModel: watchListModelResponse));
@@ -162,7 +162,8 @@ class FavoriteCubit extends Cubit<FavoriteState> {
 
   WatchListResultModel? watchListResultModel;
 
-  Future<void> emitWatchList() async {
+  Future<void> emitGetAllWatchList() async {
+    watchListResultModel = null;
     emit(FavoriteStateLoading());
     if (await SharedPrefs.checkValue(sessionIdKey) &&
         await SharedPrefs.checkValue(userIdKey)) {

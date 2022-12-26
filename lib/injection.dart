@@ -55,7 +55,7 @@ void initGetIt() {
     if (await SharedPrefs.checkValue(sessionIdKey) ||
         await SharedPrefs.checkValue(userIdKey)) {
       await allFavorite.emitGetFavoriteMovies();
-      await allFavorite.emitWatchList();
+      await allFavorite.emitGetAllWatchList();
     }
     return allFavorite;
   });
