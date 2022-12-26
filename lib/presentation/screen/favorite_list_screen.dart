@@ -5,7 +5,6 @@ import 'package:imdb_demo/presentation/widget/movies_list_widget.dart';
 import '../../business_logic/favorite_cubit/favorite_cubit.dart';
 import '../../injection.dart';
 import '../../shared/common/gradient.dart';
-import '../../shared/constants/strings.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -19,7 +18,10 @@ class FavoriteScreen extends StatelessWidget {
           getIt.allReady(),
           cubit.emitGetFavoriteMovies(),
         ]),
-        builder: (context, AsyncSnapshot) {
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
           return Scaffold(
             extendBody: true,
             bottomNavigationBar: const CurvedBottomNavbarWidget(currentPage: 1),

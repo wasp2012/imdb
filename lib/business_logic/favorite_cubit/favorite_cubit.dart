@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:imdb_demo/shared/data/models/account/get_watchlist_model.dart';
+import 'package:imdb_demo/shared/data/models/account/watchlist_model.dart';
 import 'package:imdb_demo/shared/data/models/movies/results.dart';
 
 import '../../shared/constants/strings.dart';
@@ -46,7 +48,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       await isSaved(
         favoriteResult?.statusCode ?? 0,
         favoriteBody.mediaId ?? 0,
-        favoriteResult!,
+        favoriteResult,
       );
     }, failure: (NetworkExceptions networkExceptions) {
       emit(FavoriteStateError(networkExceptions));
@@ -54,23 +56,25 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   }
 
   Future<void> isSaved(
-    int statusCode,
-    int mediaId,
-    FavoriteModel favoriteModel,
+    int? statusCode,
+    int? mediaId,
+    FavoriteModel? favoriteModel,
   ) async {
     switch (statusCode) {
       case 1:
         await emitGetFavoriteMovies();
-        checkIfMovieExist(mediaId);
-        emit(FavoriteStateSaved(favoriteModel: favoriteModel));
+        checkIfMovieExist(mediaId!);
+        emit(FavoriteStateSaved(favoriteModel: favoriteModel!));
+
         break;
       case 13:
         await emitGetFavoriteMovies();
-        checkIfMovieExist(mediaId);
-        emit(FavoriteStateRemoved(favoriteModel: favoriteModel));
+        checkIfMovieExist(mediaId!);
+        emit(FavoriteStateRemoved(favoriteModel: favoriteModel!));
+
         break;
       case 12:
-        checkIfMovieExist(mediaId);
+        checkIfMovieExist(mediaId!);
         emit(AlreadyFavorite());
         break;
 
@@ -113,6 +117,68 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     } else {
       iconData = Icons.favorite_border;
       isFavorite = false;
+    }
+  }
+
+  Future<void> emitAddToWatchList(WatchListBody? watchListBody) async {
+    emit(FavoriteStateLoading());
+
+    if (await SharedPrefs.checkValue(sessionIdKey) &&
+        await SharedPrefs.checkValue(userIdKey)) {
+      String sessionId = await SharedPrefs.getStringValuesSF(sessionIdKey);
+      int userId = await SharedPrefs.getIntValuesSF(userIdKey);
+
+      try {
+        await addedToWatchListResponse(sessionId, userId, watchListBody!);
+      } catch (e) {
+        print(e.toString());
+      }
+    } else {
+      print('Session ID Not found or User ID');
+    }
+  }
+
+  WatchListModel? watchListModel;
+
+  Future<void> addedToWatchListResponse(
+      String sessionId, int userId, WatchListBody? watchListBody) async {
+    var response = await accountRepository!
+        .addToWatchList(sessionId, userId, watchListBody!);
+    response.when(success: (watchListModelResponse) async {
+      watchListModel = watchListModelResponse;
+              print(watchListModel?.statusCode);
+
+      if (watchListModelResponse?.statusCode == 1) {
+        emit(WatchListStateSaved(watchListModel: watchListModelResponse));
+      } else if (watchListModelResponse?.statusCode == 12) {
+        emit(AlreadyInWatchList());
+      } else if (watchListModelResponse?.statusCode == 13) {
+        emit(WatchListStateRemoved());
+      }
+    }, failure: (NetworkExceptions networkExceptions) {
+      emit(FavoriteStateError(networkExceptions));
+    });
+  }
+
+  WatchListResultModel? watchListResultModel;
+
+  Future<void> emitWatchList() async {
+    emit(FavoriteStateLoading());
+    if (await SharedPrefs.checkValue(sessionIdKey) &&
+        await SharedPrefs.checkValue(userIdKey)) {
+      var sessionId = await SharedPrefs.getStringValuesSF(sessionIdKey);
+      var userId = await SharedPrefs.getIntValuesSF(userIdKey);
+      var response =
+          await accountRepository!.getWatchListMovies(sessionId, userId);
+      response.when(success: (allWatchListMovies) {
+        watchListResultModel = allWatchListMovies;
+        print(watchListResultModel);
+        emit(WatchListMoviesSuccess(allWatchListMovies));
+      }, failure: (NetworkExceptions networkExceptions) {
+        emit(WatchListMoviesFail(networkExceptions));
+      });
+    } else {
+      throw const NetworkExceptions.notFound('Session ID Or UserId');
     }
   }
 }

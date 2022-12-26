@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:imdb_demo/shared/data/models/account/get_watchlist_model.dart';
+import 'package:imdb_demo/shared/data/models/account/watchlist_model.dart';
 
 import '../../../constants/apis.dart';
 import '../../../web_services/errors/api_result.dart';
@@ -21,5 +23,11 @@ abstract class AccountRepositoryInterface {
       String sessionId, int accountId, FavoriteBody favoriteBody);
 
   Future<ApiResult<AllFavoriteModel?>> getFavoriteMovies(
+      String sessionId, int accountId);
+
+  Future<ApiResult<WatchListModel?>> addToWatchList(
+      String sessionId, int accountId, WatchListBody watchListBody);
+
+  Future<ApiResult<WatchListResultModel?>> getWatchListMovies(
       String sessionId, int accountId);
 }

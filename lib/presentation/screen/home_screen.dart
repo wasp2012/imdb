@@ -41,46 +41,45 @@ class _HomeScreenState extends State<HomeScreen> {
         cubit.emitMoviesUpComing(),
       ]),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          var cubit = getIt<MoviesCubit>();
-          return Scaffold(
-            backgroundColor: Theme.of(context).backgroundColor,
-            extendBody: true,
-            bottomNavigationBar: const CurvedBottomNavbarWidget(
-              currentPage: 0,
-            ),
-            key: globalKey,
-            body: SingleChildScrollView(
-              child: Container(
-                height: 1250,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: SharedGradient.gradientColors(context),
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-                child: BlocBuilder<MoviesCubit, MoviesState>(
-                  builder: (context, state) {
-                    if (state is MoviesStateSuccess) {
-                      return HomeScreenWidget(cubit: cubit);
-                    } else if (state is MoviesStateError) {
-                      return const Center(
-                        child: Text('something went wrong'),
-                      );
-                    } else {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                  },
-                ),
-              ),
-            ),
-          );
-        } else {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
+        var cubit = getIt<MoviesCubit>();
+        return Scaffold(
+          backgroundColor: Theme.of(context).backgroundColor,
+          extendBody: true,
+          bottomNavigationBar: const CurvedBottomNavbarWidget(
+            currentPage: 0,
+          ),
+          key: globalKey,
+          body: SingleChildScrollView(
+            child: Container(
+              height: 1250,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: SharedGradient.gradientColors(context),
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              child: BlocBuilder<MoviesCubit, MoviesState>(
+                builder: (context, state) {
+                  if (state is MoviesStateSuccess) {
+                    return HomeScreenWidget(cubit: cubit);
+                  } else if (state is MoviesStateError) {
+                    return const Center(
+                      child: Text('something went wrong'),
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            ),
+          ),
+        );
       },
     );
   }

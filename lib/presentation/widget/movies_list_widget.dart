@@ -13,6 +13,7 @@ class MoviesListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('MoviesListWidget');
     return GridView.builder(
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -23,7 +24,7 @@ class MoviesListWidget extends StatelessWidget {
       physics: const ClampingScrollPhysics(),
       itemCount: totalResults?.length,
       itemBuilder: (context, index) {
-        return totalResults![index].posterPath != null &&
+        return totalResults?[index].posterPath != null &&
                 totalResults!.isNotEmpty
             ? GestureDetector(
                 onTap: () => Navigator.pushNamed(context, movieDetailsScreen,

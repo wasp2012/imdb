@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
+import 'package:imdb_demo/presentation/screen/movies/movies_list_screen.dart';
+import 'package:imdb_demo/presentation/widget/movies_list_widget.dart';
 
 import '../../shared/common/gradient.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
@@ -8,6 +12,7 @@ class WatchListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var favCubit = context.read<FavoriteCubit>();
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: const CurvedBottomNavbarWidget(currentPage: 2),
@@ -19,6 +24,20 @@ class WatchListScreen extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
+        child: FutureBuilder(
+            future: favCubit.watchListResultModel != null
+                ? favCubit.emitWatchList()
+                : null,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return MoviesListWidget(
+                totalResults: favCubit.watchListResultModel?.results,
+              );
+            }),
       ),
     );
   }

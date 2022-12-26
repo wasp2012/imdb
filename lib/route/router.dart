@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
 import 'package:imdb_demo/presentation/screen/movies/movies_list_screen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -45,7 +46,7 @@ class AppRouter {
                 ),
               ],
               child: MovieDetailsScreen(
-                movieId: movieId as String,
+                movieId: movieId as dynamic,
               ),
             );
           },
@@ -72,8 +73,6 @@ class AppRouter {
       case favoriteScreen:
         return CustomMaterialPageRoute(
           builder: (context) {
-            var movieId = settings.arguments;
-
             return MultiBlocProvider(
               providers: [
                 BlocProvider(

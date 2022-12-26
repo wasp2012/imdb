@@ -67,3 +67,28 @@ class UnMarkFavoriteIcon extends FavoriteState {
 }
 
 class AlreadyFavorite extends FavoriteState {}
+
+class WatchListStateSaved extends FavoriteState {
+  final WatchListModel? watchListModel;
+
+  WatchListStateSaved({
+    required this.watchListModel,
+  });
+}
+
+class WatchListStateRemoved extends FavoriteState {}
+
+class WatchListMoviesSuccess extends FavoriteState {
+  final WatchListResultModel? allWatchList;
+
+  WatchListMoviesSuccess(this.allWatchList);
+}
+
+class AlreadyInWatchList extends FavoriteState {}
+
+
+class WatchListMoviesFail extends FavoriteState {
+  final NetworkExceptions networkExceptions;
+
+  WatchListMoviesFail(this.networkExceptions);
+}
