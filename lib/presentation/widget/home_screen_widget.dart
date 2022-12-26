@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:imdb_demo/shared/constants/strings.dart';
+import '../../shared/constants/strings.dart';
 
 import '../../business_logic/movies_cubitt/movies_cubit/movies_cubit.dart';
 import '../widget/blured_movie_image_widget.dart';

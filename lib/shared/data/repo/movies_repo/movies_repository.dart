@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:imdb_demo/shared/data/models/movies/searched_movies.dart';
+import '../../models/movies/searched_movies.dart';
 
 import '../../../constants/apis.dart';
 import '../../../web_services/errors/api_result.dart';

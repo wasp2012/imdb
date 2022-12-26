@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-
 part 'watchlist_model.g.dart';
 
 

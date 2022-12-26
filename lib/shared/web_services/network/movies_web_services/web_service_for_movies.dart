@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:imdb_demo/shared/data/models/movies/searched_movies.dart';
+import '../../../data/models/movies/searched_movies.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../constants/apis.dart';

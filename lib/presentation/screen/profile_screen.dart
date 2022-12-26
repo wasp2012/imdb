@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../shared/common/gradient.dart';
-import '../../shared/offline_data.dart';
+
 import '../../business_logic/profile_cubit/profile_cubit.dart';
 import '../../business_logic/profile_cubit/profile_state.dart';
 import '../../injection.dart';
+import '../../shared/common/gradient.dart';
 import '../../shared/constants/strings.dart';
+import '../../shared/offline_data.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
 
 class ProfileScreen extends StatelessWidget {

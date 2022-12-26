@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:imdb_demo/shared/data/models/movies/results.dart';
+import '../../../shared/data/models/movies/results.dart';
 
 import '../../../shared/data/models/movies/now_playing.dart';
 import '../../../shared/data/models/movies/popular.dart';

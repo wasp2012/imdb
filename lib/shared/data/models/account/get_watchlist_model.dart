@@ -1,4 +1,4 @@
-import 'package:imdb_demo/shared/data/models/movies/results.dart';
+import '../movies/results.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'get_watchlist_model.g.dart';
 

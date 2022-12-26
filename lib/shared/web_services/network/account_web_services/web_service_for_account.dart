@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:imdb_demo/shared/data/models/account/get_watchlist_model.dart';
-import 'package:imdb_demo/shared/data/models/account/watchlist_model.dart';
+import '../../../data/models/account/get_watchlist_model.dart';
+import '../../../data/models/account/watchlist_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../constants/apis.dart';

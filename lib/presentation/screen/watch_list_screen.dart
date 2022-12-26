@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
-import 'package:imdb_demo/presentation/widget/movies_list_widget.dart';
-import 'package:imdb_demo/presentation/widget/watch_later_list_widget.dart';
+import '../../business_logic/favorite_cubit/favorite_cubit.dart';
+import '../widget/movies_list_widget.dart';
+import '../widget/watch_later_list_widget.dart';
 
 import '../../shared/common/gradient.dart';
 import '../widget/curved_bottom_navbar_widget.dart';

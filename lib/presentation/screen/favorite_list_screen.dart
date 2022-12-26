@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:imdb_demo/presentation/widget/movies_list_widget.dart';
+import '../widget/movies_list_widget.dart';
 
 import '../../business_logic/favorite_cubit/favorite_cubit.dart';
 import '../../injection.dart';

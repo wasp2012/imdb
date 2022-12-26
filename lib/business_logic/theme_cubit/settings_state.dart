@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 import 'package:imdb_demo/shared/data/models/account/profile_details_model.dart';
 import 'package:imdb_demo/shared/web_services/errors/network_exceptions.dart';
 

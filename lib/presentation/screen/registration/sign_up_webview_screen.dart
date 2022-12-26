@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:imdb_demo/business_logic/auth_cubit/authentication_cubit.dart';
-import 'package:imdb_demo/business_logic/auth_cubit/authentication_state.dart';
-import 'package:imdb_demo/injection.dart';
+import '../../../business_logic/auth_cubit/authentication_cubit.dart';
+import '../../../business_logic/auth_cubit/authentication_state.dart';
+import '../../../injection.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../widget/signup/navigation_controls_widget.dart';

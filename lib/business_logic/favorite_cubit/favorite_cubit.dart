@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:imdb_demo/shared/data/models/account/get_watchlist_model.dart';
-import 'package:imdb_demo/shared/data/models/account/watchlist_model.dart';
-import 'package:imdb_demo/shared/data/models/movies/results.dart';
+import '../../shared/data/models/account/get_watchlist_model.dart';
+import '../../shared/data/models/account/watchlist_model.dart';
+import '../../shared/data/models/movies/results.dart';
 
 import '../../shared/constants/strings.dart';
 import '../../shared/data/models/account/favorite_model.dart';

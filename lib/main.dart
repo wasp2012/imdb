@@ -13,7 +13,6 @@ import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
 import 'package:imdb_demo/business_logic/internet_cubit/internet_cubit.dart';
 import 'package:imdb_demo/business_logic/profile_cubit/profile_cubit.dart';
 import 'package:imdb_demo/presentation/screen/check_internet_screen.dart';
-import 'package:imdb_demo/presentation/widget/curved_bottom_navbar_widget.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/constants/themes.dart';
 import 'package:imdb_demo/shared/offline_data.dart';
