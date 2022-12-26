@@ -24,81 +24,77 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: SharedGradient.gradientColors(context),
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: SharedGradient.gradientColors(context),
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          child: Container(
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextFormField(
-                  onChanged: (value) async {
-                    await widget.cubit.emitSearchedMovies(value);
-                  },
-                  controller: widget.cubit.searchTextController,
-                  cursorColor: Colors.white,
-                  textAlign: TextAlign.start,
-                  textAlignVertical: TextAlignVertical.bottom,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: const Color.fromARGB(115, 158, 158, 158),
-                    hintText: 'Search',
-                    hoverColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    suffixIcon: const Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(color: Colors.transparent),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(color: Colors.white),
-                    ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                onChanged: (value) async {
+                  await widget.cubit.emitSearchedMovies(value);
+                },
+                controller: widget.cubit.searchTextController,
+                cursorColor: Colors.white,
+                textAlign: TextAlign.start,
+                textAlignVertical: TextAlignVertical.bottom,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color.fromARGB(115, 158, 158, 158),
+                  hintText: 'Search',
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  suffixIcon: const Icon(
+                    Icons.search,
+                    color: Colors.white,
                   ),
-                  onTap: () {
-                    FocusScopeNode currentFocus = FocusScope.of(context);
-                    if (!currentFocus.hasPrimaryFocus ||
-                        !currentFocus.isFirstFocus) {
-                      currentFocus.unfocus();
-                    }
-                  },
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(color: Colors.transparent),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: const BorderSide(color: Colors.white),
+                  ),
                 ),
-                widget.cubit.searchedMovies!.isNotEmpty &&
-                        widget.cubit.searchedMovies != null
-                    ? BlocBuilder<MoviesCubit, MoviesState>(
-                        builder: (context, state) {
-                          if (state is MoviesStateIdle) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else if (state is MoviesStateSearchingStarted) {
-                            return MoviesListWidget(
-                                totalResults: widget.cubit.searchedMovies);
-                          } else if (state is MoviesStateError) {
-                            return const Center(
-                              child: Text('Something went wrong'),
-                            );
-                          } else {
-                            return MoviesListWidget(
-                                totalResults: widget.cubit.searchedMovies);
-                          }
-                        },
-                      )
-                    : const Center(
-                        child: Text('Search for something'),
-                      ),
-              ],
-            ),
+                onTap: () {
+                  FocusScopeNode currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus ||
+                      !currentFocus.isFirstFocus) {
+                    currentFocus.unfocus();
+                  }
+                },
+              ),
+              widget.cubit.searchedMovies!.isNotEmpty &&
+                      widget.cubit.searchedMovies != null
+                  ? BlocBuilder<MoviesCubit, MoviesState>(
+                      builder: (context, state) {
+                        if (state is MoviesStateIdle) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is MoviesStateSearchingStarted) {
+                          return MoviesListWidget(
+                              totalResults: widget.cubit.searchedMovies);
+                        } else if (state is MoviesStateError) {
+                          return const Center(
+                            child: Text('Something went wrong'),
+                          );
+                        } else {
+                          return MoviesListWidget(
+                              totalResults: widget.cubit.searchedMovies);
+                        }
+                      },
+                    )
+                  : const Center(
+                      child: Text('Search for something'),
+                    ),
+            ],
           ),
         ),
       ),
