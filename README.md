@@ -1,16 +1,40 @@
-# imdb_demo
 
-A new Flutter project.
+# IMDB
 
-## Getting Started
+Simple Movies application to follow up with what's new.
+## Overview
 
-This project is a starting point for a Flutter application.
+- State management : Bloc
+- Dio 
+- webview
+- Dependency injection : get_it
+- Clean architecture
+- Retrofit
+- Crashlytics: firebase
+- Performance: firebase
+## API Reference
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+I found this free api
+```http
+https://developers.themoviedb.org/3/getting-started/introduction
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+## Features
+
+- Light/dark mode toggle
+- Search by movie name
+- Login/signup auth
+- Favorite/watch later list
+
+
+## Installation
+
+
+```bash
+  flutter clean
+  flutter pub get
+```
+    
