@@ -12,7 +12,8 @@ import 'package:imdb_demo/business_logic/auth_cubit/authentication_cubit.dart';
 import 'package:imdb_demo/business_logic/favorite_cubit/favorite_cubit.dart';
 import 'package:imdb_demo/business_logic/internet_cubit/internet_cubit.dart';
 import 'package:imdb_demo/business_logic/profile_cubit/profile_cubit.dart';
-import 'package:imdb_demo/presentation/screen/check_internet_screen.dart';
+import 'package:imdb_demo/core/check_internet_screen.dart';
+import 'package:imdb_demo/core/gradient.dart';
 import 'package:imdb_demo/shared/constants/strings.dart';
 import 'package:imdb_demo/shared/constants/themes.dart';
 import 'package:imdb_demo/shared/offline_data.dart';
@@ -39,7 +40,7 @@ void main() async {
   Bloc.observer = MyBlocObserver();
 
   var isUserLoggedIn = await SharedPrefs.checkValue(userTokenKey);
-  Future.delayed(const Duration(seconds: 4));
+  Future.delayed(const Duration(seconds: 2));
   runApp(MyApp(
     router: AppRouter(),
     home: isUserLoggedIn == true ? homeScreen : logInScreen,
@@ -69,25 +70,25 @@ class MyApp extends StatelessWidget {
           final cubitThemeCubit = getIt<SettingsCubit>();
 
           return MultiBlocProvider(
-              providers: [
-                BlocProvider(
-                  create: (context) => getIt<SettingsCubit>(),
-                ),
-                BlocProvider(
-                  create: (context) => getIt<AuthenticationCubit>(),
-                ),
-                BlocProvider(
-                  create: (context) => getIt<FavoriteCubit>(),
-                ),
-                BlocProvider(
-                  create: (context) => getIt<ProfileCubit>(),
-                ),
-                BlocProvider(
-                  create: (context) => getIt<InternetCubit>(),
-                ),
-              ],
-              child: BlocBuilder<InternetCubit, InternetState>(
-                  builder: (context, state) {
+            providers: [
+              BlocProvider(
+                create: (context) => getIt<SettingsCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<AuthenticationCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<FavoriteCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<ProfileCubit>(),
+              ),
+              BlocProvider(
+                create: (context) => getIt<InternetCubit>(),
+              ),
+            ],
+            child: BlocBuilder<InternetCubit, InternetState>(
+              builder: (context, state) {
                 if (state is InternetDisconnected) {
                   return MaterialApp(
                     debugShowCheckedModeBanner: false,
@@ -102,23 +103,24 @@ class MyApp extends StatelessWidget {
                   return BlocBuilder<SettingsCubit, SettingState>(
                     builder: (context, state) {
                       return ScreenUtilInit(
-                          designSize: const Size(360, 690),
-                          minTextAdapt: true,
-                          splitScreenMode: true,
-                          builder: (context, child) {
-                            return SafeArea(
-                              child: MaterialApp(
-                                debugShowCheckedModeBanner: false,
-                                darkTheme: AppTheme.darkTheme,
-                                theme: AppTheme.lightTheme,
-                                themeMode: cubitThemeCubit.savedTheme == true
-                                    ? ThemeMode.dark
-                                    : ThemeMode.light,
-                                initialRoute: home,
-                                onGenerateRoute: router?.onGenerateRoute,
-                              ),
-                            );
-                          });
+                        designSize: const Size(360, 690),
+                        minTextAdapt: true,
+                        splitScreenMode: true,
+                        builder: (context, child) {
+                          return SafeArea(
+                            child: MaterialApp(
+                              debugShowCheckedModeBanner: false,
+                              darkTheme: AppTheme.darkTheme,
+                              theme: AppTheme.lightTheme,
+                              themeMode: cubitThemeCubit.savedTheme == true
+                                  ? ThemeMode.dark
+                                  : ThemeMode.light,
+                              initialRoute: home,
+                              onGenerateRoute: router?.onGenerateRoute,
+                            ),
+                          );
+                        },
+                      );
                     },
                   );
                 } else {
@@ -129,10 +131,22 @@ class MyApp extends StatelessWidget {
                     themeMode: cubitThemeCubit.savedTheme == true
                         ? ThemeMode.dark
                         : ThemeMode.light,
-                    home: const Center(child: CircularProgressIndicator()),
+                    home: Scaffold(
+                      body: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: SharedGradient.gradientColors(context),
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                        ),
+                      ),
+                    ),
                   );
                 }
-              }));
+              },
+            ),
+          );
         } else {
           return const CircularProgressIndicator();
         }

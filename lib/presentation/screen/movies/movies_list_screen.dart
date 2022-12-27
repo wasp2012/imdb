@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../business_logic/movies_cubitt/movies_cubit/movies_cubit.dart';
 import '../../../business_logic/movies_cubitt/movies_cubit/movies_state.dart';
 import '../../widget/movies_list_widget.dart';
-import '../../../shared/common/gradient.dart';
+import 'package:imdb_demo/core/gradient.dart';
 
 class MoviesListScreen extends StatefulWidget {
   const MoviesListScreen({Key? key, required this.cubit}) : super(key: key);

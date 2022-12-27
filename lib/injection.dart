@@ -85,8 +85,11 @@ void initGetIt() {
     return themeCubit;
   });
 
-  getIt.registerSingleton<InternetCubit>(
-      InternetCubit(connectivity: Connectivity()));
+  getIt.registerFactory<InternetCubit>(
+    () => InternetCubit(
+      connectivity: Connectivity(),
+    ),
+  );
 
   //
 

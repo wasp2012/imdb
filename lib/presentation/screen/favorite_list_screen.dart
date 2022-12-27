@@ -4,7 +4,7 @@ import '../widget/movies_list_widget.dart';
 
 import '../../business_logic/favorite_cubit/favorite_cubit.dart';
 import '../../injection.dart';
-import '../../shared/common/gradient.dart';
+import 'package:imdb_demo/core/gradient.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
 
 class FavoriteScreen extends StatelessWidget {

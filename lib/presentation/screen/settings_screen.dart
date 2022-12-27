@@ -5,7 +5,7 @@ import 'package:rive/rive.dart' as riveImport;
 import '../../business_logic/theme_cubit/settings_cubit.dart';
 import '../../business_logic/theme_cubit/settings_state.dart';
 import '../../injection.dart';
-import '../../shared/common/gradient.dart';
+import 'package:imdb_demo/core/gradient.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
 
 class SettingsScreen extends StatefulWidget {

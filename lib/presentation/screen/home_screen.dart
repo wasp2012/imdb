@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../business_logic/movies_cubitt/movies_cubit/movies_state.dart';
 import '../widget/movies_list_widget.dart';
 import '../../business_logic/internet_cubit/internet_cubit.dart';
-import 'check_internet_screen.dart';
+import '../../core/check_internet_screen.dart';
 import '../widget/home_screen_widget.dart';
 
 import '../../business_logic/movies_cubitt/movies_cubit/movies_cubit.dart';
 import '../../injection.dart';
-import '../../shared/common/gradient.dart';
+import 'package:imdb_demo/core/gradient.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
 
 class HomeScreen extends StatefulWidget {

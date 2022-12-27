@@ -6,7 +6,7 @@ import '../../../business_logic/favorite_cubit/favorite_cubit.dart';
 import '../../../business_logic/movies_cubitt/movie_detail_cubit/movie_details_cubit.dart';
 import '../../../business_logic/movies_cubitt/movie_detail_cubit/movie_details_state.dart';
 import '../../../injection.dart';
-import '../../../shared/common/gradient.dart';
+import 'package:imdb_demo/core/gradient.dart';
 import '../../widget/movie_details/floating_action_button_widget.dart';
 
 class MovieDetailsScreen extends StatefulWidget {

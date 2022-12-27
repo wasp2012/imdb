@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../business_logic/profile_cubit/profile_cubit.dart';
 import '../../business_logic/profile_cubit/profile_state.dart';
 import '../../injection.dart';
-import '../../shared/common/gradient.dart';
+import 'package:imdb_demo/core/gradient.dart';
 import '../../shared/constants/strings.dart';
 import '../../shared/offline_data.dart';
 import '../widget/curved_bottom_navbar_widget.dart';
