@@ -37,8 +37,11 @@ class _GenericCarouselSliderWidgetState
                     borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                     child: Stack(
                       children: <Widget>[
-                        Image.network(imageDisplay + item.posterPath!,
-                            fit: BoxFit.cover, width: 1000.0),
+                        Image.network(
+                          imageDisplay + item.posterPath!,
+                          fit: BoxFit.fill,
+                          width: 1000.0,
+                        ),
                         Positioned(
                           bottom: 0.0,
                           left: 0.0,
@@ -95,6 +98,9 @@ class _GenericCarouselSliderWidgetState
             autoPlay: true,
             aspectRatio: 1.0,
             enlargeCenterPage: true,
+            viewportFraction: 0.7,
+            enableInfiniteScroll: true,
+            initialPage: 0,
           ),
           items: resultsSlider != null && resultsSlider!.isNotEmpty
               ? resultsSlider!
