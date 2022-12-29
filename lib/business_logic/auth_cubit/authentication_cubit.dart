@@ -44,7 +44,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   bool isLoggedIn = false;
 
   Future<void> logIn(String userName, String password) async {
-    print('Not Empty ${await SharedPrefs.getStringValuesSF(requestTokenKey)}');
+    // print('Not Empty ${await SharedPrefs.getStringValuesSF(requestTokenKey)}');
     if (await SharedPrefs.checkValue(requestTokenKey)) {
       String reqToken = await SharedPrefs.getStringValuesSF(requestTokenKey);
       await emitPostLogin(LogInBodyModel(

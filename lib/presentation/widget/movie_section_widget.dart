@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:imdb_demo/shared/constants/strings.dart';
 
 import '../../../shared/data/models/movies/results.dart';
 import '../../business_logic/movies_cubitt/movies_cubit/movies_cubit.dart';
@@ -12,7 +13,7 @@ class MovieSectionWidget extends StatefulWidget {
   final List<Results>? moviesList;
   final double? adaptiveHeight;
 
-  const MovieSectionWidget({
+   MovieSectionWidget({
     super.key,
     required this.sectionTitle,
     required this.moviesList,
@@ -24,6 +25,7 @@ class MovieSectionWidget extends StatefulWidget {
 }
 
 class _MovieSectionWidgetState extends State<MovieSectionWidget> {
+   
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MoviesCubit, MoviesState>(

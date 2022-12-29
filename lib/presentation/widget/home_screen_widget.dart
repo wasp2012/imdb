@@ -7,6 +7,7 @@ import '../../shared/constants/strings.dart';
 import '../../business_logic/movies_cubitt/movies_cubit/movies_cubit.dart';
 import '../widget/blured_movie_image_widget.dart';
 import '../widget/movie_section_widget.dart';
+import 'generic_carousel_slider_widget.dart';
 
 class HomeScreenWidget extends StatelessWidget {
   const HomeScreenWidget({
@@ -42,11 +43,16 @@ class HomeScreenWidget extends StatelessWidget {
                         SizedBox(
                           height: 20.h,
                         ),
-                        MovieSectionWidget(
+                        // MovieSectionWidget(
+                        //   sectionTitle: 'Now Playing',
+                        //   moviesList: cubit.nowPlayingMoviesList,
+                        //   adaptiveHeight: 350,
+                        // ),
+                        GenericCarouselSliderWidget(
                           sectionTitle: 'Now Playing',
                           moviesList: cubit.nowPlayingMoviesList,
                           adaptiveHeight: 350,
-                        ),
+                        )
                       ],
                     ),
                   ),

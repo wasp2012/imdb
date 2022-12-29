@@ -33,9 +33,8 @@ class SharedPrefs {
 
   static getIntValuesSF(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    int stringValue = prefs.getInt(key) ?? -1;
-    return stringValue;
+    int intValue = prefs.getInt(key) ?? -1;
+    return intValue;
   }
 
   static Future<bool> checkValue(String key) async {

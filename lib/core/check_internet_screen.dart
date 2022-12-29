@@ -35,9 +35,7 @@ class CheckInternetScreen extends StatelessWidget {
                     height: 150,
                   ),
 
-                  // SizedBox(
-                  //   height: 30.h,
-                  // ),
+                
                 ],
               ),
             ),
